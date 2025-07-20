@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Деплой NextJS проекту на VDS сервер
+Інструкція по розгортанню проекту на NextJS/React/TailwindCSS з CSS modules на віддалений сервер через SSH.
+Технології проекту
 
-## Getting Started
+Frontend Framework: Next.js
+UI Library: React
+Styling: TailwindCSS + CSS Modules
+Deploy: VDS сервер з SSH доступом
 
-First, run the development server:
+Інформація про сервер
+ПараметрЗначенняДоменне ім'я765314-vds-rezoswap.gmhost.pp.uaIP-адреса195.226.192.94КористувачrootПарольPN6K3LK0sSNqОпераційна системаmacOS (локальна)
+Покрокова інструкція деплою
+1. Встановлення SSH з'єднання
+Встановіть SSH з'єднання до сервера
+2. Робота з Git репозиторієм (локально)
+bash# Клонування проекту
+git clone [URL_РЕПОЗИТОРІЯ]
+cd [НАЗВА_ПРОЕКТУ]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Внесення змін
+# ... ваші зміни в коді ...
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Коміт змін
+git add .
+git commit -m "Опис ваших змін"
+git push origin main
+3. Видалення старої версії проекту на сервері
+Зайдіть на раніше встановлене SSH з'єднання та видаліть директорію /front/crypt
+4. Перенесення файлів на сервер
+bash# Виконати з локального терміналу (не SSH)
+scp -r ~/Desktop/lizex/crypt root@195.226.192.94:/root/front/crypt
 
-You can start editing the page by modifying `app/policy.tsx`. The page auto-updates as you edit the file.
+Примітка: Замініть ~/Desktop/lizex/crypt на шлях до вашого локального проекту
+Увага: Ця команда може зайняти значний час залежно від розміру проекту
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. Перехід до директорії проекту на сервері
+bash# Підключіться до SSH
+ssh root@195.226.192.94
+cd /root/front/crypt
+6. Встановлення залежностей
+bashnpm install
 
-## Learn More
+Увага: Виконання може зайняти більше часу ніж очікується
 
-To learn more about Next.js, take a look at the following resources:
+7. Збірка проекту
+bashnpm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Увага: Виконання може зайняти більше часу ніж очікується
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+8. Зупинка попередніх процесів через htop
+bashhtop
+В інтерфейсі htop:
 
-## Deploy on Vercel
+Натисніть F4 (Filter)
+Введіть ключове слово: start
+Знайдіть процес npm run start (білого кольору)
+Виберіть його та натисніть F9 (Kill)
+В лівому sidebar виберіть 9 SIGKILL
+Натисніть Send
+Натисніть F10 (Quit) для виходу з htop
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+9. Перевірка процесів на порту 3000
+bashss -ltnp | grep :3000
+10. Завершення процесів на порту 3000
+bash# Якщо команда з п.9 повернула процес, виконайте:
+kill -9 [ID_ПРОЦЕСУ]
+Замініть [ID_ПРОЦЕСУ] на ID, який повернула попередня команда
+11. Створення screen сесії для production
+bashscreen -S frontend
+Відкриється нове вікно терміналу для production
+12. Запуск проекту
+bashnpm start
+Проект запуститься на порту 3000
+13. Завершення деплою
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+✅ Правильно: Закрийте термінал натиснувши хрестик у куті вікна
+❌ Неправильно: НЕ використовуйте Ctrl+C або Ctrl+Z - це зупинить production
+
+Важливі примітки
+⚠️ Критично важливо: Після запуску npm start не завершуйте процес через Ctrl+C/Ctrl+Z, інакше веб-сайт перестане працювати
+⏱️ Час виконання: Команди з пунктів 4, 6, 7 можуть зайняти значно більше часу ніж очікується
+🔄 Повторний запуск: Якщо production зупинився, повторіть кроки з пункту 8
