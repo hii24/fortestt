@@ -1,0 +1,53 @@
+.currencyWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.currencyWrapperRow {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+.currencyWrapperCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 1px;
+}
+
+.currencyIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.currencySymbol {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.currencyName {
+  color: var(--Grey_txt, #7d7878);
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.networkSymbol {
+  color: var(--FF_TXT, #fff);
+  padding: 2px 4px;
+  font-family: Roboto;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 5px;
+  background: rgba(0, 136, 204, 0.7);
+}

@@ -1,0 +1,28 @@
+/* .customSwitch:not(.ant-switch-checked),
+.customSwitch:not(.ant-switch-checked):hover {
+  outline: 1px solid var(--Active_Header_Collor, #3460fd);
+}
+
+.customSwitch,
+.customSwitch:not(.ant-switch-checked):hover {
+  background-color: var(--Background_blocks, #fffafa);
+}
+
+.customSwitch.ant-switch-checked {
+  background-color: var(--Background_blocks, #3460fd);
+} */
+
+.customSwitch {
+  & svg {
+    stroke: white;
+  }
+}
+
+.floatingRateText {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

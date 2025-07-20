@@ -1,0 +1,586 @@
+.container {
+  width: 1372px;
+  max-width: 1372px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1430px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+.pageTitle {
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 24px;
+    margin-top: 50px;
+    margin-bottom: 15px;
+  }
+}
+
+.pageTitleFAQ {
+  text-align: left;
+}
+
+.coinsImage {
+  position: absolute;
+  z-index: 1;
+}
+
+.coinsImage1 {
+  bottom: -100px;
+  left: 0;
+}
+
+.coinsImage2 {
+  top: 150px;
+  right: 200px;
+}
+
+.coinsImage3 {
+  bottom: 40px;
+  left: 60px;
+}
+
+@media (max-width: 1430px) {
+  .coinsImage2 {
+    top: 150px;
+    right: 100px;
+  }
+
+  .coinsImage3 {
+    bottom: 40px;
+    left: -20px;
+  }
+}
+@media (max-width: 1430px) {
+  .coinsImage2 {
+    top: 150px;
+    right: 100px;
+  }
+
+  .coinsImage3 {
+    bottom: 40px;
+    left: -20px;
+  }
+}
+
+.howItWorkTop {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 100px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.howItWorkTopLeft {
+  width: 560px;
+  margin-right: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+@media (max-width: 1430px) {
+  .howItWorkTopLeft {
+    width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .howItWorkTop {
+    flex-direction: column;
+    margin-top: 50px;
+  }
+
+  .howItWorkTopLeft {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+}
+
+.howItWorkTopLeft h1 {
+  font-size: 35px;
+  margin: 0 0 20px 0;
+  font-weight: 700;
+}
+
+.howItWorkTopLeft p {
+  font-size: 16px;
+  margin: 10px 0;
+  font-weight: normal;
+}
+
+.howItWorkTopLeft p.grey {
+  margin-top: 20px;
+  color: #7d7878;
+}
+
+@media (max-width: 1430px) {
+  .howItWorkTopLeft h1 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .howItWorkTopLeft h1 {
+    font-size: 24px;
+    margin: 0 0 15px 0;
+  }
+
+  .howItWorkTopLeft p {
+    font-size: 14px;
+  }
+}
+
+.howItWorkTopRight {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 1;
+  z-index: 1;
+  gap: 12px;
+}
+
+.howItWorkTopRight_others {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1430px) {
+  .howItWorkTopRight_others {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .howItWorkTopRight {
+    align-items: center;
+    width: 100%;
+  }
+
+  .howItWorkTopRight_others {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.howItWorkTopRight_support {
+  position: relative;
+  z-index: 2;
+  width: 328px;
+  height: 200px;
+  background-color: #fffafa99;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  margin-right: 232px;
+  /* margin: 0 auto 20px auto; */
+  background-image: url('/images/landing/support.png');
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 10px;
+  background-size: 200px;
+}
+.howItWorkTopRight_noLimits {
+  position: relative;
+  z-index: 2;
+  width: 444px;
+  height: 200px;
+  background-color: #fffafa99;
+  padding: 20px;
+  border-radius: 15px;
+  background-image: url('/images/landing/nolimits.png');
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 10px;
+  background-size: 200px;
+}
+.howItWorkTopRight_transparency {
+  position: relative;
+  z-index: 2;
+  width: 328px;
+  height: 200px;
+  background-color: #fffafa99;
+  padding: 20px;
+  border-radius: 15px;
+  background-image: url('/images/landing/transparancy.png');
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 10px;
+  background-size: 200px;
+}
+.howItWorkTopRight_speed {
+  position: relative;
+  z-index: 2;
+  width: 328px;
+  height: 200px;
+  background-color: #fffafa99;
+  padding: 20px;
+  border-radius: 15px;
+  background-image: url('/images/landing/speed.png');
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 10px;
+  background-size: 200px;
+}
+.howItWorkTopRight_noregistration {
+  position: relative;
+  z-index: 2;
+  width: 328px;
+  height: 200px;
+  background-color: #fffafa99;
+  padding: 20px;
+  border-radius: 15px;
+  background-image: url('/images/landing/noreg.png');
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 10px;
+  background-size: 200px;
+}
+
+@media (max-width: 1430px) {
+  .howItWorkTopRight_noLimits,
+  .howItWorkTopRight_transparency,
+  .howItWorkTopRight_speed,
+  .howItWorkTopRight_noregistration {
+    width: calc(50% - 10px);
+    height: 180px;
+    background-size: 160px;
+  }
+
+  .howItWorkTopRight_support {
+    width: 380px;
+    height: 180px;
+    background-size: 160px;
+  }
+
+  .howItWorkTopRight_support {
+    margin-right: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .howItWorkTopRight_support,
+  .howItWorkTopRight_transparency,
+  .howItWorkTopRight_speed,
+  .howItWorkTopRight_noregistration,
+  .howItWorkTopRight_noLimits {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 15px;
+    background-size: 140px;
+  }
+}
+
+.blockTitle {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.exchange {
+  background-color: #3460fd;
+  padding: 16px 100px;
+  border-radius: 15px;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .exchange {
+    padding: 14px 50px;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.why {
+  width: 100%;
+  display: flex;
+}
+
+.why_flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex: 1;
+  gap: 20px;
+}
+
+.why_block {
+  width: 444px;
+  height: 169px;
+  background-color: #fffafa;
+  padding: 20px;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  /* flex: 1; */
+}
+
+.why_nolimits {
+  /* flex: 1; */
+  height: 367px;
+  margin-right: 20px;
+
+  background-image: url('/images/chart.svg');
+  background-repeat: no-repeat;
+  background-position: right -10px bottom 0px;
+  background-size: 200px;
+}
+
+.why_bg1 {
+  position: absolute;
+  bottom: -40px;
+  right: 0;
+  width: 220px;
+  height: 220px;
+  z-index: 2;
+  background-image: url('/images/lines.svg');
+  background-repeat: no-repeat;
+  background-position: right 0px bottom 0px;
+  background-size: 220px;
+  /* rotate bg  */
+  transform: rotate(180deg);
+}
+
+.why_bg2 {
+  background-image: url('/images/lines.svg');
+  background-repeat: no-repeat;
+  background-position: left 0px top 0px;
+  background-size: 220px;
+  /* rotate bg  */
+}
+
+@media (max-width: 1430px) {
+  .why {
+    flex-direction: column;
+  }
+  .why_block {
+    width: calc(50% - 10px);
+    margin-bottom: 15px;
+  }
+
+  .why_nolimits {
+    width: 100%;
+    /* height: fit-content; */
+    height: 169px;
+  }
+}
+
+@media (max-width: 768px) {
+  .why {
+    flex-direction: column;
+  }
+
+  .why_flex {
+    flex-direction: column;
+  }
+
+  .why_block {
+    width: 100%;
+    height: auto;
+    min-height: 169px;
+    margin-bottom: 15px;
+  }
+
+  .why_nolimits {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+.whyTitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 7px;
+}
+
+.why_block p {
+  font-size: 14px;
+  /* margin: 10px 0; */
+  font-weight: 400;
+}
+
+.partners {
+  width: 100%;
+  margin-top: 100px;
+}
+.faq {
+  width: 100%;
+  /* margin-top: 100px; */
+}
+.reviewsBlock {
+  width: 100%;
+  /* margin-top: 100px; */
+}
+.reviewsBlock > div > p {
+  display: none;
+}
+
+@media (max-width: 1430px) {
+  .partners {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .partners {
+    margin-top: 50px;
+  }
+
+  .faq,
+  .reviewsBlock {
+    margin-top: 30px;
+  }
+}
+
+.heroTitle {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.heroDescription {
+  color: var(--Grey_txt, #7d7878);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-bottom: 30px;
+}
+
+.heroRightBox {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 15px;
+  background: rgba(255, 250, 250, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.heroRightBoxTitle {
+  color: var(--Active_Header_Collor, #3460fd);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  & span {
+    color: var(--Txt_Collor, #5c5c5c);
+    padding-inline: 4px;
+  }
+}
+.heroRightBoxDescription {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.stagesOfWorkBox {
+  display: flex;
+  max-width: 948px;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.howItWorksContainersBlocks {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  gap: 12px;
+}
+.howItWorksContainersBlock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  width: fit-content;
+  padding: 20px;
+  max-width: 948px;
+  align-items: flex-start;
+  border-radius: 15px;
+  background: rgba(255, 250, 250, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.howItWorksContainersBlockText {
+  display: flex;
+  width: 100%;
+  max-width: 408px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+  & .howItWorksContainersBlockTextTitle {
+    color: var(--Active_Header_Collor, #3460fd);
+    font-family: Roboto;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  & p {
+    color: var(--Txt_Collor, #1b1b1b);
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding-right: 24px;
+  }
+}
+
+.howItWorksContainersBlocksBlock {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: var(--Background_blocks, #fffafa);
+  box-shadow: 0px 0px 4px 0px #e1dcdc;
+
+  img {
+    max-width: 100% !important;
+  }
+}
+@media screen and (min-width: 768px) {
+  .howItWorksContainersBlocksBlock {
+    min-height: 313px;
+    width: 444px;
+  }
+}

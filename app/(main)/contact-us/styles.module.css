@@ -1,0 +1,137 @@
+.container {
+  width: 100%;
+}
+
+.howContactUs {
+  margin-top: 100px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.howContactUsMainText {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.howContactUsDescriptionText {
+  color: var(--Grey_txt, #7d7878);
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.anyQues {
+  display: flex;
+  width: 716px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 100px;
+  margin-left: 34px;
+}
+
+.anyQuesMainText {
+  color: #000;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.anyQuestDescriptionText {
+  color: var(--Grey_txt, #7d7878);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.buttonsSocial {
+  margin-top: 50px;
+  gap: 20px;
+  display: flex;
+  margin-left: 34px;
+}
+
+.buttonsSocial button {
+  display: flex;
+  width: 444px;
+  padding: 20px;
+  flex-direction: row;
+  text-align: left;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 15px;
+  background: var(--Background_blocks, #fffafa);
+  transition: box-shadow 0.7s;
+}
+
+.buttonsSocial h4 {
+  margin-top: 10px;
+}
+
+.buttonsSocial img {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonsSocial button:hover {
+  transition: box-shadow 0.7s;
+  box-shadow: 0 0 50px 0 rgba(52, 96, 253, 0.5);
+}
+
+.buttonsSocial h3 {
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.buttonsSocial h4 {
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media (max-width: 768px) {
+  .buttonsSocial {
+    flex-direction: column;
+    margin-left: 0;
+  }
+  .buttonsSocial button {
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+  }
+
+  .buttonsSocial img {
+    display: none;
+  }
+  .anyQues {
+    width: 100%;
+    margin-left: 0;
+  }
+}

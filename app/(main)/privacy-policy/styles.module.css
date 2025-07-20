@@ -1,0 +1,86 @@
+.aml {
+  margin-top: 100px;
+  width: 100%;
+}
+
+.documentStart {
+  text-align: center;
+}
+
+.documentStart p {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.documentStart span {
+  color: var(--Grey_txt, #7d7878);
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.firstSection h1 {
+  margin-top: 50px;
+  color: #000;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.kycCompliance p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.kycCompliance ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-bottom: 1rem;
+}
+
+.kycCompliance {
+  margin-top: 20px;
+}
+
+.kycCompliance li {
+  margin-bottom: 0.5rem;
+}
+
+.hrAndNumber {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  color: var(--Active_Header_Collor, #3460fd);
+  font-family: Inter;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.hrAndNumber hr {
+  flex: 1;
+  margin: 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.hrAndNumber span {
+  margin-left: 20px;
+}
+
+@media (width <= 768px) {
+  .firstSection {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}

@@ -1,0 +1,78 @@
+.toDayStatisctic {
+  width: 100%;
+  user-select: none;
+  margin-top: -30px;
+}
+
+.toDayStatisticMainText {
+  color: var(--Active_Header_Collor, #3460fd);
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
+}
+
+.toDayStatisticsBlocks {
+  display: flex;
+  gap: 20px;
+  margin-top: 50px;
+  user-select: none;
+}
+
+.block {
+  display: flex;
+  flex: 1;
+  max-width: 328px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex-shrink: 0;
+  transition: 0.7s;
+  border-radius: 15px;
+  background: #fffafa;
+  user-select: none;
+}
+
+.toDayStatisticsBlocksText {
+  /* color: var(--Header_Background, #5C88FF); */
+  font-family: Inter;
+  font-size: 29px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.toDayStatisticsBlocksDescriptionText {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  user-select: none;
+}
+
+.sliderContainer {
+  overflow: hidden;
+  width: 100%;
+  cursor: grab;
+  user-select: none;
+}
+
+.sliderContainer:active {
+  cursor: grabbing;
+}
+
+.slide {
+  display: flex !important;
+  gap: 20px;
+  transition: transform 0.5s ease;
+  user-select: none;
+  margin-top: 20px;
+}

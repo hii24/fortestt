@@ -1,0 +1,58 @@
+.exchangeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 994px;
+  margin-inline: auto;
+  background-color: #fffafa;
+  margin-top: 16px;
+  padding: 20px 20px 15px 20px;
+  border-radius: 10px;
+}
+
+.exchangeContainer .bg-white {
+  background: #fffafa !important;
+}
+
+.exchangeBtn {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 26px;
+}
+
+.exchangeBtn span {
+  width: 100%;
+}
+
+.exchangeBtn span {
+  display: flex;
+  height: 50px;
+  padding: 10px 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--Active_Header_Collor, #3460fd);
+  color: #fff;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.policyTermsTextBox {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  & a {
+    color: var(--Active_Header_Collor, #3460fd);
+    font-family: Roboto;
+  }
+}

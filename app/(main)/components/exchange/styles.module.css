@@ -1,0 +1,317 @@
+.formCenter {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  flex-direction: column;
+  align-self: stretch;
+  border-radius: 15px;
+  background: var(--Background_blocks, #fffafa);
+}
+
+@media (min-width: 1024px) {
+  .formCenter {
+    flex-direction: row;
+  }
+}
+
+.swap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swap img {
+  cursor: pointer;
+  transform: rotate(90deg);
+}
+
+@media (max-width: 1024px) {
+  .swap {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .swap img {
+    transform: rotate(0deg);
+  }
+}
+
+.floatIcon {
+  position: relative;
+  height: 100%;
+  width: 0;
+  cursor: default;
+  user-select: none;
+  & span {
+    top: 16px;
+  }
+  & svg {
+    top: 24px;
+  }
+  & span,
+  svg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: var(--Grey_txt, #7d7878);
+    font-family: Roboto;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
+.fromSelect {
+  display: flex;
+  gap: 13px;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .fromSelect {
+    height: 65px;
+  }
+}
+
+.fromSelect input {
+  padding-left: 13px;
+  display: flex;
+  width: 260px;
+  color: var(--Grey_txt, #1b1b1b);
+  font-family: Roboto;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  border-bottom: 0.5px solid #e6e7eb;
+  background-color: transparent;
+}
+
+@media (max-width: 500px) {
+  .fromSelect {
+    width: calc(100vw - 70px);
+  }
+  .fromSelect input {
+    flex: 2;
+    width: 100%;
+  }
+}
+
+.fromSelect input:focus-visible {
+  outline: none;
+}
+
+.arrowDown {
+}
+
+.coinsendOpen .arrowDown {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+
+.currencyDD {
+  position: absolute;
+  top: 50px;
+  right: 0%;
+  width: 405px;
+  z-index: 3000;
+  padding: 10px 0;
+  border-radius: 15px;
+}
+
+.to .currencyDD {
+  right: 0;
+  left: auto;
+}
+
+/* @media (max-width: 768px) {
+  .currencyDD {
+    right: 0;
+    left: auto;
+  }
+} */
+@media (max-width: 500px) {
+  .currencyDD {
+    width: calc(100vw - 70px);
+  }
+}
+
+.currencyDD input {
+  border-bottom: none;
+  font-size: 14px;
+  width: 100%;
+}
+
+.currencyDD button {
+  border-radius: 10px;
+  padding: 5px 7px;
+}
+
+.from {
+  position: relative;
+  display: flex;
+  width: 140px;
+  padding: 6px 10px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  border-bottom: 0.5px solid #e6e7eb;
+  cursor: pointer;
+}
+
+.categoryCoin {
+  height: 15px;
+  width: 25px;
+  color: #fff;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-family: Inter;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: flex;
+  padding: 3px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 3px;
+  background: rgba(247, 147, 26, 0.8);
+}
+
+.categoryCoinSolana {
+  height: 15px;
+  width: 25px;
+  color: #fff;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-family: Inter;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: flex;
+  padding: 3px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 3px;
+  background: #000008;
+}
+
+.to {
+  position: relative;
+  display: flex;
+  width: 140px;
+  height: 80px;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  border-bottom: 0.5px solid #e6e7eb;
+  cursor: pointer;
+}
+
+.description {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin-top: 10px;
+}
+
+.send {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: left;
+}
+
+.coinsend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: fit-content;
+}
+
+.coinSendText {
+  display: flex;
+  column-gap: 4px;
+}
+
+.coinSendOwn {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.coinSendDescription {
+  display: flex;
+  align-items: center;
+  color: var(--Grey_txt, #7d7878);
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.coinSendNetwork {
+  padding: 3px;
+  color: var(--FF_TXT, #fff);
+  font-family: Roboto;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 2px;
+}
+
+/*
+.toSelect {
+    p.send {
+        margin-bottom: 10px;
+    }
+} */
+
+/* @media (max-width: 768px) {
+  .send,
+  .description {
+    font-size: 9px;
+  }
+} */
+
+.toAmount {
+  padding-inline: 9px;
+  max-width: 100%;
+  width: 100%; /* або конкретна ширина */
+  color: var(--Grey_txt, #1b1b1b);
+  font-family: Roboto;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  border-bottom: 0.5px solid #e6e7eb;
+  padding-block: 14px 10px;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block; /* ← ключовий момент */
+}

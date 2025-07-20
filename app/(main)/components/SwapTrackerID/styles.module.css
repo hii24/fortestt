@@ -1,0 +1,63 @@
+.swapTrackerID {
+  position: fixed;
+  top: 18%;
+  z-index: 10;
+  left: max(calc(50% - 768px), 0px);
+}
+
+.swapTrackerIDWrapper {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: end;
+  height: 100%;
+  align-items: center;
+  min-width: 22px;
+  height: 152px;
+  padding: 24px 20px;
+
+  border-radius: 0px 15px 15px 0px;
+  background: rgba(245, 240, 240, 0.8);
+}
+.swapTrackerIDCollapseBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 5px;
+  gap: 8px;
+}
+/* .swapTrackerIDCollapseArrow {
+}
+.swapTrackerIDText {
+} */
+.swapTrackerIDForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
+  width: 100%;
+  flex: 1 1 auto;
+  padding: 12px 14px 12px 0;
+}
+.swapTrackerIDFormInput {
+  display: flex;
+  padding: 16px 10px 17px 10px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 10px;
+  background: #fffafa !important;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  &::placeholder {
+    color: var(--Grey_txt, #7d7878);
+    font-size: 14px;
+  }
+}

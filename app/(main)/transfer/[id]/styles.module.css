@@ -1,0 +1,99 @@
+.exchangeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 994px;
+  margin-inline: auto;
+  background-color: #fffafa;
+  margin-top: 16px;
+  padding: 20px 20px 15px 20px;
+  border-radius: 10px;
+
+  @media (max-width: 768px) {
+    & {
+      margin-top: 13px;
+    }
+  }
+}
+
+.coplatedResult {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0px;
+}
+
+.statusOverdueWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  align-self: stretch;
+  background-color: #ffedeb;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.statusOverdueTitle {
+  color: var(--Red_txt, #c22527);
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.statusOverdueDescription {
+  color: var(--Red_txt, #c22527);
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.submitFeedback {
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+/* anima */
+
+.loaderWrapper {
+  position: relative;
+  height: 2px;
+  width: 100%;
+  background-color: #f5f0f0;
+  overflow: hidden;
+  border-radius: 0.25rem; /* rounded */
+}
+
+.loaderBar {
+  position: absolute;
+  height: 100%;
+  width: 33.3333%;
+  background-color: #3460fd;
+  animation: slide 3s linear infinite;
+}
+
+@keyframes slide {
+  0% {
+    left: -33.3333%;
+  }
+  100% {
+    left: 100%;
+  }
+}

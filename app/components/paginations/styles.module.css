@@ -1,0 +1,6 @@
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  background: var(--Background_blocks, #fffafa);
+  border-radius: 15px;
+}

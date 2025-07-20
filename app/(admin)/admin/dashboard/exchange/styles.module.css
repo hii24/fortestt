@@ -1,0 +1,26 @@
+.filters {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.filters input::placeholder,
+.filters .ant-select-selection-placeholder {
+  color: black;
+}
+.spanText {
+  span {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+}
+
+.customSelect :global(.ant-select-selector) {
+  font-weight: 600;
+}
+
+.customSelect :global(.ant-select-item-option-content) {
+  font-weight: 500;
+}

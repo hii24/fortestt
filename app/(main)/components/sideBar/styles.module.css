@@ -1,0 +1,67 @@
+.sideBar {
+  display: flex;
+  width: 262px;
+  min-height: 95vh;
+  padding: 15px;
+  flex-direction: column;
+  border-radius: 15px;
+  background: var(--Background_blocks, #fffafa);
+}
+
+.name {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.subName {
+  color: var(--Grey_txt, #7d7878);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.buttonsSideBar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.buttonsSideBar button {
+  display: flex;
+  height: 34px;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.buttonsSideBar p {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.buttonsSideBar img {
+  margin-left: 5px;
+}
+
+.active,
+.active p {
+  border-radius: 8px;
+  background: var(--Active_Header_Collor, #3460fd);
+  color: white;
+}
+
+.active img {
+  filter: invert() brightness(105);
+}

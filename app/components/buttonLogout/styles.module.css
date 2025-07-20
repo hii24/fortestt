@@ -1,0 +1,31 @@
+.buttonLogoutContainer {
+  width: 100%;
+  display: flex;
+}
+
+.buttonLogout {
+  display: flex;
+  padding: 13px 137px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  border-radius: 10px;
+  color: var(--Red, #fd3437);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.buttonLogout p {
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+@media (width <= 768px) {
+  .buttonLogout {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}

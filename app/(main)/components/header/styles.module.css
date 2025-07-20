@@ -1,0 +1,231 @@
+.headerWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background-color: #fffafa;
+  position: relative;
+  z-index: 2;
+}
+
+.header {
+  display: flex;
+  height: 60px;
+  width: 100%;
+  padding: 10px 14px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  opacity: 1;
+  z-index: 2;
+}
+
+.textLogo {
+  color: #000;
+  font-family: Roboto;
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+}
+.textLogo span {
+  color: #273ea6 !important;
+}
+
+.navLinks {
+  color: #1b1b1b;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: flex;
+  gap: 20px;
+}
+
+.subMenu {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+}
+
+.subMenuList {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 20px;
+  left: -30px;
+  width: 100%;
+  min-width: 200px;
+  background: #fffafa;
+  border-radius: 15px;
+  z-index: 1000;
+  padding: 13px;
+  z-index: 2;
+}
+
+.subMenuList li {
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.subMenuList li:hover {
+  color: #3460fd;
+}
+
+.subMenu:hover .subMenuList {
+  display: flex;
+}
+
+.dropdownArrow {
+  transition: all 0.3s;
+}
+.subMenu:hover .dropdownArrow {
+  transform: rotate(180deg);
+}
+
+.login {
+  display: flex;
+  width: 80px;
+  height: 40px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #f5f0f0;
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.signup {
+  display: flex;
+  width: 80px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 10px;
+  background: var(--Active_Header_Collor, #3460fd);
+}
+
+.userInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.userInfo img {
+  width: 40px;
+  height: 40px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.subName {
+  color: var(--Grey_txt, #7d7878);
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.mobileMenuIcon {
+  display: none;
+  cursor: pointer;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.TextLogo {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.authButtons {
+  display: flex;
+}
+
+@media (width <= 1024px) {
+  .navLinks {
+    font-size: 13px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #fffafa;
+    border-radius: 15px;
+    padding: 10px;
+    gap: 10px;
+    z-index: 1000;
+  }
+
+  .navLinks.mobileMenuOpen {
+    display: flex;
+  }
+
+  .mobileMenuIcon {
+    display: block;
+  }
+
+  .login,
+  .signup,
+  .userInfo {
+    display: none;
+  }
+
+  .header {
+    gap: 10px;
+  }
+
+  .rightSection {
+    order: 2;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}

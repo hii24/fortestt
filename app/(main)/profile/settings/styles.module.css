@@ -1,0 +1,145 @@
+.container {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+}
+
+.subContainer {
+  margin-left: 20px;
+  width: 100%;
+}
+
+.password {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+  background: var(--Background_blocks, #fffafa);
+}
+
+.textMainPassword {
+  color: #000;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.textDescriptionPassword {
+  color: var(--Grey_txt, #7d7878);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.passwordInput {
+  outline: none;
+  border: none;
+  cursor: default;
+  background: none;
+}
+
+.btnPassword {
+  color: #fff;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: flex;
+  width: 72px;
+  padding: 10px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--Active_Header_Collor, #3460fd);
+}
+
+@media (max-width: 768px) {
+  .subContainer {
+    margin-left: 0;
+  }
+
+  .password {
+    margin-right: 16px;
+    margin-left: 16px;
+    width: auto;
+  }
+}
+
+.changePasswordForm {
+  height: fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+  width: 300px;
+  max-width: 90vw;
+  border-radius: 15px;
+  background-color: #fff;
+}
+
+.changePasswordFormTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.changePasswordForm label {
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 7px;
+  margin-top: 18px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #000;
+  border-radius: 12px;
+  font-size: 17px;
+  background-color: white;
+  color: #333;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.inputField:focus {
+  background-color: #f5f0f0;
+}
+
+.inputField::placeholder {
+  color: #a0a0a0;
+  font-weight: 300;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 17px;
+  border-radius: 10px;
+  margin-top: 40px;
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submitBtn:hover {
+  background-color: #1e40af;
+}

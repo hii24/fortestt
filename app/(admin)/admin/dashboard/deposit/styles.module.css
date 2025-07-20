@@ -1,0 +1,9 @@
+.filters {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.filters input::placeholder,
+.filters .ant-select-selection-placeholder {
+  color: black;
+}

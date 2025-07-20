@@ -1,0 +1,33 @@
+.dashboardContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  background-color: var(--Backgraund, #f5f0f0);
+}
+
+.content {
+  margin-left: 20px;
+  width: 1140px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  font-size: 18px;
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 20px 16px;
+  }
+
+  .dashboardContainer {
+    flex-direction: column;
+  }
+}

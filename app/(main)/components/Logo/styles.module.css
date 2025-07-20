@@ -1,0 +1,17 @@
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logoText {
+  color: var(--Txt_Collor, #000);
+  font-family: Roboto;
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+  & span {
+    color: #273ea6;
+  }
+}

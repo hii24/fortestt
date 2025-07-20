@@ -1,0 +1,102 @@
+.authPage {
+  inset: 0;
+  height: 100vh;
+  min-height: fit-content;
+  max-height: 100vh;
+  padding: 30px;
+}
+
+.authContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  min-height: fit-content;
+}
+.authContent img {
+  flex: 1;
+}
+
+.authForm {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fffafa;
+  margin: auto auto;
+  /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); */
+}
+
+.authFormLogo {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.authFormLogo img {
+  margin-right: 14px;
+  flex: 1;
+}
+
+.authFormLogo span {
+  color: #273ea6;
+}
+
+.authForm form {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.authForm label {
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 7px;
+}
+
+.authForm button {
+  padding-top: 17px;
+  padding-bottom: 17px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #000;
+  border-radius: 12px;
+  font-size: 17px;
+  background-color: #fffcfc;
+  color: #333;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.inputField:focus {
+  /* border-color: #4169E1; */
+  background-color: #f5f0f0;
+  /* box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1); */
+}
+
+.inputField::placeholder {
+  color: #a0a0a0;
+  font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  .authForm label {
+    margin-top: 14px;
+  }
+  .authForm button {
+    padding-top: 17px;
+    padding-bottom: 17px;
+    margin-top: 26px;
+  }
+}

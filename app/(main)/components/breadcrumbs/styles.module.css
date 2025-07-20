@@ -1,0 +1,27 @@
+.breadcrumbs {
+  margin-top: 20px;
+  margin-left: 20px;
+  color: var(--Grey_txt, #7d7878);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.lastAdress {
+  color: var(--Active_Header_Collor, #3460fd);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .breadcrumbs {
+    margin-bottom: 10px;
+    margin-left: calc(20px + 16px);
+  }
+}

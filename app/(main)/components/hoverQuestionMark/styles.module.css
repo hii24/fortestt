@@ -1,0 +1,35 @@
+.block {
+  display: flex;
+  width: 444px;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 15px;
+  background: var(--Background_blocks, #fffafa);
+}
+
+@media (max-width: 500px) {
+  .block {
+    width: 250px;
+  }
+}
+
+.block p {
+  color: var(--Active_Header_Collor, #3460fd);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 5px;
+}
+
+.block span {
+  margin-top: 5px;
+  color: var(--Grey_txt, #7d7878);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

@@ -1,0 +1,29 @@
+.modal {
+  border-radius: 15px;
+}
+
+.modal :global(.ant-modal-content) {
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #fffafa;
+}
+
+.card {
+  border-radius: 12px;
+  background-color: #fffafa;
+  box-shadow: none;
+}
+
+.card :global(.ant-card-head) {
+  border-bottom: none;
+  padding: 0 0 16px 0;
+}
+
+.card :global(.ant-card-head-title) {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.formContainer {
+  min-height: 300px;
+}

@@ -1,0 +1,46 @@
+.mobileSideBar {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+
+.mobileSideBar button {
+  flex: 1;
+  display: flex;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--Background_blocks, #fffafa);
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.active {
+  color: white !important;
+  background: var(--Active_Header_Collor, #3460fd) !important;
+}
+
+@media (width <= 768px) {
+  .mobileSideBar {
+    margin-left: 16px;
+    margin-right: 16px;
+    touch-action: pan-y;
+    /* overflow: hidden; */
+  }
+  .mobileSideBar button {
+    pointer-events: none;
+  }
+  .slideContainer {
+    gap: 10px;
+    user-select: none;
+    flex: 1;
+    width: 100%;
+    justify-content: space-between;
+    overflow: auto;
+  }
+}

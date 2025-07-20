@@ -1,0 +1,149 @@
+.modalMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  z-index: 1020;
+}
+
+.modalContent {
+  position: absolute;
+  background: #fffafa;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 7px 14px;
+  box-sizing: border-box;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  gap: 20px;
+}
+
+.modalRight {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.hr {
+  display: flex;
+  padding-bottom: 10px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  border-top: 1px solid var(--Grey_txt, #7d7878);
+  margin-top: 10px;
+}
+
+.authButtons {
+  display: flex;
+  justify-content: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.login,
+.signup {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login {
+  color: black;
+  border-radius: 10px;
+  background: var(--Input, #f0f1f5);
+  display: flex;
+  width: 128px;
+  height: 40px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.signup {
+  display: flex;
+  width: 128px;
+  height: 40px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  border-radius: 10px;
+  background: var(--Active_Header_Collor, #3460fd);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.userInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.navLinks a {
+  text-decoration: none;
+  display: block;
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.logoText {
+  color: var(--Txt_Collor, #000);
+  font-family: Roboto;
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+  & span {
+    color: #273ea6;
+  }
+}

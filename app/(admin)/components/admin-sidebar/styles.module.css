@@ -1,0 +1,162 @@
+.sidebarItem {
+  width: 212px;
+  display: flex;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  align-items: center;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.sidebarItem:hover {
+  background-color: #eff6ff;
+}
+
+.sidebarItem img {
+  margin-right: 10px;
+}
+
+.sidebarDivider {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-top-width: 1px;
+  border-color: #e5e7eb;
+}
+
+.sideBar {
+  display: flex;
+  width: 262px;
+  height: 100%;
+  min-height: calc(100vh - 60px);
+  padding: 15px;
+  flex-direction: column;
+  border-radius: 15px;
+  background: var(--Background_blocks, #fffafa);
+  justify-content: space-between;
+}
+
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.subName {
+  color: var(--Grey_txt, #7d7878);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: -5px;
+}
+
+.buttonsSideBar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 15px;
+}
+
+.buttonsSideBar a {
+  text-decoration: none;
+}
+
+.buttonsSideBar button {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: center;
+  gap: 15px;
+  align-self: stretch;
+  padding: 0 15px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.buttonsSideBar button:hover {
+  background-color: rgba(52, 96, 253, 0.1);
+}
+
+.buttonsSideBar p {
+  color: var(--Txt_Collor, #1b1b1b);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.active {
+  border-radius: 8px;
+  background: var(--Active_Header_Collor, #3460fd) !important;
+}
+
+.activeColor {
+  color: var(--Active_Header_Collor, #3460fd);
+}
+
+.active p {
+  color: var(--FF_TXT, #fff) !important;
+}
+
+.logoutSection {
+  margin-top: auto;
+}
+
+.logoutButton {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: center;
+  gap: 15px;
+  align-self: stretch;
+  padding: 0 15px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.logoutButton:hover {
+  background-color: rgba(253, 52, 55, 0.1);
+}
+
+.logoutButton p {
+  color: #fd3437;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+@media (max-width: 768px) {
+  .sideBar {
+    display: none;
+  }
+}
