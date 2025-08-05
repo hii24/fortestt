@@ -4,13 +4,29 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Modal, Input, Button } from 'antd';
 import styles from './styles.module.css';
 import { ExchangeService } from '@/services/exchange/exchange.service';
-import { ExchangeProcessStatus } from '@/config/status.config';
+// import { ExchangeProcessStatus } from '@/config/status.config';
 import { ManualUpdateExchangeBody } from '@/types/exchange.interface';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+interface Transaction {
+  unique_id?: string;
+  deposit?: any;
+  token1_amount?: any;
+  node_deposit?: any;
+  withdrawal?: any;
+  token2_amount?: any;
+  buy_orders?: any[];
+  sell_orders?: any[];
+  is_stopped?: boolean;
+  note?: string;
+  status?: number;
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 interface ManualUpdateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  transaction?: any;
+  transaction?: Transaction;
   onUpdateSuccess?: () => void; // Коллбэк для обновления данных в родительском компоненте
 }
 
@@ -60,7 +76,7 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
       
       // Конвертируем числовой статус обратно в строку для отображения
       const currentStatusString = Object.entries(statusMapping).find(
-        ([_, value]) => value === transaction.status
+        ([, value]) => value === transaction.status
       )?.[0] || 'Success';
       setStatus(currentStatusString);
       

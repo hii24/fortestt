@@ -160,6 +160,51 @@ const statusMapping = {
 
 ## 🔧 Services Structure
 
+### Proxy Error Handling (`app/api/proxy/route.ts`)
+
+**Обработка ошибок сервера:**
+- **502, 503, 504**: Возвращает `"Server is temporarily unavailable"`
+- **401**: Unauthorized
+- **403**: Permission denied  
+- **404**: Not Found
+- **500+**: Internal server errors
+
+**Преимущества:**
+- Централизованная обработка ошибок
+- Единообразные сообщения для пользователей
+- Логирование всех ошибок
+- Graceful degradation при недоступности сервера
+
+### General Settings Integration
+
+**Компонент**: `app/(admin)/admin/dashboard/general/page.tsx`
+
+**Функциональность:**
+- Загрузка всех настроек при инициализации
+- Сохранение отдельных полей
+- Переключение Platform Gate с отправкой данных на API
+- Анимация переключателя
+
+**API Endpoints:**
+- `POST /network/api/toggle-gate/` - переключение gate с параметрами
+- `GET /api/feesettings/` - получение настроек комиссий
+- `GET /api/aml_threshold/value/` - получение risk score
+- `POST /api/aml_threshold/` - обновление risk score
+- `PATCH /constant/api/numeric/{key}` - обновление числовых констант
+- `PATCH /constant/api/json/{key}` - обновление JSON констант
+
+**Пример использования:**
+```typescript
+// В handlePlatformToggle
+await GeneralService.toggleNetworkGate(!formData.platformGate);
+
+// В handleSaveField для risk score
+await GeneralService.updateAMLThreshold(formData.riskScore);
+
+// В loadAllSettings для загрузки risk score
+const riskScore = await GeneralService.getAMLThreshold();
+```
+
 ### ExchangeService (`services/exchange/exchange.service.ts`)
 ```typescript
 export const ExchangeService = {
@@ -250,12 +295,36 @@ export const GeneralService = {
   async updateAMLThreshold(value: number): Promise<AMLThreshold>
   
   // Network Gate
-  async toggleNetworkGate(): Promise<NetworkGateResponse>
+  async toggleNetworkGate(requestData: NetworkGateRequest): Promise<NetworkGateResponse>
   
   // Helper methods
   async loadAllSettings(): Promise<Partial<GeneralFormState>>
   async saveAllSettings(formData: GeneralFormState): Promise<void>
 }
+```
+
+**Network Gate API:**
+```typescript
+// Request body structure
+{
+  "gate_enabled": true
+}
+
+// Response structure
+{
+  "status": "success",
+  "gate_enabled": true
+}
+```
+
+**Risk Score (AML Threshold) API:**
+```typescript
+// GET /api/aml_threshold/value/ - получение текущего значения
+// Response: { "threshold": 0.5 }
+
+// POST /api/aml_threshold/ - обновление значения
+// Request: { "threshold": 1.5 }
+// Response: { "threshold": 1.5 }
 ```
 
 ---

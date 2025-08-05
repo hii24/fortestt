@@ -70,7 +70,7 @@ const OrderTable: FC<{
                     const value = main[key];
                     const baseClass = 'p-2 border';
                     const isNumeric = ['price', 'amount', 'filled', 'total', 'fee'].includes(key);
-                    const className = `${baseClass}${isNumeric ? ' text-center p-1' : ''}`;
+                    // const className = `${baseClass}${isNumeric ? ' text-center p-1' : ''}`;
 
                     if (key === 'order_time') {
                       const date = value ? new Date(value) : null;

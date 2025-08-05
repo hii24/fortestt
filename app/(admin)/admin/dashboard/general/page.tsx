@@ -80,7 +80,7 @@ export default function GeneralPage() {
           break;
           
         case 'riskScore':
-          await GeneralService.updateConstantNumeric('risk_score', formData[field]);
+          await GeneralService.updateAMLThreshold(formData[field]);
           break;
           
         case 'defaultAmount':
@@ -134,7 +134,7 @@ export default function GeneralPage() {
     
     try {
       // Вызываем API для переключения gate
-      await GeneralService.toggleNetworkGate();
+      await GeneralService.toggleNetworkGate(!formData.platformGate);
       
       if (!formData.platformGate) {
         handleFormChange('platformGate', true);

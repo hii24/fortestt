@@ -13,7 +13,7 @@ export const CopyClipboardButton: FC<{
     try {
       await copyToClipboard(value);
       message.success('Copied to clipboard!');
-    } catch (error) {
+    } catch {
       message.error('Failed to copy to clipboard!');
     }
   };

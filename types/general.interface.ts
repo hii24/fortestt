@@ -26,7 +26,12 @@ export interface ConstantJson {
 }
 
 export interface AMLThreshold {
-  value: number;
+  value?: number; // Для обратной совместимости
+  threshold: number; // Основное поле из API
+}
+
+export interface NetworkGateRequest {
+  gate_enabled: boolean;
 }
 
 export interface NetworkGateResponse {

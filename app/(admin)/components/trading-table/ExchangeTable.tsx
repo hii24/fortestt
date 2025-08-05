@@ -70,7 +70,7 @@ const ExchangeTable: FC<{
   // Состояния для hover кнопок и модалки manual update
   const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null);
   const [isManualUpdateOpen, setIsManualUpdateOpen] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState<GetExchangesItem | null>(null);
+  const [selectedTransaction, setSelectedTransaction] = useState<GetExchangesItem | undefined>(undefined);
 
   // Функция для форматирования адреса
   const formatAddress = (address?: string) => {
@@ -137,7 +137,7 @@ const ExchangeTable: FC<{
         </thead>
         <tbody>
           {list.map((transaction, index) => {
-            const [included, excluded] = Object.entries(transaction).reduce(
+            const [, excluded] = Object.entries(transaction).reduce(
               ([inc, exc], [key, value]) => {
                 if (excludeKeys.includes(key)) {
                   exc[key] = value;
@@ -278,7 +278,7 @@ const ExchangeTable: FC<{
                                   try {
                                     await copyToClipboard(String(excluded.address));
                                     message.success('Address copied to clipboard!');
-                                  } catch (error) {
+                                  } catch {
                                     message.error('Failed to copy address!');
                                   }
                                 }
@@ -293,7 +293,7 @@ const ExchangeTable: FC<{
                                     try {
                                       await copyToClipboard(String(excluded.address));
                                       message.success('Address copied to clipboard!');
-                                    } catch (error) {
+                                    } catch {
                                       message.error('Failed to copy address!');
                                     }
                                   }
@@ -403,7 +403,7 @@ const ExchangeTable: FC<{
                                   try {
                                     await copyToClipboard(String(excluded.deposit_address));
                                     message.success('Deposit address copied to clipboard!');
-                                  } catch (error) {
+                                  } catch {
                                     message.error('Failed to copy deposit address!');
                                   }
                                 }
@@ -419,7 +419,7 @@ const ExchangeTable: FC<{
                                     try {
                                       await copyToClipboard(String(excluded.deposit_address));
                                       message.success('Deposit address copied to clipboard!');
-                                    } catch (error) {
+                                    } catch {
                                       message.error('Failed to copy deposit address!');
                                     }
                                   }
@@ -485,8 +485,8 @@ const ExchangeTable: FC<{
                             } else {
                               console.error('Failed to stop exchange:', result?.error || 'Unknown error');
                             }
-                          } catch (error) {
-                            console.error('Error stopping exchange:', error);
+                          } catch {
+                            console.error('Error stopping exchange');
                           }
                         }}
                         onMouseEnter={(e) => (e.target as HTMLButtonElement).style.background = '#E42E31'}
@@ -555,7 +555,7 @@ const ExchangeTable: FC<{
         isOpen={isManualUpdateOpen}
         onClose={() => {
           setIsManualUpdateOpen(false);
-          setSelectedTransaction(null);
+          setSelectedTransaction(undefined);
         }}
         transaction={selectedTransaction}
         onUpdateSuccess={() => {

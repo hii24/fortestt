@@ -122,6 +122,19 @@ export async function GET(request: NextRequest) {
         );
       }
 
+      // Handle server errors (502, 503, 504)
+      if (response.status >= 500 && response.status < 600) {
+        console.log(`❌ GET Server error (${response.status})`);
+        return NextResponse.json(
+          {
+            error: 'Server is temporarily unavailable',
+            detail: 'The external server is not responding. Please try again later.',
+            status: response.status,
+          },
+          { status: 502 }
+        );
+      }
+
       // Handle other error status codes
       return NextResponse.json(
         {
@@ -238,6 +251,19 @@ export async function PATCH(request: NextRequest) {
         );
       }
 
+      // Handle server errors (502, 503, 504)
+      if (response.status >= 500 && response.status < 600) {
+        console.log(`❌ PATCH Server error (${response.status})`);
+        return NextResponse.json(
+          {
+            error: 'Server is temporarily unavailable',
+            detail: 'The external server is not responding. Please try again later.',
+            status: response.status,
+          },
+          { status: 502 }
+        );
+      }
+
       // Handle other error status codes
       return NextResponse.json(
         {
@@ -350,6 +376,19 @@ export async function POST(request: NextRequest) {
             ...data,
           },
           { status: 404 }
+        );
+      }
+
+      // Handle server errors (502, 503, 504)
+      if (response.status >= 500 && response.status < 600) {
+        console.log(`❌ POST Server error (${response.status})`);
+        return NextResponse.json(
+          {
+            error: 'Server is temporarily unavailable',
+            detail: 'The external server is not responding. Please try again later.',
+            status: response.status,
+          },
+          { status: 502 }
         );
       }
 

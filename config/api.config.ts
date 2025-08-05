@@ -80,4 +80,4 @@ export const getConstantJsonUrl = (key: string) => createProxyUrl(ensureTrailing
 
 export const getAMLThresholdUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`api/aml_threshold${s}`));
 
-export const getNetworkGateUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`network/api${s}`));
+export const getNetworkGateUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`network/api/${s}`));

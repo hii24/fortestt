@@ -13,6 +13,7 @@ import {
   ConstantJson,
   AMLThreshold,
   NetworkGateResponse,
+  NetworkGateRequest,
   GeneralFormState,
 } from '@/types/general.interface';
 
@@ -100,7 +101,7 @@ export const GeneralService = {
 
   async updateAMLThreshold(value: number): Promise<AMLThreshold> {
     try {
-      const res: AxiosResponse<AMLThreshold> = await axiosInter.post(getAMLThresholdUrl(), { value });
+      const res: AxiosResponse<AMLThreshold> = await axiosInter.post(getAMLThresholdUrl(), { threshold: value });
       console.log('AML threshold updated:', res.data);
       return res.data;
     } catch (error) {
@@ -110,9 +111,11 @@ export const GeneralService = {
   },
 
   // Network Gate
-  async toggleNetworkGate(): Promise<NetworkGateResponse> {
+  async toggleNetworkGate(gateEnabled: boolean = true): Promise<NetworkGateResponse> {
     try {
-      const res: AxiosResponse<NetworkGateResponse> = await axiosInter.post(getNetworkGateUrl('toggle-gate/'));
+      const requestData = { gate_enabled: gateEnabled };
+      console.log('Toggling network gate with data:', requestData);
+      const res: AxiosResponse<NetworkGateResponse> = await axiosInter.post(getNetworkGateUrl('toggle-gate/'), requestData);
       console.log('Network gate toggled:', res.data);
       return res.data;
     } catch (error) {
@@ -126,7 +129,7 @@ export const GeneralService = {
     try {
       const [feeSettings, riskScore, defaultAmount, defaultCurrency, platformGate] = await Promise.allSettled([
         this.getFeeSettings(),
-        this.getConstantNumeric('risk_score').catch(() => ({ value: 1.5 })),
+        this.getAMLThreshold().catch(() => ({ threshold: 1.5 })),
         this.getConstantNumeric('default_amount').catch(() => ({ value: 0.5 })),
         this.getConstantJson('default_currency').catch(() => ({ value: { from: 'BTC', to: 'BTC' } })),
         this.getConstantNumeric('platform_gate').catch(() => ({ value: 1 })),
@@ -145,7 +148,7 @@ export const GeneralService = {
 
       // Risk score
       if (riskScore.status === 'fulfilled') {
-        settings.riskScore = riskScore.value.value;
+        settings.riskScore = riskScore.value.threshold;
       }
 
       // Default amount
@@ -193,7 +196,7 @@ export const GeneralService = {
         }),
         
         // Update constants
-        this.updateConstantNumeric('risk_score', formData.riskScore),
+        this.updateAMLThreshold(formData.riskScore),
         this.updateConstantNumeric('default_amount', formData.defaultAmount),
         this.updateConstantJson('default_currency', {
           from: formData.defaultFromCurrency,
