@@ -106,12 +106,17 @@ export const ExchangeService = {
   async updateExchange(uniqueId: string, body: { status?: number; [key: string]: any }): Promise<any> {
     try {
       const url = `/api/proxy?endpoint=${encodeURIComponent(`exchange/api/${uniqueId}/edit/`)}`;
+      console.log('Update Exchange URL:', url);
+      console.log('Update Exchange Body:', body);
+      
       const res: AxiosResponse<any> = await axiosInter.patch(url, body);
       console.log('Exchange updated successfully:', res.data);
       return res.data;
     } catch (error) {
       if (error instanceof AxiosError) {
         console.error('Update Exchange Error:', error.response?.data);
+        console.error('Update Exchange Status:', error.response?.status);
+        console.error('Update Exchange URL:', error.config?.url);
         return error.response?.data;
       } else {
         console.error('Error:', error);
@@ -122,7 +127,7 @@ export const ExchangeService = {
 
   async stopExchange(uniqueId: string): Promise<any> {
     try {
-      const res: AxiosResponse<any> = await axiosInter.post(getStopExchangeUrl(uniqueId));
+      const res: AxiosResponse<any> = await axiosInter.patch(getStopExchangeUrl(uniqueId));
       console.log('Exchange stopped successfully:', res.data);
       return res.data;
     } catch (error) {

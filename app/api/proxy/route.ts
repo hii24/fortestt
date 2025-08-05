@@ -146,6 +146,121 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export async function PATCH(request: NextRequest) {
+  console.log('🔥 PATCH PROXY ROUTE HIT!');
+
+  try {
+    const searchParams = request.nextUrl.searchParams;
+    const endpoint = searchParams.get('endpoint');
+
+    if (!endpoint) {
+      return NextResponse.json({ error: 'Missing endpoint parameter' }, { status: 400 });
+    }
+
+    const body = await request.json().catch(() => null);
+    const cleanEndpoint = endpoint.replace(/^\/+/, '');
+    const fullUrl = `${LIZEX_BASE_URL}/${cleanEndpoint}`;
+
+    // Get Authorization header from the request
+    const authHeader = request.headers.get('authorization');
+    console.log('🔐 PATCH Authorization header from frontend:', authHeader);
+
+    const headersToSend: Record<string, string> = {
+      'Api-Key': LIZEX_API_KEY,
+      Accept: '*/*',
+      'Content-Type': 'application/json',
+      'User-Agent': 'PostmanRuntime/7.44.1',
+    };
+
+    // Add Authorization header if present
+    if (authHeader) {
+      headersToSend.Authorization = authHeader;
+    }
+
+    console.log('🔑 PATCH Headers being sent:', JSON.stringify(headersToSend, null, 2));
+
+    const response = await fetch(fullUrl, {
+      method: 'PATCH',
+      headers: headersToSend,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+
+    const responseText = await response.text();
+    let data;
+
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      return NextResponse.json(
+        { error: `Invalid JSON response - ${e}`, rawResponse: responseText },
+        { status: response.status || 500 }
+      );
+    }
+
+    // Check if the external API returned an error status code
+    if (!response.ok) {
+      console.log(`❌ PATCH API returned error status: ${response.status}`);
+
+      // Handle specific error status codes
+      if (response.status === 403) {
+        console.log('❌ PATCH Permission denied (403)');
+        return NextResponse.json(
+          {
+            error: 'Permission denied',
+            detail: data.detail || 'You do not have permission to perform this action.',
+            ...data,
+          },
+          { status: 403 }
+        );
+      }
+
+      if (response.status === 401) {
+        console.log('❌ PATCH Unauthorized (401)');
+        return NextResponse.json(
+          {
+            error: 'Unauthorized',
+            detail: data.detail || 'Authentication failed.',
+            ...data,
+          },
+          { status: 401 }
+        );
+      }
+
+      if (response.status === 404) {
+        console.log('❌ PATCH Not Found (404)');
+        return NextResponse.json(
+          {
+            error: 'Not Found',
+            detail: data.detail || 'The requested resource was not found.',
+            ...data,
+          },
+          { status: 404 }
+        );
+      }
+
+      // Handle other error status codes
+      return NextResponse.json(
+        {
+          error: data.error || data.detail || data.message || 'API request failed',
+          ...data,
+        },
+        { status: response.status }
+      );
+    }
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('❌ PATCH Proxy error:', error);
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   console.log('🔥 POST PROXY ROUTE HIT!');
 

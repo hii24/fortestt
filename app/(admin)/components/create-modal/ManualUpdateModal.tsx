@@ -5,6 +5,7 @@ import { Modal, Input, Button } from 'antd';
 import styles from './styles.module.css';
 import { ExchangeService } from '@/services/exchange/exchange.service';
 import { ExchangeProcessStatus } from '@/config/status.config';
+import { ManualUpdateExchangeBody } from '@/types/exchange.interface';
 
 interface ManualUpdateModalProps {
   isOpen: boolean;
@@ -14,11 +15,14 @@ interface ManualUpdateModalProps {
 }
 
 const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, transaction, onUpdateSuccess }) => {
-  const [withdrawals, setWithdrawals] = useState('');
+  const [buyOrders, setBuyOrders] = useState<string[]>([]);
+  const [sellOrders, setSellOrders] = useState<string[]>([]);
   const [deposit, setDeposit] = useState('');
-  const [buyTrades, setBuyTrades] = useState('');
-  const [sellTrades, setSellTrades] = useState('');
+  const [nodeDeposit, setNodeDeposit] = useState('');
+  const [withdrawal, setWithdrawal] = useState('');
   const [status, setStatus] = useState('Success');
+  const [isStopped, setIsStopped] = useState(false);
+  const [note, setNote] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   // Состояние для управления dropdown статуса
@@ -46,8 +50,13 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
       console.log('Pre-filling modal with transaction data:', transaction);
       
       // Предзаполняем поля значениями из транзакции
-      setDeposit(transaction.token1_amount ? String(transaction.token1_amount) : '');
-      setWithdrawals(transaction.token2_amount ? String(transaction.token2_amount) : '');
+      setDeposit(transaction.deposit || transaction.token1_amount || '');
+      setNodeDeposit(transaction.node_deposit || '');
+      setWithdrawal(transaction.withdrawal || transaction.token2_amount || '');
+      setBuyOrders(transaction.buy_orders || []);
+      setSellOrders(transaction.sell_orders || []);
+      setIsStopped(transaction.is_stopped || false);
+      setNote(transaction.note || '');
       
       // Конвертируем числовой статус обратно в строку для отображения
       const currentStatusString = Object.entries(statusMapping).find(
@@ -62,8 +71,8 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
   // Очистка полей при закрытии модалки
   useEffect(() => {
     if (!isOpen) {
-      setBuyTrades('');
-      setSellTrades('');
+      setBuyOrders([]);
+      setSellOrders([]);
       setIsStatusOpen(false);
     }
   }, [isOpen]);
@@ -74,35 +83,29 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
       return;
     }
 
+    // Валидация обязательных полей
+    // if (!nodeDeposit.trim()) {
+    //   alert('Node Deposit is required');
+    //   return;
+    // }
+
     setIsLoading(true);
     
     try {
-      // Подготавливаем данные для отправки
-      const updateData: { [key: string]: any } = {};
-      
-      // Маппинг полей формы в поля API
-      if (status) {
-        updateData.status = statusMapping[status];
-      }
-      
-      if (deposit) {
-        updateData.token1_amount = parseFloat(deposit);
-      }
-      
-      if (withdrawals) {
-        updateData.token2_amount = parseFloat(withdrawals);
-      }
+      // Подготавливаем данные для отправки согласно новой структуре
+      const updateData: ManualUpdateExchangeBody = {
+        buy_orders: buyOrders.length > 0 ? buyOrders : [],
+        sell_orders: sellOrders.length > 0 ? sellOrders : [],
+        deposit: deposit || '',
+        node_deposit: nodeDeposit || transaction?.node_deposit || null,
+        withdrawal: withdrawal || transaction?.withdrawal || null,
+        status: statusMapping[status],
+        is_stopped: isStopped,
+        note: note || ''
+      };
 
-      // buyTrades и sellTrades пока оставим как заметки или отдельные поля
-      // так как в API нет прямого соответствия
-      if (buyTrades) {
-        updateData.buy_trades_note = buyTrades;
-      }
-      
-      if (sellTrades) {
-        updateData.sell_trades_note = sellTrades;
-      }
-
+      console.log('Transaction unique_id:', transaction.unique_id);
+      console.log('Transaction object:', transaction);
       console.log('Updating exchange with data:', updateData);
 
       const result = await ExchangeService.updateExchange(transaction.unique_id, updateData);
@@ -116,11 +119,14 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
         }
         
         // Reset fields and close modal only on success
-        setWithdrawals('');
+        setBuyOrders([]);
+        setSellOrders([]);
         setDeposit('');
-        setBuyTrades('');
-        setSellTrades('');
+        setNodeDeposit('');
+        setWithdrawal('');
         setStatus('Success');
+        setIsStopped(false);
+        setNote('');
         onClose();
       } else {
         console.error('Failed to update exchange:', result?.error || 'Unknown error');
@@ -173,7 +179,7 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
 
         {/* Status Dropdown */}
         <div className={styles.statusSection}>
-          <label className={styles.statusLabel}>Status</label>
+          <label className={styles.statusLabel}>Deposit</label>
           <div 
             className={styles.statusDropdown}
             onClick={() => setIsStatusOpen(!isStatusOpen)}>
@@ -214,11 +220,14 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
             <label className={styles.inputLabel}>Withdrawals</label>
             <div className={styles.inputContainer}>
               <Input 
-                value={withdrawals}
-                onChange={(e) => setWithdrawals(e.target.value)}
+                value={withdrawal}
+                onChange={(e) => setWithdrawal(e.target.value)}
                 className={styles.manualInput}
                 placeholder="Enter withdrawal amount"
               />
+              <button className={styles.placeOrderButton}>
+                Place new order +
+              </button>
             </div>
           </div>
 
@@ -232,6 +241,9 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
                 className={styles.manualInput}
                 placeholder="Enter deposit amount"
               />
+              <button className={styles.placeOrderButton}>
+                Place new order
+              </button>
             </div>
           </div>
 
@@ -240,11 +252,14 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
             <label className={styles.inputLabel}>Buy Trades</label>
             <div className={styles.inputContainer}>
               <Input 
-                value={buyTrades}
-                onChange={(e) => setBuyTrades(e.target.value)}
+                value={buyOrders.join(', ')}
+                onChange={(e) => setBuyOrders(e.target.value.split(',').map(s => s.trim()).filter(s => s))}
                 className={styles.manualInput}
-                placeholder="Enter buy trades note"
+                placeholder="Enter buy trades"
               />
+              <button className={styles.placeOrderButton}>
+                Place new order
+              </button>
             </div>
           </div>
 
@@ -253,11 +268,14 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
             <label className={styles.inputLabel}>Sell Trades</label>
             <div className={styles.inputContainer}>
               <Input 
-                value={sellTrades}
-                onChange={(e) => setSellTrades(e.target.value)}
+                value={sellOrders.join(', ')}
+                onChange={(e) => setSellOrders(e.target.value.split(',').map(s => s.trim()).filter(s => s))}
                 className={styles.manualInput}
-                placeholder="Enter sell trades note"
+                placeholder="Enter sell trades"
               />
+              <button className={styles.placeOrderButton}>
+                Place new order
+              </button>
             </div>
           </div>
         </div>

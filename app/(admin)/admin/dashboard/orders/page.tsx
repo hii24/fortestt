@@ -28,6 +28,11 @@ export default function HistoryPage() {
     setIsModalOpen(false);
   };
 
+  const handleOrderCreated = () => {
+    // Обновляем список ордеров после создания нового
+    fetchData(currentParams);
+  };
+
   const handleOpenModal2 = () => {
     setIsModal2Open(true);
   };
@@ -388,7 +393,11 @@ export default function HistoryPage() {
         <p className="text-2xl">No Items</p>
       )}
 
-      <CreateOrderModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <CreateOrderModal 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+        onCreateSuccess={handleOrderCreated}
+      />
       <ManualUpdateModal isOpen={isModal2Open} onClose={handleCloseModal2} />
     </div>
   );

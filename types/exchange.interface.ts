@@ -102,3 +102,14 @@ export interface ExchangeCheckingItem {
   token1_title?: string;
   token2_title?: string;
 }
+
+export interface ManualUpdateExchangeBody {
+  buy_orders: string[];
+  sell_orders: string[];
+  deposit: string;
+  node_deposit: string | null;
+  withdrawal: string | null;
+  status: number;
+  is_stopped: boolean;
+  note: string;
+}

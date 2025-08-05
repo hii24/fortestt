@@ -72,6 +72,11 @@ export default function HistoryPage() {
     }
   }, []);
 
+  const handleExchangeUpdated = () => {
+    // Обновляем список обменов после успешного обновления
+    fetchData(currentParams);
+  };
+
   const statusOptions = [
     { value: 'all', label: <span className="text-sm font-medium">Status</span> },
     ...Object.entries(ExchangeProcessStatus).map(([key, status]) => ({
@@ -384,7 +389,10 @@ export default function HistoryPage() {
         <>
           {/* <div className="w-full overflow-x-auto"> */}
           <div className="w-full">
-            <ExchangeTable list={responseData?.results} />
+            <ExchangeTable 
+              list={responseData?.results} 
+              onExchangeUpdated={handleExchangeUpdated}
+            />
           </div>
           <CustomPagination
             total={responseData?.count}

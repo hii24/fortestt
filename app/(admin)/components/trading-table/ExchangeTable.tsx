@@ -23,6 +23,7 @@ const ExchangeTable: FC<{
     problematic: string;
     refunded: string;
   };
+  onExchangeUpdated?: () => void;
 }> = ({
   list = [],
   statusColors = {
@@ -37,6 +38,7 @@ const ExchangeTable: FC<{
     problematic: 'bg-red-200 text-red-600',
     refunded: 'bg-violet-100 text-violet-800',
   },
+  onExchangeUpdated,
 }) => {
   const excludeKeys = [
     'unique_id',
@@ -536,9 +538,11 @@ const ExchangeTable: FC<{
         }}
         transaction={selectedTransaction}
         onUpdateSuccess={() => {
-          // Здесь можно добавить логику для обновления списка обменов
-          // Например, вызвать коллбэк из родительского компонента
-          console.log('Exchange updated, consider refreshing the list');
+          // Вызываем коллбэк для обновления списка обменов
+          if (onExchangeUpdated) {
+            onExchangeUpdated();
+          }
+          console.log('Exchange updated, refreshing the list');
         }}
       />
     </>

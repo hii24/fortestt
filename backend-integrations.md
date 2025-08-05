@@ -8,6 +8,7 @@
 - **Прокси URL**: `/api/proxy?endpoint=${encodeURIComponent(endpoint)}`
 - **Аутентификация**: `axiosInter` (для админ функций)
 - **Base URL**: Все эндпоинты проксируются через Next.js API routes
+- **Поддерживаемые методы**: GET, POST, PATCH
 - **Админ токены**: Сохранены в `config/admin-tokens.json` для автоматической аутентификации
 
 ---
@@ -16,12 +17,12 @@
 
 ### 1. **Stop Exchange** (Остановка обмена)
 - **Компонент**: `ExchangeTable.tsx`
-- **Эндпоинт**: `POST https://api.lizex.io/exchange/api/<unique_id>/transaction_stopped/`
+- **Эндпоинт**: `PATCH https://api.lizex.io/exchange/api/<unique_id>/transaction_stopped/`
 - **Функция**: `ExchangeService.stopExchange()`
 - **Данные**: Без тела запроса (только unique_id в URL)
 
 ```typescript
-// Кнопка "Stop Exchange"
+// Кнопка "Stop Exchange" - PATCH запрос
 const result = await ExchangeService.stopExchange(unique_id);
 ```
 
@@ -32,11 +33,14 @@ const result = await ExchangeService.stopExchange(unique_id);
 - **Данные**:
   ```typescript
   {
-    status: number,           // Числовой статус (1-10)
-    token1_amount: number,    // Сумма депозита
-    token2_amount: number,    // Сумма вывода
-    buy_trades_note: string,  // Заметка о покупках
-    sell_trades_note: string  // Заметка о продажах
+    buy_orders: string[],              // Массив ордеров на покупку
+    sell_orders: string[],             // Массив ордеров на продажу
+    deposit: string,                   // Сумма депозита
+    node_deposit: string,              // Депозит ноды
+    withdrawal: string,                // Сумма вывода
+    status: number,                    // Статус обмена (1-10)
+    is_stopped: boolean,               // Остановлен ли обмен
+    note: string                       // Заметка
   }
   ```
 
@@ -103,6 +107,32 @@ await GeneralService.saveAllSettings(formData);
     platform: 'whitebit' | 'mexc'     // Платформа
   }
   ```
+
+**Пример использования в родительском компоненте:**
+```typescript
+// В orders/page.tsx
+const handleOrderCreated = () => {
+  // Обновляем список ордеров после создания нового
+  fetchData(currentParams);
+};
+
+<CreateOrderModal 
+  isOpen={isModalOpen} 
+  onClose={handleCloseModal} 
+  onCreateSuccess={handleOrderCreated}
+/>
+
+// В exchange/page.tsx
+const handleExchangeUpdated = () => {
+  // Обновляем список обменов после обновления
+  fetchData(currentParams);
+};
+
+<ExchangeTable 
+  list={responseData?.results} 
+  onExchangeUpdated={handleExchangeUpdated}
+/>
+```
 
 ---
 
@@ -298,9 +328,9 @@ Response ← Result ← Proxy Response ← HTTP Response ← API Response
 ### Example Flow: Stop Exchange
 1. `ExchangeTable.tsx` → кнопка "Stop Exchange" 
 2. `ExchangeService.stopExchange()` → вызов сервиса
-3. `axiosInter.post()` → HTTP запрос через interceptor
+3. `axiosInter.patch()` → HTTP запрос через interceptor
 4. `/api/proxy?endpoint=exchange/api/{id}/transaction_stopped/` → прокси маршрут
-5. `POST /exchange/api/{id}/transaction_stopped/` → реальный API эндпоинт
+5. `PATCH /exchange/api/{id}/transaction_stopped/` → реальный API эндпоинт
 6. Response → Success/Error handling → UI Update
 
 ---
