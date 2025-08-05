@@ -75,7 +75,7 @@
 .fromSelect input {
   padding-left: 13px;
   display: flex;
-  width: 260px;
+  width: auto;
   color: var(--Grey_txt, #1b1b1b);
   font-family: Roboto;
   font-size: 26px;

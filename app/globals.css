@@ -464,3 +464,41 @@ button.activeBtn {
 .z-3 {
   z-index: 3;
 }
+
+/* Исправление проблем с выпадающими списками Ant Design */
+.ant-select-dropdown {
+  z-index: 1050 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.ant-select-focused {
+  z-index: 1001 !important;
+}
+
+.ant-select-open {
+  z-index: 1001 !important;
+}
+
+/* Убираем overflow hidden на контейнерах чтобы выпадающие списки были видны */
+.ant-select-dropdown-container {
+  z-index: 1050 !important;
+}
+
+/* Стили для селектов в админ панели */
+.ant-select-selector {
+  overflow: visible !important;
+}
+
+.ant-select {
+  overflow: visible !important;
+}
+
+/* Исправляем проблему с кликом на выпадающий список */
+.ant-select-selection-search-input {
+  opacity: 1 !important;
+}
+
+.ant-select-selection-placeholder {
+  opacity: 1 !important;
+}

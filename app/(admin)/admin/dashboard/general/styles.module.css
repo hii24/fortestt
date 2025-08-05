@@ -12,6 +12,7 @@
   font-weight: 500;
   line-height: normal;
 }
+
 .contentWrapper {
   background: var(--Background_blocks, #fffafa);
   border-radius: 15px;
@@ -20,12 +21,41 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: start;
-  align-items: start;
-  gap: 45px;
-  min-height: 100svh;
+  min-height: 70vh;
+  position: relative;
+  /* Убираем overflow чтобы выпадающие списки не обрезались */
+  overflow: visible;
+  z-index: 1;
 }
+
+/* Двухколоночная структура */
+.twoColumnLayout {
+  display: flex;
+  gap: 40px;
+  flex: 1;
+  /* Обеспечиваем видимость выпадающих списков */
+  overflow: visible;
+  z-index: 2;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  /* Убираем любые ограничения overflow */
+  overflow: visible;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  /* Убираем любые ограничения overflow */
+  overflow: visible;
+}
+
 .content {
   display: flex;
   flex-wrap: wrap;
@@ -40,8 +70,13 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  & label {
-    min-width: 381px;
+  /* Важно для выпадающих списков */
+  position: relative;
+  z-index: 3;
+  
+  & label,
+  & > div {
+  
     color: var(--Txt_Collor, #1b1b1b);
     font-feature-settings:
       'liga' off,
@@ -54,5 +89,102 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    /* Убираем overflow ограничения */
+    overflow: visible;
+  }
+}
+
+/* Стили для Platform секции */
+.platformSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+}
+
+.platformLabel {
+  color: #7D7878;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+/* Кнопка Save в правом нижнем углу */
+.saveButtonWrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.saveButton {
+  width: 80px;
+  height: 40px;
+  border-radius: 10px;
+  background: #3460FD;
+  border: none;
+  color: #FFFFFF;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.saveButton:hover {
+  background: #2850E0 !important;
+}
+
+/* Стили для базовых селектов */
+.fieldset .ant-select {
+  border-radius: 10px !important;
+}
+
+.fieldset .ant-select .ant-select-selector {
+  background: #F0F1F5 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  height: 40px !important;
+  padding: 0 10px !important;
+}
+
+.fieldset .ant-select .ant-select-selection-item {
+  color: #1B1B1B !important;
+  font-family: Inter !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Стили для стрелки селекта */
+.fieldset .ant-select .ant-select-arrow {
+  color: #1B1B1B !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .twoColumnLayout {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .leftColumn,
+  .rightColumn {
+    flex: none;
+  }
+  
+  .fieldset label {
+    min-width: 100%;
+  }
+  
+  .saveButtonWrapper {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
   }
 }

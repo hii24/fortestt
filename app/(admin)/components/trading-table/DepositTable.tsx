@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styles from './styles.module.css';
 import { WithdrawalProcessStatus } from '@/config/status.config';
 import { GetWithdrawalItem } from '@/types/withdrawal.interface';
+import { Tooltip } from 'antd';
 
 const DepositTable: FC<{
   list?: GetWithdrawalItem[];
@@ -40,6 +41,7 @@ const DepositTable: FC<{
                 <tr key={`exch-${index}`} className="hover:bg-gray-50">
                   {Object.entries(transaction).map(([key, value]) => {
                     value = value === '' || (!!value && value !== true) ? value : JSON.stringify(value);
+                    const isNumeric = typeof value === 'number' || (!isNaN(Number(value)) && value !== '' && value !== null);
 
                     if (key === 'buy_orders' || key === 'sell_orders') {
                       return (
@@ -69,8 +71,14 @@ const DepositTable: FC<{
                   );
                 }
                 return (
-                  <td key={key} className={className}>
-                    {value}
+                  <td key={key} className={`border text-left${isNumeric ? ' text-center p-1' : ' p-2'}`}>
+                    {isNumeric && value !== '' && value !== null ? (
+                      <Tooltip title={value}>
+                        {Number(value).toFixed(2)}
+                      </Tooltip>
+                    ) : (
+                      value
+                    )}
                   </td>
                 );
               })}

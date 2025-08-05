@@ -167,9 +167,9 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
 
   return (
     <>
-      <div className={`flex flex-col lg:flex-row w-full p-0 sm:p-5 ${className || ''}`}>
+      <div className={`flex flex-col lg:grid lg:grid-cols-[1fr_200px_1fr] w-full p-0 sm:p-5 ${className || ''}`}>
         {/*---------------YOU SEND---------------*/}
-        <div className="flex-1 flex flex-col items-start gap-[10px] pt-[15px] sm:pt-0">
+        <div className="flex flex-col items-start gap-[10px] pt-[15px] sm:pt-0 max-w-full overflow-hidden min-w-0">
           <p
             className={`color-[#1b1b1b] text-[14px] md:text-[16px] font-[400] leading-normal ${error && '!text-red-500'}`}>
             You send
@@ -203,22 +203,24 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
         </div>
 
         {/*---------------SWAP BUTTON---------------*/}
-        <button
-          type="button"
-          className={`${styles.swap} max-sm:w-full max-sm:!my-0 max-sm:pr-6 sm:mx-8 flex max-sm:!justify-end`}
-          onClick={() => {
-            if (setFromCurrencyChange && setToCurrencyChange && fromCurrency && toCurrency) {
-              const tempTo = { ...toCurrency };
-              const tempFrom = { ...fromCurrency };
-              setFromCurrencyChange(tempTo);
-              setToCurrencyChange(tempFrom);
-            }
-          }}>
-          <Image src="/icons/swap.svg" width={32} height={32} alt="swap" />
-        </button>
+        <div className="flex items-center justify-center">
+          <button
+            type="button"
+            className={`${styles.swap} max-sm:w-full max-sm:!my-0 max-sm:pr-6 flex max-sm:!justify-end`}
+            onClick={() => {
+              if (setFromCurrencyChange && setToCurrencyChange && fromCurrency && toCurrency) {
+                const tempTo = { ...toCurrency };
+                const tempFrom = { ...fromCurrency };
+                setFromCurrencyChange(tempTo);
+                setToCurrencyChange(tempFrom);
+              }
+            }}>
+            <Image src="/icons/swap.svg" width={32} height={32} alt="swap" />
+          </button>
+        </div>
 
         {/*---------------YOU GET---------------*/}
-        <div className={`${styles.toSelect} flex-1 gap-[10px] flex flex-col items-start !w-full`}>
+        <div className={`${styles.toSelect} gap-[10px] flex flex-col items-start max-w-full overflow-hidden min-w-0`}>
           <p className={'color-[#1b1b1b] text-[14px] md:text-[16px] font-[400] leading-normal'}>You get</p>
           <CurrencySelector
             cuted

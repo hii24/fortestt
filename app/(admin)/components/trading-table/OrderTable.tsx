@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styles from './styles.module.css';
 import { Pagination } from 'antd';
 import { Order } from '@/types/response.interface';
+import { Tooltip } from 'antd';
 
 const OrderTable: FC<{
   total: number;
@@ -30,13 +31,14 @@ const OrderTable: FC<{
 
   return (
     <>
-      <div className="max-w-full overflow-x-auto -mx-3 px-3">
+      <div className="max-w-full  -mx-3 px-3">
+      {/* <div className="max-w-full overflow-x-auto -mx-3 px-3"> */}
         <table className={styles.table}>
           <thead>
             <tr>
               {mainKeys.map((key) => (
                 <th key={key} className="p-2 border text-left capitalize">
-                  <span className="px-1">{key}</span>
+                  <span className="px-1">{key === 'order_time' ? 'Time' : key}</span>
                 </th>
               ))}
 
@@ -68,8 +70,23 @@ const OrderTable: FC<{
                     const value = main[key];
                     const baseClass = 'p-2 border';
                     const isNumeric = ['price', 'amount', 'filled', 'total', 'fee'].includes(key);
-                    const className = `${baseClass}${isNumeric ? ' text-right' : ''}`;
+                    const className = `${baseClass}${isNumeric ? ' text-center p-1' : ''}`;
 
+                    if (key === 'order_time') {
+                      const date = value ? new Date(value) : null;
+                      const dateStr = date ? date.toLocaleDateString('ru-RU') : '-';
+                      const timeStr = date ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-';
+                      return (
+                        <td key={key} className={baseClass + ' text-center p-1'}>
+                          <Tooltip title={value}>
+                            <div className="flex flex-col items-center">
+                              <span>{dateStr}</span>
+                              <span>{timeStr}</span>
+                            </div>
+                          </Tooltip>
+                        </td>
+                      );
+                    }
                     if (key === 'side') {
                       const isBuy = String(value).toLowerCase() === 'buy';
                       return (
@@ -99,13 +116,19 @@ const OrderTable: FC<{
                     }
 
                     return (
-                      <td key={key} className={className}>
-                        {value ?? '-'}
+                      <td key={key} className={`${baseClass} text-left`}>
+                        {isNumeric && value != null && value !== '' ? (
+                          <Tooltip title={value}>
+                            {Number(value).toFixed(2)}
+                          </Tooltip>
+                        ) : (
+                          value ?? '-'
+                        )}
                       </td>
                     );
                   })}
                   {Object.entries(extra).map(([key, value]) => (
-                    <td key={key} className="p-2 border">
+                    <td key={key} className="p-2 border text-left">
                       {String(value)}
                     </td>
                   ))}

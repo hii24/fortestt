@@ -3,6 +3,11 @@ import styles from './styles.module.css';
 import { ExchangeProcessStatus } from '@/config/status.config';
 import { GetExchangesItem } from '@/types/exchange.interface';
 import { Modal } from 'antd';
+import { Tooltip } from 'antd';
+import EyeIcon from './EyeIcon';
+import InfoIcon from './InfoIcon';
+import ManualUpdateModal from '../create-modal/ManualUpdateModal';
+import { ExchangeService } from '@/services/exchange/exchange.service';
 
 const ExchangeTable: FC<{
   list?: GetExchangesItem[];
@@ -58,6 +63,26 @@ const ExchangeTable: FC<{
 
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState<{ title?: string; children?: ReactNode } | null>(null);
+  
+  // Состояния для hover кнопок и модалки manual update
+  const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null);
+  const [isManualUpdateOpen, setIsManualUpdateOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<GetExchangesItem | null>(null);
+
+  // Функция для форматирования адреса
+  const formatAddress = (address?: string) => {
+    if (!address) return '';
+    if (address.length <= 8) return address;
+    return `${address.slice(0, 4)}...${address.slice(address.length - 4)}`;
+  };
+
+  // Функция для форматирования числового значения пары (до 8 знаков после запятой)
+  const formatPairNumber = (value: number | string | null | undefined) => {
+    if (value == null) return '';
+    const num = Number(value);
+    if (isNaN(num)) return String(value);
+    return num.toFixed(8);
+  };
 
   return (
     <>
@@ -80,7 +105,7 @@ const ExchangeTable: FC<{
               <span className="px-1">Status</span>
             </th>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">time</span>
+              <span className="px-1">Time</span>
             </th>
             <th className="p-2 border text-left capitalize">
               <span className="px-1">info</span>
@@ -124,10 +149,14 @@ const ExchangeTable: FC<{
 
             const className = 'p-2 border';
             return (
-              <tr key={`exch-${index}`} className="hover:bg-gray-50">
-                <td className={`${className} min-w-fit`}>{excluded.unique_id}</td>
+              <tr 
+                key={`exch-${index}`} 
+                className="hover:bg-gray-50 relative"
+                onMouseEnter={() => setHoveredRowIndex(index)}
+                onMouseLeave={() => setHoveredRowIndex(null)}>
+                <td className={`${className} min-w-fit text-left`}>{excluded.unique_id}</td>
 
-                <td className={`${className} min-w-fit`}>
+                <td className={`${className} min-w-fit text-left`}>
                   <span
                     className={`px-2 py-1 rounded uppercase ${
                       ExchangeProcessStatus?.[excluded.status as keyof typeof ExchangeProcessStatus]
@@ -143,128 +172,135 @@ const ExchangeTable: FC<{
                   </span>
                 </td>
 
-                <td className={`${className} min-w-fit`}>
+                <td className={`${className} min-w-fit text-left`}>
                   <div className="flex justify-center items-center">
-                    {excluded.end_time || excluded.start_time
-                      ? new Date(excluded.end_time ?? excluded.start_time).toLocaleString()
-                      : '-'}
+                    {excluded.end_time || excluded.start_time ? (
+                      <Tooltip title={excluded.end_time ?? excluded.start_time}>
+                        <div className="flex flex-col items-center">
+                          <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleDateString('ru-RU')}</span>
+                          <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        </div>
+                      </Tooltip>
+                    ) : (
+                      '-'
+                    )}
                   </div>
                 </td>
 
-                <td className={`${className} min-w-fit`}>
-                  <button
-                    className="pl-2"
-                    type="button"
+                <td className={`${className} min-w-fit text-left`}>
+                  <InfoIcon
+                    size={20}
+                    className="hover:opacity-80 transition-opacity"
                     onClick={() => {
                       setModalContent({
-                        title: `Other fields for : ${excluded?.unique_id ?? 'details'}`,
+                        title: 'Info',
                         children: (
                           <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
-                            {Object.entries(included)?.map(([key, value]) => (
-                              <div key={key}>
-                                <strong>{key}:</strong> {String(value)}
+                            {excluded?.address && (
+                              <div>
+                                <strong>Address:</strong> {excluded.address}
                               </div>
-                            ))}
+                            )}
+                            {excluded?.refund_address && (
+                              <div>
+                                <strong>Refound address:</strong> {excluded.refund_address}
+                              </div>
+                            )}
+                            {!(excluded?.address || excluded?.refund_address) && <div>No data</div>}
                           </div>
                         ),
                       });
-
-                      setOpenModal((prev) => !prev);
-                    }}>
-                    <svg
-                      width="17"
-                      height="16"
-                      viewBox="0 0 17 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M8.25016 14.6666C11.9168 14.6666 14.9168 11.6666 14.9168 7.99992C14.9168 4.33325 11.9168 1.33325 8.25016 1.33325C4.5835 1.33325 1.5835 4.33325 1.5835 7.99992C1.5835 11.6666 4.5835 14.6666 8.25016 14.6666Z"
-                        stroke="#7D7878"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.25 5.33325V8.66659"
-                        stroke="#7D7878"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.24658 10.6667H8.25257"
-                        stroke="#7D7878"
-                        strokeWidth="1.33333"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
+                      setOpenModal(true);
+                    }}
+                  />
                 </td>
 
-                <td className={`${className} min-w-fit`}>{excluded.volume}</td>
-                <td className={`${className} min-w-fit`}>{excluded.fixed ? 'fixed' : 'float'}</td>
+                <td className={`${className} min-w-fit text-left`}>
+                  {excluded.volume != null ? Number(excluded.volume).toFixed(4) : '-'}
+                </td>
+                <td className={`${className} min-w-fit text-left`}>{excluded.fixed ? 'fixed' : 'float'}</td>
 
                 <td className={className}>
                   {!!Object.keys(excluded)?.length && (
-                    <div className="flex items-center min-w-[413px]">
-                      <div className="flex flex-col gap-1 ">
-                        <span>{`${excluded.exp_token1_amount} `}</span>
-                        <div>
+                    <div className="flex items-center">
+                      <div className="flex flex-col gap-1 " style={{ width: 120 }}>
+                        <div className="flex items-center gap-1">
+                          <Tooltip
+                            title={
+                              excluded.exp_token1_amount != null ? String(excluded.exp_token1_amount) : ''
+                            }>
+                            <span>{formatPairNumber(excluded.exp_token1_amount)}</span>
+                          </Tooltip>
+                          {/* Левый верхний глазик - Deposit Info */}
+                          
+                        </div>
+                        <div className='flex items-center gap-1'>
                           <span className="text-xs ">{`${excluded.token1}`}</span>
                           <span className="text-gray-500">{` (${excluded.token1_network})`}</span>
-                        </div>
-                        <span className="text-xs max-w-[180px] overflow-hidden whitespace-nowrap text-ellipsis">
-                          {excluded.address}
-                        </span>
-                        <button
-                          onClick={() => {
-                            const view = {
-                              Terms: excluded?.terms ? 'Confirmed' : 'NOT confirmed',
-                              Address: excluded?.address ?? '-',
-                            };
-                            console.log('view', view);
-                            setModalContent({
-                              title: `Send : ${'details'}`,
-                              children: (
-                                <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
-                                  {Object.entries(view)?.map(([key, value]) => (
-                                    <div key={key}>
-                                      <strong>{key}:</strong> {String(value)}
+                          <button
+                            onClick={() => {
+                              setModalContent({
+                                title: 'Deposit Info',
+                                children: (
+                                  <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
+                                    <div>
+                                      <strong>Deposit ID:</strong> {excluded?.deposite ?? '-'}
                                     </div>
-                                  ))}
-                                </div>
-                              ),
-                            });
-                            setOpenModal((prev) => !prev);
-                          }}>
-                          <svg
-                            width="17"
-                            height="16"
-                            viewBox="0 0 17 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M8.25016 14.6666C11.9168 14.6666 14.9168 11.6666 14.9168 7.99992C14.9168 4.33325 11.9168 1.33325 8.25016 1.33325C4.5835 1.33325 1.5835 4.33325 1.5835 7.99992C1.5835 11.6666 4.5835 14.6666 8.25016 14.6666Z"
-                              stroke="#7D7878"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M8.25 5.33325V8.66659"
-                              stroke="#7D7878"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M8.24658 10.6667H8.25257"
-                              stroke="#7D7878"
-                              strokeWidth="1.33333"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </button>
+                                    <div>
+                                      <strong>Expected Deposit:</strong> {excluded.exp_token1_amount ?? '-'}
+                                    </div>
+                                    <div>
+                                      <strong>Actual Deposit:</strong> {excluded.exp_token1_amount ?? '-'}
+                                    </div>
+                                  </div>
+                                ),
+                              });
+                              setOpenModal(true);
+                            }}>
+                            <EyeIcon size={16} />
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Tooltip title={excluded.address != null ? String(excluded.address) : ''}>
+                            <span
+                              className="text-xs cursor-pointer"
+                              style={{
+                               
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                display: 'inline-block',
+                              }}
+                              onClick={() => {
+                                if (excluded.address) {
+                                  navigator.clipboard.writeText(String(excluded.address));
+                                }
+                              }}>
+                              {formatAddress(excluded.address)}
+                             
+                            </span>
+                          </Tooltip>
+                          <button
+                                onClick={() => {
+                                  if (excluded.address) {
+                                    navigator.clipboard.writeText(String(excluded.address));
+                                  }
+                                }}>
+                                <EyeIcon size={16} />
+                              </button>
+                          {/* Левый нижний глазик - копирование депозитного адреса */}
+                        </div>
+                        {/* MEMO для депозита если есть */}
+                        {excluded.memo && <div className="text-xs text-gray-500">MEMO: {excluded.memo}</div>}
                       </div>
                       <svg
+                        style={{
+                          width: 22,
+                          marginRight: 28,
+                          marginLeft: 12,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
                         className="mx-auto"
                         xmlns="http://www.w3.org/2000/svg"
                         width="21"
@@ -300,68 +336,173 @@ const ExchangeTable: FC<{
                           strokeLinejoin="round"
                         />
                       </svg>
-                      <div className="flex flex-col gap-1">
-                        <span>{`${excluded.exp_token2_amount} `}</span>
-                        <div>
+                      <div className="flex flex-col gap-1" >
+                        <div className="flex items-center gap-1">
+                          <Tooltip
+                            title={
+                              excluded.exp_token2_amount != null ? String(excluded.exp_token2_amount) : ''
+                            }>
+                            <span>{formatPairNumber(excluded.exp_token2_amount)}</span>
+                          </Tooltip>
+                          {/* Правый верхний глазик - Withdrawal Info */}
+                          
+                        </div>
+                        <div className='flex items-center gap-1'>
                           <span className="text-xs ">{`${excluded.token2}`}</span>
                           <span className="text-gray-500">{` (${excluded.token2_network})`}</span>
-                        </div>
-                        <span className="text-xs max-w-[180px] overflow-hidden whitespace-nowrap text-ellipsis">
-                          {excluded.deposit_address}
-                        </span>
-                        <button
-                          onClick={() => {
-                            setModalContent({
-                              title: `Get : ${'details'}`,
-                              children: (
-                                <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
-                                  {Object.entries({
-                                    'Deposite ID': excluded?.deposite ?? '-',
-                                    'Deposite address': excluded?.deposit_address ?? '-',
-                                  })?.map(([key, value]) => (
-                                    <div key={key}>
-                                      <strong>{key}:</strong> {String(value)}
+                          <button
+                            onClick={() => {
+                              setModalContent({
+                                title: 'Withdrawal Info',
+                                children: (
+                                  <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
+                                    <div>
+                                      <strong>Withdrawal ID:</strong> {excluded?.unique_id ?? '-'}
                                     </div>
-                                  ))}
-                                </div>
-                              ),
-                            });
-
-                            setOpenModal((prev) => !prev);
-                          }}>
-                          <svg
-                            width="17"
-                            height="16"
-                            viewBox="0 0 17 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M8.25016 14.6666C11.9168 14.6666 14.9168 11.6666 14.9168 7.99992C14.9168 4.33325 11.9168 1.33325 8.25016 1.33325C4.5835 1.33325 1.5835 4.33325 1.5835 7.99992C1.5835 11.6666 4.5835 14.6666 8.25016 14.6666Z"
-                              stroke="#7D7878"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M8.25 5.33325V8.66659"
-                              stroke="#7D7878"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M8.24658 10.6667H8.25257"
-                              stroke="#7D7878"
-                              strokeWidth="1.33333"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </button>
+                                    <div>
+                                      <strong>Expected Withdrawal:</strong>{' '}
+                                      {excluded.exp_token2_amount ?? '-'}
+                                    </div>
+                                    <div>
+                                      <strong>Actual Withdrawal:</strong> {excluded.exp_token2_amount ?? '-'}
+                                    </div>
+                                  </div>
+                                ),
+                              });
+                              setOpenModal(true);
+                            }}>
+                            <EyeIcon size={16} />
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-1 ">
+                          <Tooltip
+                            title={excluded.deposit_address != null ? String(excluded.deposit_address) : ''}>
+                            <span
+                              className="text-xs cursor-pointer flex items-center gap-1"
+                              style={{
+                               
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                display: 'inline-block',
+                              }}
+                              onClick={() => {
+                                if (excluded.deposit_address) {
+                                  navigator.clipboard.writeText(String(excluded.deposit_address));
+                                }
+                              }}>
+                              {formatAddress(excluded.deposit_address)}
+                              
+                            </span>
+                          </Tooltip>
+                          {/* Правый нижний глазик - копирование адреса для вывода */}
+                          <button
+                                onClick={() => {
+                                  if (excluded.deposit_address) {
+                                    navigator.clipboard.writeText(String(excluded.deposit_address));
+                                  }
+                                }}>
+                                <EyeIcon size={16} />
+                              </button>
+                        </div>
+                        {/* MEMO для вывода если есть */}
+                        {excluded.withdrawal_memo && (
+                          <div className="text-xs text-gray-500">MEMO: {excluded.withdrawal_memo}</div>
+                        )}
                       </div>
                     </div>
                   )}
                 </td>
-                <td className={`${className} min-w-fit`}>{excluded?.profit ?? '-'}</td>
-                <td className={`${className} min-w-fit`}>{excluded?.partner_profit ?? '-'}</td>
+                <td className={`${className} min-w-fit text-left`}>
+                  {excluded?.profit != null ? Number(excluded.profit).toFixed(4) : '-'}
+                </td>
+                <td className={`${className} min-w-fit text-left relative`}>
+                  {excluded?.partner_profit != null ? Number(excluded.partner_profit).toFixed(4) : '-'}
+                  
+                  {/* Hover кнопки */}
+                  {hoveredRowIndex === index && (
+                    <div 
+                      className="absolute top-1/4 transform -translate-y-1/2 flex"
+                      style={{
+                        gap: '4px',
+                        width: '260px',
+                        right: '-10px',
+                        height: '37px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                      }}>
+                      <button
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          padding: '10px 40px',
+                          gap: '10px',
+                          width: '120px',
+                          height: '37px',
+                          background: '#FD3437',
+                          borderRadius: '10px',
+                          border: 'none',
+                          fontFamily: 'Inter',
+                          fontWeight: 500,
+                          fontSize: '14px',
+                          lineHeight: '17px',
+                          color: '#FFFFFF',
+                          cursor: 'pointer',
+                          textWrap: 'nowrap',
+                          transition: 'background-color 0.2s ease'
+                        }}
+                        onClick={async () => {
+                          try {
+                            const result = await ExchangeService.stopExchange(excluded.unique_id);
+                            
+                            if (result && !result.error) {
+                              console.log('Exchange stopped successfully:', excluded.unique_id);
+                              // Optionally refresh the data or update UI
+                              // You might want to call a callback prop here to refresh the table data
+                            } else {
+                              console.error('Failed to stop exchange:', result?.error || 'Unknown error');
+                            }
+                          } catch (error) {
+                            console.error('Error stopping exchange:', error);
+                          }
+                        }}
+                        onMouseEnter={(e) => (e.target as HTMLButtonElement).style.background = '#E42E31'}
+                        onMouseLeave={(e) => (e.target as HTMLButtonElement).style.background = '#FD3437'}
+                        title="Stop Exchange">
+                        Stop Exchange
+                      </button>
+                      <button
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          padding: '10px 40px',
+                          gap: '10px',
+                          width: '120px',
+                          height: '37px',
+                          background: '#3460FD',
+                          borderRadius: '10px',
+                          border: 'none',
+                          fontFamily: 'Inter',
+                          fontWeight: 500,
+                          fontSize: '14px',
+                          lineHeight: '17px',
+                          color: '#FFFFFF',
+                          cursor: 'pointer',
+                          transition: 'background-color 0.2s ease'
+                        }}
+                        onClick={() => {
+                          setSelectedTransaction(transaction);
+                          setIsManualUpdateOpen(true);
+                        }}
+                        onMouseEnter={(e) => (e.target as HTMLButtonElement).style.background = '#2850E8'}
+                        onMouseLeave={(e) => (e.target as HTMLButtonElement).style.background = '#3460FD'}
+                        title="Update">
+                        Update
+                      </button>
+                    </div>
+                  )}
+                </td>
 
                 {/*                 {Object.entries(included).map(([key, value]) => {
                   value = value === '' || (!!value && value !== true) ? value : JSON.stringify(value);
@@ -385,6 +526,21 @@ const ExchangeTable: FC<{
           })}
         </tbody>
       </table>
+      
+      {/* Manual Update Modal */}
+      <ManualUpdateModal
+        isOpen={isManualUpdateOpen}
+        onClose={() => {
+          setIsManualUpdateOpen(false);
+          setSelectedTransaction(null);
+        }}
+        transaction={selectedTransaction}
+        onUpdateSuccess={() => {
+          // Здесь можно добавить логику для обновления списка обменов
+          // Например, вызвать коллбэк из родительского компонента
+          console.log('Exchange updated, consider refreshing the list');
+        }}
+      />
     </>
   );
 };

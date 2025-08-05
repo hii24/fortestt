@@ -17,6 +17,15 @@ export interface OrderParams {
   status?: string;
 }
 
+export interface CreateOrderBody {
+  pair: string;
+  amount: string;
+  side: 'buy' | 'sell';
+  order_type: 'market' | 'limit';
+  price: string;
+  platform: string;
+}
+
 export interface GetAllOrdersItem {
   id: number;
   order_id: string;

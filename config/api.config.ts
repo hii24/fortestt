@@ -16,6 +16,9 @@ export const postCreatedExchange = (s: string = '/') =>
 export const getExchangeByUniqueIdUrl = (s: string = '/') =>
   createProxyUrl(ensureTrailingSlash(`exchange/api${s}`));
 
+export const getStopExchangeUrl = (uniqueId: string) =>
+  createProxyUrl(ensureTrailingSlash(`exchange/api/${uniqueId}/transaction_stopped`));
+
 export const getQuoteRangeWhitebitUrl = (s: string = '/') =>
   createProxyUrl(ensureTrailingSlash(`exchange/api/quote-range-whitebit${s}`));
 
@@ -67,3 +70,14 @@ export const getAllWithdrawalsUrl = (s: string = '/') =>
 
 //exchange no auth
 export const getExchange = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`exchange/api${s}`));
+
+// general settings
+export const getFeeSettingsUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`api/feesettings${s}`));
+
+export const getConstantNumericUrl = (key: string) => createProxyUrl(ensureTrailingSlash(`constant/api/numeric/${key}`));
+
+export const getConstantJsonUrl = (key: string) => createProxyUrl(ensureTrailingSlash(`constant/api/json/${key}`));
+
+export const getAMLThresholdUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`api/aml_threshold${s}`));
+
+export const getNetworkGateUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`network/api${s}`));

@@ -1,37 +1,79 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Modal, Card, Input, Select, Button } from 'antd';
+import { Modal, Input, Button } from 'antd';
 import styles from './styles.module.css';
+import { AdminService } from '@/services/admin/admin.service';
 
 interface CreateOrderModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onCreateSuccess?: () => void; // Коллбэк для обновления данных в родительском компоненте
 }
 
-const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ isOpen, onClose }) => {
-  const [base, setBase] = useState('');
+const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ isOpen, onClose, onCreateSuccess }) => {
+  const [pair, setPair] = useState('');
   const [amount, setAmount] = useState('');
   const [price, setPrice] = useState('');
-  const [orderType, setOrderType] = useState<'buy' | 'sell' | ''>('');
+  const [side, setSide] = useState<'buy' | 'sell'>('buy');
+  const [orderType, setOrderType] = useState<'market' | 'limit'>('market');
+  const [platform, setPlatform] = useState<'whitebit' | 'mexc'>('whitebit');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
+  // Состояния для управления видимостью секций
+  const [isSideOpen, setIsSideOpen] = useState(false);
+  const [isOrderTypeOpen, setIsOrderTypeOpen] = useState(false);
+  const [isPlatformOpen, setIsPlatformOpen] = useState(false);
+
+  const handleSubmit = async () => {
     // Validate fields
-    if (!base || !amount || !price || !orderType) {
-      console.log('Please fill all fields');
+    if (!pair || !amount || !price) {
+      alert('Please fill all fields');
       return;
     }
 
-    // Process form submission
-    const formValues = { base, amount, price, orderType };
-    console.log('Form values:', formValues);
+    setIsLoading(true);
+    
+    try {
+      const orderData = {
+        pair,
+        amount,
+        price,
+        side,
+        order_type: orderType,
+        platform,
+      };
 
-    // Reset fields and close modal
-    setBase('');
-    setAmount('');
-    setPrice('');
-    setOrderType('');
-    onClose();
+      console.log('Creating order with data:', orderData);
+
+      const result = await AdminService.createOrder(orderData);
+      
+      if (result && !result.error) {
+        console.log('Order created successfully:', result);
+        
+        // Вызываем коллбэк для обновления данных в родительском компоненте
+        if (onCreateSuccess) {
+          onCreateSuccess();
+        }
+        
+        // Reset fields and close modal
+        setPair('');
+        setAmount('');
+        setPrice('');
+        setSide('buy');
+        setOrderType('market');
+        setPlatform('whitebit');
+        onClose();
+      } else {
+        console.error('Failed to create order:', result?.error || 'Unknown error');
+        alert('Failed to create order: ' + (result?.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+      alert('Error creating order: ' + (error instanceof Error ? error.message : 'Unknown error'));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -39,62 +81,169 @@ const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ isOpen, onClose }) 
       open={isOpen}
       onCancel={onClose}
       footer={null}
-      width={340}
+      width={444}
       centered
       maskClosable={true}
-      className={styles.modal}>
-      <Card title="Create Order" variant="borderless" className={styles.card}>
-        <div className={styles.formContainer}>
-          <div className="space-y-4">
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">Base</label>
+      className={styles.modal}
+      closeIcon={
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M6 6L18 18" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      }>
+      <div className={styles.modalContent}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>Create order</h2>
+        </div>
+
+        <div className={styles.formSection}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Pair</label>
+            <div className={styles.inputWrapper}>
               <Input
-                placeholder="Enter base currency"
-                value={base}
-                onChange={(e) => setBase(e.target.value)}
+                value={pair}
+                onChange={(e) => setPair(e.target.value)}
+                className={styles.input}
+                placeholder="BTC_USDT"
               />
             </div>
+          </div>
 
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">Amount</label>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Amount</label>
+            <div className={styles.inputWrapper}>
               <Input
-                type="number"
-                placeholder="Enter amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+                className={styles.input}
+                placeholder="0.1"
               />
             </div>
+          </div>
 
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">Price</label>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Price</label>
+            <div className={styles.inputWrapper}>
               <Input
-                type="number"
-                placeholder="Enter price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+                className={styles.input}
+                placeholder="118337.49"
               />
-            </div>
-
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">Order Type</label>
-              <Select
-                placeholder="Select order type"
-                style={{ width: '100%' }}
-                value={orderType}
-                onChange={(value) => setOrderType(value)}>
-                <Select.Option value="buy">Buy</Select.Option>
-                <Select.Option value="sell">Sell</Select.Option>
-              </Select>
-            </div>
-
-            <div className="flex justify-end mt-6">
-              <Button type="primary" onClick={handleSubmit}>
-                Submit
-              </Button>
             </div>
           </div>
         </div>
-      </Card>
+
+        <div className={styles.selectorSection}>
+          <div className={styles.selectorGroup}>
+            <div 
+              className={styles.selectorHeader}
+              onClick={() => setIsSideOpen(!isSideOpen)}>
+              <span className={styles.selectorLabel}>Side</span>
+              <svg 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className={`${styles.arrow} ${isSideOpen ? styles.arrowRotated : ''}`}>
+                <path d="M19.92 9.41L13.4 15.93C12.63 16.7 11.37 16.7 10.6 15.93L4.08 9.41" stroke="#1B1B1B" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            {isSideOpen && (
+              <div className={styles.buttonGroup}>
+                <button
+                  type="button"
+                  className={`${styles.selectorButton} ${side === 'buy' ? styles.buyActive : styles.buyInactive}`}
+                  onClick={() => setSide('buy')}>
+                  Buy
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.selectorButton} ${side === 'sell' ? styles.sellActive : styles.sellInactive}`}
+                  onClick={() => setSide('sell')}>
+                  Sell
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className={styles.selectorGroup}>
+            <div 
+              className={styles.selectorHeader}
+              onClick={() => setIsOrderTypeOpen(!isOrderTypeOpen)}>
+              <span className={styles.selectorLabel}>Order Type</span>
+              <svg 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className={`${styles.arrow} ${isOrderTypeOpen ? styles.arrowRotated : ''}`}>
+                <path d="M19.92 9.41L13.4 15.93C12.63 16.7 11.37 16.7 10.6 15.93L4.08 9.41" stroke="#1B1B1B" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            {isOrderTypeOpen && (
+              <div className={styles.buttonGroup}>
+                <button
+                  type="button"
+                  className={`${styles.selectorButton} ${orderType === 'market' ? styles.marketActive : styles.marketInactive}`}
+                  onClick={() => setOrderType('market')}>
+                  Market
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.selectorButton} ${orderType === 'limit' ? styles.limitActive : styles.limitInactive}`}
+                  onClick={() => setOrderType('limit')}>
+                  Limit
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className={styles.selectorGroup}>
+            <div 
+              className={styles.selectorHeader}
+              onClick={() => setIsPlatformOpen(!isPlatformOpen)}>
+              <span className={styles.selectorLabel}>Platform</span>
+              <svg 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className={`${styles.arrow} ${isPlatformOpen ? styles.arrowRotated : ''}`}>
+                <path d="M19.92 9.41L13.4 15.93C12.63 16.7 11.37 16.7 10.6 15.93L4.08 9.41" stroke="#1B1B1B" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            {isPlatformOpen && (
+              <div className={styles.buttonGroup}>
+                <button
+                  type="button"
+                  className={`${styles.selectorButton} ${platform === 'whitebit' ? styles.platformActive : styles.platformInactive}`}
+                  onClick={() => setPlatform('whitebit')}>
+                  Whitebit
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.selectorButton} ${platform === 'mexc' ? styles.platformActive : styles.platformInactive}`}
+                  onClick={() => setPlatform('mexc')}>
+                  Mexc
+                </button>
+              </div>
+            )}
+          </div>
+
+        </div>
+
+        <Button 
+          onClick={handleSubmit}
+          loading={isLoading}
+          disabled={isLoading}
+          className={styles.submitButton}>
+          {isLoading ? 'Creating...' : 'Submit'}
+        </Button>
+      </div>
     </Modal>
   );
 };

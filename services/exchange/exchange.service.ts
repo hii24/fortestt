@@ -6,6 +6,7 @@ import {
   getQuoteRangeWhitebitUrl,
   getRefferralExchangesUrl,
   postCreatedExchange,
+  getStopExchangeUrl,
 } from '@/config/api.config';
 import axiosInter, { axiosSimple } from '@/api/interceptors';
 import { CreateExchangeBody } from '@/types/exchange.interface';
@@ -95,6 +96,39 @@ export const ExchangeService = {
     } catch (error) {
       if (error instanceof AxiosError) {
         return { error: error.response?.data?.error ?? null };
+      } else {
+        console.error('Error:', error);
+        return null;
+      }
+    }
+  },
+
+  async updateExchange(uniqueId: string, body: { status?: number; [key: string]: any }): Promise<any> {
+    try {
+      const url = `/api/proxy?endpoint=${encodeURIComponent(`exchange/api/${uniqueId}/edit/`)}`;
+      const res: AxiosResponse<any> = await axiosInter.patch(url, body);
+      console.log('Exchange updated successfully:', res.data);
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error('Update Exchange Error:', error.response?.data);
+        return error.response?.data;
+      } else {
+        console.error('Error:', error);
+        return null;
+      }
+    }
+  },
+
+  async stopExchange(uniqueId: string): Promise<any> {
+    try {
+      const res: AxiosResponse<any> = await axiosInter.post(getStopExchangeUrl(uniqueId));
+      console.log('Exchange stopped successfully:', res.data);
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error('Stop Exchange Error:', error.response?.data);
+        return error.response?.data;
       } else {
         console.error('Error:', error);
         return null;

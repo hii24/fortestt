@@ -382,7 +382,8 @@ export default function HistoryPage() {
         <div>Loading</div>
       ) : responseData && 'count' in responseData && responseData?.count ? (
         <>
-          <div className="w-full overflow-x-auto">
+          {/* <div className="w-full overflow-x-auto"> */}
+          <div className="w-full">
             <ExchangeTable list={responseData?.results} />
           </div>
           <CustomPagination

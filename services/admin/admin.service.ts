@@ -8,7 +8,7 @@ import {
 } from '@/config/api.config';
 import { EmptyResponse, ResponseList } from '@/types/response.interface';
 import { GetExchangeParams, GetExchangesItem } from '@/types/exchange.interface';
-import { DepositeParams, GetAllOrdersItem, OrderParams } from '@/types/order.interface';
+import { CreateOrderBody, DepositeParams, GetAllOrdersItem, OrderParams } from '@/types/order.interface';
 import { GetWithdrawalItem, GetWithdrawalParams } from '@/types/withdrawal.interface';
 
 export const AdminService = {
@@ -81,6 +81,17 @@ export const AdminService = {
       }
       return res.data;
     } catch (error) {
+      throw error;
+    }
+  },
+
+  async createOrder(body: CreateOrderBody): Promise<any> {
+    try {
+      const res: AxiosResponse<any> = await axiosInter.post(getOrdersUrl(), body);
+      console.log('Order created successfully:', res.data);
+      return res.data;
+    } catch (error) {
+      console.error('Error creating order:', error);
       throw error;
     }
   },
