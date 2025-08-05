@@ -42,7 +42,7 @@ export const CopiedInput: React.FC<CopiedInputProps> = ({
               strokeLinejoin="round"
             />
           </svg>
-          <span> {copyTooltipAlt} copied to yor clipboard!</span>
+          <span> {copyTooltipAlt} copied to your clipboard!</span>
         </p>
       </div>
       <Input

@@ -2,12 +2,13 @@ import { FC, ReactNode, useState } from 'react';
 import styles from './styles.module.css';
 import { ExchangeProcessStatus } from '@/config/status.config';
 import { GetExchangesItem } from '@/types/exchange.interface';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import { Tooltip } from 'antd';
 import EyeIcon from './EyeIcon';
 import InfoIcon from './InfoIcon';
 import ManualUpdateModal from '../create-modal/ManualUpdateModal';
 import { ExchangeService } from '@/services/exchange/exchange.service';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 const ExchangeTable: FC<{
   list?: GetExchangesItem[];
@@ -272,9 +273,14 @@ const ExchangeTable: FC<{
                                 whiteSpace: 'nowrap',
                                 display: 'inline-block',
                               }}
-                              onClick={() => {
+                              onClick={async () => {
                                 if (excluded.address) {
-                                  navigator.clipboard.writeText(String(excluded.address));
+                                  try {
+                                    await copyToClipboard(String(excluded.address));
+                                    message.success('Address copied to clipboard!');
+                                  } catch (error) {
+                                    message.error('Failed to copy address!');
+                                  }
                                 }
                               }}>
                               {formatAddress(excluded.address)}
@@ -282,9 +288,14 @@ const ExchangeTable: FC<{
                             </span>
                           </Tooltip>
                           <button
-                                onClick={() => {
+                                onClick={async () => {
                                   if (excluded.address) {
-                                    navigator.clipboard.writeText(String(excluded.address));
+                                    try {
+                                      await copyToClipboard(String(excluded.address));
+                                      message.success('Address copied to clipboard!');
+                                    } catch (error) {
+                                      message.error('Failed to copy address!');
+                                    }
                                   }
                                 }}>
                                 <EyeIcon size={16} />
@@ -387,9 +398,14 @@ const ExchangeTable: FC<{
                                 whiteSpace: 'nowrap',
                                 display: 'inline-block',
                               }}
-                              onClick={() => {
+                              onClick={async () => {
                                 if (excluded.deposit_address) {
-                                  navigator.clipboard.writeText(String(excluded.deposit_address));
+                                  try {
+                                    await copyToClipboard(String(excluded.deposit_address));
+                                    message.success('Deposit address copied to clipboard!');
+                                  } catch (error) {
+                                    message.error('Failed to copy deposit address!');
+                                  }
                                 }
                               }}>
                               {formatAddress(excluded.deposit_address)}
@@ -398,9 +414,14 @@ const ExchangeTable: FC<{
                           </Tooltip>
                           {/* Правый нижний глазик - копирование адреса для вывода */}
                           <button
-                                onClick={() => {
+                                onClick={async () => {
                                   if (excluded.deposit_address) {
-                                    navigator.clipboard.writeText(String(excluded.deposit_address));
+                                    try {
+                                      await copyToClipboard(String(excluded.deposit_address));
+                                      message.success('Deposit address copied to clipboard!');
+                                    } catch (error) {
+                                      message.error('Failed to copy deposit address!');
+                                    }
                                   }
                                 }}>
                                 <EyeIcon size={16} />

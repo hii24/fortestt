@@ -1,5 +1,5 @@
 import { copyToClipboard } from '@/utils/copyToClipboard';
-import { Image, Tooltip } from 'antd';
+import { Image, Tooltip, message } from 'antd';
 import { FC } from 'react';
 
 export const CopyClipboardButton: FC<{
@@ -9,6 +9,15 @@ export const CopyClipboardButton: FC<{
   width?: number;
   height?: number;
 }> = ({ value, alt, className = '', width = 20, height = 20 }) => {
+  const handleCopy = async () => {
+    try {
+      await copyToClipboard(value);
+      message.success('Copied to clipboard!');
+    } catch (error) {
+      message.error('Failed to copy to clipboard!');
+    }
+  };
+
   return (
     <Tooltip title={alt}>
       <Image
@@ -17,7 +26,7 @@ export const CopyClipboardButton: FC<{
         src="/icons/copy.svg"
         alt={alt}
         className={className}
-        onClick={() => copyToClipboard(value)}
+        onClick={handleCopy}
       />
     </Tooltip>
   );

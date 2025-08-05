@@ -205,6 +205,33 @@ export const isAdminRefreshTokenExpired = (): boolean
 export const getAdminTokenInfo = () => { access: TokenInfo, refresh: TokenInfo }
 ```
 
+### Copy to Clipboard (`utils/copyToClipboard.ts`)
+```typescript
+export const copyToClipboard = async (value: string): Promise<boolean>
+```
+**Функциональность:**
+- Копирует текст в буфер обмена
+- Возвращает `true` при успехе, выбрасывает ошибку при неудаче
+- Компоненты сами обрабатывают уведомления пользователю
+- Автоматический fallback: сначала пробует `navigator.clipboard.writeText()`, затем `document.execCommand('copy')`
+- Проверка на SSR и доступность API
+- Работает во всех браузерах (современных и старых)
+
+**Компоненты:**
+- `CopyClipboardButton` - показывает Ant Design message
+- `CopiedInput` - показывает кастомное уведомление
+- `ExchangeTable` - показывает Ant Design message для адресов
+
+**Использование:**
+```typescript
+try {
+  await copyToClipboard(String(address));
+  message.success('Address copied to clipboard!');
+} catch (error) {
+  message.error('Failed to copy address!');
+}
+```
+
 ### GeneralService (`services/general/general.service.ts`)
 ```typescript
 export const GeneralService = {
