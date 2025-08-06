@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { GeneralService } from '@/services/general/general.service';
 import { GeneralFormState } from '@/types/general.interface';
-import { Button, Input, Select } from 'antd';
+import { Button, Input } from 'antd';
 import styles from './styles.module.css';
 
 export default function GeneralPage() {
@@ -193,11 +193,11 @@ export default function GeneralPage() {
     return style;
   };
 
-  const currencyOptions = [
-    { value: 'BTC', label: <span>BTC</span> },
-    { value: 'XRP', label: <span>XRP</span> },
-    { value: 'USDT', label: <span>USDT</span> },
-  ];
+  // const currencyOptions = [
+  //   { value: 'BTC', label: <span>BTC</span> },
+  //   { value: 'XRP', label: <span>XRP</span> },
+  //   { value: 'USDT', label: <span>USDT</span> },
+  // ];
 
       return (
     <div className="">
