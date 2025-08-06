@@ -75,6 +75,7 @@
   font-family: Inter;
   font-size: 14px;
   height: auto;
+  color: #1B1B1B;
 }
 
 .input:hover,
@@ -82,6 +83,11 @@
   background-color: #F0F1F5;
   border: none;
   box-shadow: none;
+  color: #1B1B1B;
+}
+
+.input::placeholder {
+  color: #7D7878;
 }
 
 .selectorSection {
@@ -409,6 +415,7 @@
   font-family: Inter;
   font-size: 14px;
   height: auto;
+  color: #1B1B1B;
 }
 
 .manualInput:hover,
@@ -416,6 +423,11 @@
   background-color: #F0F1F5;
   border: none;
   box-shadow: none;
+  color: #1B1B1B;
+}
+
+.manualInput::placeholder {
+  color: #7D7878;
 }
 
 .placeOrderButton {

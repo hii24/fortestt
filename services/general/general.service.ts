@@ -6,14 +6,17 @@ import {
   getConstantJsonUrl,
   getAMLThresholdUrl,
   getNetworkGateUrl,
+  getGateStatusUrl,
 } from '@/config/api.config';
 import {
   FeeSettingsItem,
+  FeeSettingsResponse,
   ConstantNumeric,
   ConstantJson,
   AMLThreshold,
   NetworkGateResponse,
   NetworkGateRequest,
+  GateStatusResponse,
   GeneralFormState,
 } from '@/types/general.interface';
 
@@ -21,9 +24,9 @@ export const GeneralService = {
   // Fee Settings
   async getFeeSettings(): Promise<FeeSettingsItem[]> {
     try {
-      const res: AxiosResponse<FeeSettingsItem[]> = await axiosInter.get(getFeeSettingsUrl());
+      const res: AxiosResponse<FeeSettingsResponse> = await axiosInter.get(getFeeSettingsUrl('?page=&page_size=&search='));
       console.log('Fee settings fetched:', res.data);
-      return res.data;
+      return res.data.results;
     } catch (error) {
       console.error('Error fetching fee settings:', error);
       throw error;
@@ -32,7 +35,7 @@ export const GeneralService = {
 
   async updateFeeSetting(id: number, data: Partial<FeeSettingsItem>): Promise<FeeSettingsItem> {
     try {
-      const res: AxiosResponse<FeeSettingsItem> = await axiosInter.patch(getFeeSettingsUrl(`${id}/`), data);
+      const res: AxiosResponse<FeeSettingsItem> = await axiosInter.patch(getFeeSettingsUrl(`/${id}/`), data);
       console.log('Fee setting updated:', res.data);
       return res.data;
     } catch (error) {
@@ -90,7 +93,7 @@ export const GeneralService = {
   // AML Threshold
   async getAMLThreshold(): Promise<AMLThreshold> {
     try {
-      const res: AxiosResponse<AMLThreshold> = await axiosInter.get(getAMLThresholdUrl('value/'));
+      const res: AxiosResponse<AMLThreshold> = await axiosInter.get(getAMLThresholdUrl('/value/'));
       console.log('AML threshold fetched:', res.data);
       return res.data;
     } catch (error) {
@@ -115,7 +118,7 @@ export const GeneralService = {
     try {
       const requestData = { gate_enabled: gateEnabled };
       console.log('Toggling network gate with data:', requestData);
-      const res: AxiosResponse<NetworkGateResponse> = await axiosInter.post(getNetworkGateUrl('toggle-gate/'), requestData);
+      const res: AxiosResponse<NetworkGateResponse> = await axiosInter.post(getNetworkGateUrl('/toggle-gate/'), requestData);
       console.log('Network gate toggled:', res.data);
       return res.data;
     } catch (error) {
@@ -124,26 +127,40 @@ export const GeneralService = {
     }
   },
 
+  // Gate Status
+  async getGateStatus(): Promise<GateStatusResponse> {
+    try {
+      const res: AxiosResponse<GateStatusResponse> = await axiosInter.get(getGateStatusUrl());
+      console.log('Gate status fetched:', res.data);
+      return res.data;
+    } catch (error) {
+      console.error('Error fetching gate status:', error);
+      throw error;
+    }
+  },
+
   // Helper method to load all general settings
   async loadAllSettings(): Promise<Partial<GeneralFormState>> {
     try {
-      const [feeSettings, riskScore, defaultAmount, defaultCurrency, platformGate] = await Promise.allSettled([
+      const [feeSettings, riskScore, defaultAmount, defaultCurrency, gateStatus] = await Promise.allSettled([
         this.getFeeSettings(),
         this.getAMLThreshold().catch(() => ({ threshold: 1.5 })),
         this.getConstantNumeric('default_amount').catch(() => ({ value: 0.5 })),
         this.getConstantJson('default_currency').catch(() => ({ value: { from: 'BTC', to: 'BTC' } })),
-        this.getConstantNumeric('platform_gate').catch(() => ({ value: 1 })),
+        this.getGateStatus().catch(() => ({ gate_enabled: true })),
       ]);
 
       const settings: Partial<GeneralFormState> = {};
 
       // Fee settings
       if (feeSettings.status === 'fulfilled' && feeSettings.value.length > 0) {
-        const fixedFee = feeSettings.value.find(f => f.fee_type === 'fixed');
+        const fixFee = feeSettings.value.find(f => f.fee_type === 'fix');
         const floatFee = feeSettings.value.find(f => f.fee_type === 'float');
+        const riskFee = feeSettings.value.find(f => f.fee_type === 'risk');
         
-        if (fixedFee) settings.freeFixed = fixedFee.fixed_fee;
-        if (floatFee) settings.freeFloat = floatFee.float_fee;
+        if (fixFee) settings.freeFixed = fixFee.fee_percentage;
+        if (floatFee) settings.freeFloat = floatFee.fee_percentage;
+        if (riskFee) settings.riskFee = riskFee.fee_percentage;
       }
 
       // Risk score
@@ -164,8 +181,8 @@ export const GeneralService = {
       }
 
       // Platform gate
-      if (platformGate.status === 'fulfilled') {
-        settings.platformGate = platformGate.value.value === 1;
+      if (gateStatus.status === 'fulfilled') {
+        settings.platformGate = gateStatus.value.gate_enabled;
       }
 
       console.log('All settings loaded:', settings);
@@ -182,15 +199,19 @@ export const GeneralService = {
       const updates = await Promise.allSettled([
         // Update fee settings
         this.getFeeSettings().then(feeSettings => {
-          const fixedFee = feeSettings.find(f => f.fee_type === 'fixed');
+          const fixFee = feeSettings.find(f => f.fee_type === 'fix');
           const floatFee = feeSettings.find(f => f.fee_type === 'float');
+          const riskFee = feeSettings.find(f => f.fee_type === 'risk');
           
           const promises = [];
-          if (fixedFee) {
-            promises.push(this.updateFeeSetting(fixedFee.id, { fixed_fee: formData.freeFixed }));
+          if (fixFee) {
+            promises.push(this.updateFeeSetting(fixFee.id, { fee_percentage: formData.freeFixed }));
           }
           if (floatFee) {
-            promises.push(this.updateFeeSetting(floatFee.id, { float_fee: formData.freeFloat }));
+            promises.push(this.updateFeeSetting(floatFee.id, { fee_percentage: formData.freeFloat }));
+          }
+          if (riskFee) {
+            promises.push(this.updateFeeSetting(riskFee.id, { fee_percentage: formData.riskFee }));
           }
           return Promise.all(promises);
         }),
@@ -202,7 +223,7 @@ export const GeneralService = {
           from: formData.defaultFromCurrency,
           to: formData.defaultToCurrency,
         }),
-        this.updateConstantNumeric('platform_gate', formData.platformGate ? 1 : 0),
+        this.toggleNetworkGate(formData.platformGate),
       ]);
 
       console.log('All settings saved:', updates);

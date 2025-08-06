@@ -72,12 +72,14 @@ export const getAllWithdrawalsUrl = (s: string = '/') =>
 export const getExchange = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`exchange/api${s}`));
 
 // general settings
-export const getFeeSettingsUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`api/feesettings${s}`));
+export const getFeeSettingsUrl = (s: string = '/') => createProxyUrl(`api/feesettings${s}`);
 
 export const getConstantNumericUrl = (key: string) => createProxyUrl(ensureTrailingSlash(`constant/api/numeric/${key}`));
 
 export const getConstantJsonUrl = (key: string) => createProxyUrl(ensureTrailingSlash(`constant/api/json/${key}`));
 
-export const getAMLThresholdUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`api/aml_threshold${s}`));
+export const getAMLThresholdUrl = (s: string = '/') => createProxyUrl(`api/aml_threshold${s}`);
 
-export const getNetworkGateUrl = (s: string = '/') => createProxyUrl(ensureTrailingSlash(`network/api/${s}`));
+export const getNetworkGateUrl = (s: string = '/') => createProxyUrl(`network/api${s}`);
+
+export const getGateStatusUrl = () => createProxyUrl(`network/api/gate-status/`);

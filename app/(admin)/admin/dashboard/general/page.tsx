@@ -13,6 +13,7 @@ export default function GeneralPage() {
   const [formData, setFormData] = useState<GeneralFormState>({
     freeFixed: 1.5,
     freeFloat: 0.45,
+    riskFee: 50.0,
     riskScore: 1.5,
     defaultAmount: 0.5,
     defaultFromCurrency: 'BTC',
@@ -65,9 +66,9 @@ export default function GeneralPage() {
       switch (field) {
         case 'freeFixed':
           const feeSettings = await GeneralService.getFeeSettings();
-          const fixedFee = feeSettings.find(f => f.fee_type === 'fixed');
-          if (fixedFee) {
-            await GeneralService.updateFeeSetting(fixedFee.id, { fixed_fee: formData[field] });
+          const fixFee = feeSettings.find(f => f.fee_type === 'fix');
+          if (fixFee) {
+            await GeneralService.updateFeeSetting(fixFee.id, { fee_percentage: formData[field] });
           }
           break;
           
@@ -75,7 +76,15 @@ export default function GeneralPage() {
           const feeSettingsFloat = await GeneralService.getFeeSettings();
           const floatFee = feeSettingsFloat.find(f => f.fee_type === 'float');
           if (floatFee) {
-            await GeneralService.updateFeeSetting(floatFee.id, { float_fee: formData[field] });
+            await GeneralService.updateFeeSetting(floatFee.id, { fee_percentage: formData[field] });
+          }
+          break;
+          
+        case 'riskFee':
+          const feeSettingsRisk = await GeneralService.getFeeSettings();
+          const riskFee = feeSettingsRisk.find(f => f.fee_type === 'risk');
+          if (riskFee) {
+            await GeneralService.updateFeeSetting(riskFee.id, { fee_percentage: formData[field] });
           }
           break;
           
@@ -96,7 +105,7 @@ export default function GeneralPage() {
           break;
           
         case 'platformGate':
-          await GeneralService.updateConstantNumeric('platform_gate', formData[field] ? 1 : 0);
+          await GeneralService.toggleNetworkGate(formData[field] as boolean);
           break;
       }
       
@@ -126,7 +135,7 @@ export default function GeneralPage() {
     }
   };
 
-  // Обработчик переключения Platform (точная копия toggleSwitch)
+  // Обработчик переключения Platform
   const handlePlatformToggle = async () => {
     if (switchAnimStage !== 'idle' || isSaving) return;
 
@@ -134,21 +143,15 @@ export default function GeneralPage() {
     
     try {
       // Вызываем API для переключения gate
-      await GeneralService.toggleNetworkGate(!formData.platformGate);
+      const response = await GeneralService.toggleNetworkGate(!formData.platformGate);
       
-      if (!formData.platformGate) {
-        handleFormChange('platformGate', true);
-        setSwitchAnimStage('expanding');
-        setTimeout(() => setSwitchAnimStage('shrinking'), 150);
-        setTimeout(() => setSwitchAnimStage('idle'), 300);
-      } else {
-        setSwitchAnimStage('expanding');
-        setTimeout(() => {
-          handleFormChange('platformGate', false);
-          setSwitchAnimStage('shrinking');
-        }, 150);
-        setTimeout(() => setSwitchAnimStage('idle'), 300);
-      }
+      // Обновляем состояние на основе ответа API
+      handleFormChange('platformGate', response.gate_enabled);
+      
+      // Анимация переключателя
+      setSwitchAnimStage('expanding');
+      setTimeout(() => setSwitchAnimStage('shrinking'), 150);
+      setTimeout(() => setSwitchAnimStage('idle'), 300);
       
       console.log('Platform gate toggled successfully');
     } catch (error) {
@@ -285,8 +288,47 @@ export default function GeneralPage() {
                   </div>
                 </fieldset>
 
-                                {/* Default Amount */}
+                {/* Risk Fee, % */}
                 <fieldset className={styles.fieldset}>
+                  <div>
+                    <span>{'Risk Fee, %'}</span>
+                    <div className="flex gap-1">
+                      <Input 
+                        value={formData.riskFee}
+                        onChange={(e) => handleFormChange('riskFee', parseFloat(e.target.value) || 0)}
+                        type="number"
+                        step="0.01"
+                      />
+                      <Button 
+                        className="px-2 rounded-[10px]" 
+                        variant="solid" 
+                        color="blue" 
+                        size="large"
+                        loading={isSaving}
+                        disabled={isSaving}
+                        onClick={() => handleSaveField('riskFee')}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none">
+                          <path
+                            d="M4 12L8.94975 16.9497L19.5568 6.34314"
+                            stroke="white"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </Button>
+                    </div>
+                  </div>
+                </fieldset>
+
+                                {/* Default Amount */}
+                {/* <fieldset className={styles.fieldset}>
                   <div>
                     <span>{'Default Amount'}</span>
                     <div className="flex gap-1">
@@ -314,7 +356,7 @@ export default function GeneralPage() {
                       />
                     </div>
                   </div>
-                </fieldset>
+                </fieldset> */}
 
                 {/* Platform Section */}
                 <fieldset className={styles.fieldset}>
