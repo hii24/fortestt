@@ -288,14 +288,19 @@ const ExchangeTable: FC<{
                             </span>
                           </Tooltip>
                           <button
-                                onClick={async () => {
+                                onClick={() => {
                                   if (excluded.address) {
-                                    try {
-                                      await copyToClipboard(String(excluded.address));
-                                      message.success('Address copied to clipboard!');
-                                    } catch {
-                                      message.error('Failed to copy address!');
-                                    }
+                                    setModalContent({
+                                      title: 'Address Details',
+                                      children: (
+                                        <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
+                                          <div>
+                                            <strong>Address:</strong> {String(excluded.address)}
+                                          </div>
+                                        </div>
+                                      ),
+                                    });
+                                    setOpenModal(true);
                                   }
                                 }}>
                                 <EyeIcon size={16} />
@@ -414,14 +419,19 @@ const ExchangeTable: FC<{
                           </Tooltip>
                           {/* Правый нижний глазик - копирование адреса для вывода */}
                           <button
-                                onClick={async () => {
+                                onClick={() => {
                                   if (excluded.deposit_address) {
-                                    try {
-                                      await copyToClipboard(String(excluded.deposit_address));
-                                      message.success('Deposit address copied to clipboard!');
-                                    } catch {
-                                      message.error('Failed to copy deposit address!');
-                                    }
+                                    setModalContent({
+                                      title: 'Deposit Address Details',
+                                      children: (
+                                        <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
+                                          <div>
+                                            <strong>Deposit Address:</strong> {String(excluded.deposit_address)}
+                                          </div>
+                                        </div>
+                                      ),
+                                    });
+                                    setOpenModal(true);
                                   }
                                 }}>
                                 <EyeIcon size={16} />
