@@ -172,7 +172,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
   const pattern = '^\d*\.?\d{0,18}$';
 
   return (
-    <div className={`relative !w-full ${styles.fromSelect} ${className}`}>
+    <div className={`relative !w-full ${styles.fromSelect} ${className} lg:min-w-0 w-full`}>
       <div className={styles.floatIcon}>
         {showFloatIcon && !fixed && <span>{'~'}</span>}
         {showFloatIcon && fixed && (
@@ -230,14 +230,16 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
             )}
           </AnimatePresence>
 
-          {String(amount).includes('.')
-            ? String(amount).split('.')[0] + '.' + String(amount).split('.')[1].slice(0, 8)
-            : String(amount)}
+          <span className="lg:text-sm xl:text-base">
+            {String(amount).includes('.')
+              ? String(amount).split('.')[0] + '.' + String(amount).split('.')[1].slice(0, 8)
+              : String(amount)}
+          </span>
         </div>
       ) : (
         <DebouncedInput
           disabled={disabledAmound}
-          className="flex-1 pt-[19px] pb-[14px]"
+          className="flex-1 pt-[19px] pb-[14px] lg:text-sm xl:text-base w-full min-w-0"
           type="text"
           inputMode="decimal"
           pattern={pattern}

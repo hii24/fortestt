@@ -169,7 +169,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
     <>
       <div className={`flex flex-col lg:flex-row w-full p-0 sm:p-5 ${className || ''}`}>
         {/*---------------YOU SEND---------------*/}
-        <div className="flex-1 flex flex-col items-start gap-[10px] pt-[15px] sm:pt-0">
+        <div className="flex-1 flex flex-col items-start gap-[10px] pt-[15px] sm:pt-0 lg:max-w-[442px] xl:max-w-none min-w-0">
           <p
             className={`color-[#1b1b1b] text-[14px] md:text-[16px] font-[400] leading-normal ${error && '!text-red-500'}`}>
             You send
@@ -218,7 +218,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
         </button>
 
         {/*---------------YOU GET---------------*/}
-        <div className={`${styles.toSelect} flex-1 gap-[10px] flex flex-col items-start !w-full`}>
+        <div className={`${styles.toSelect} flex-1 gap-[10px] flex flex-col items-start !w-full lg:max-w-[442px] xl:max-w-none min-w-0`}>
           <p className={'color-[#1b1b1b] text-[14px] md:text-[16px] font-[400] leading-normal'}>You get</p>
           <CurrencySelector
             cuted
