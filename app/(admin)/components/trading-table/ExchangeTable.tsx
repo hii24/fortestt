@@ -60,6 +60,8 @@ const ExchangeTable: FC<{
     'deposit_address',
     'deposite',
     'terms',
+    'withdraw_refund',
+    'support_email',
   ];
 
   // const normalHeaders = Object.keys(list?.[0] ?? {}).filter((key) => !excludeKeys.includes(key));
@@ -149,7 +151,7 @@ const ExchangeTable: FC<{
               /* eslint-disable @typescript-eslint/no-explicit-any */
               [{}, {}] as [Record<string, any>, Record<string, any>]
             );
-
+            console.log(list);
             const className = 'p-2 border';
             return (
               <tr 
@@ -199,17 +201,16 @@ const ExchangeTable: FC<{
                         title: 'Info',
                         children: (
                           <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
-                            {excluded?.address && (
-                              <div>
-                                <strong>Address:</strong> {excluded.address}
-                              </div>
-                            )}
-                            {excluded?.refund_address && (
-                              <div>
-                                <strong>Refound address:</strong> {excluded.refund_address}
-                              </div>
-                            )}
-                            {!(excluded?.address || excluded?.refund_address) && <div>No data</div>}
+                            <div>
+                              <strong>Address:</strong> {excluded?.address || '-'}
+                            </div>
+                           
+                            <div>
+                              <strong>Withdraw refund:</strong> {excluded?.withdraw_refund || '-'}
+                            </div>
+                            <div>
+                              <strong>Support email:</strong> {excluded?.support_email || '-'}
+                            </div>
                           </div>
                         ),
                       });

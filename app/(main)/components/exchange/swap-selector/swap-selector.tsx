@@ -184,7 +184,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
             isCalculating={isLoading}
           />
           <div className="relative inline-block">
-            <p className={clsx(`pl-1 color-[#1B1B1B] text-[12px] md:text-[14px] font-[300] leading-normal`)}>
+            <p className={clsx(`pl-1 color-[#1B1B1B] text-[12px] md:text-[14px] font-[360] leading-normal`)}>
               {error ? (
                 <span className="text-red-500">{error}</span>
               ) : (
@@ -233,7 +233,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
             isCalculating={isLoading}
           />
           <div className="relative inline-block">
-            <p className={clsx(`pl-1 color-[#1B1B1B] text-[12px] md:text-[14px] font-[300] leading-normal`)}>
+            <p className={clsx(`pl-1 color-[#1B1B1B] text-[12px] md:text-[14px] font-[360] leading-normal`)}>
               {pricePerOne?.price
                 ? `1 ${fromCurrency?.token} = ${pricePerOne?.price}`
                 : `${pricePerOne?.price ?? 'Try select another pair'}`}
