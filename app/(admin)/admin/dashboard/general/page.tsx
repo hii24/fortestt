@@ -288,7 +288,7 @@ export default function GeneralPage() {
                   </div>
                 </fieldset>
 
-                {/* Risk Fee, % */}
+                {/* Risk Fee, %
                 <fieldset className={styles.fieldset}>
                   <div>
                     <span>{'Risk Fee, %'}</span>
@@ -325,7 +325,7 @@ export default function GeneralPage() {
                       </Button>
                     </div>
                   </div>
-                </fieldset>
+                </fieldset> */}
 
                                 {/* Default Amount */}
                 {/* <fieldset className={styles.fieldset}>

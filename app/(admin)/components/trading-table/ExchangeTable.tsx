@@ -264,10 +264,11 @@ const ExchangeTable: FC<{
                             <EyeIcon size={16} />
                           </button>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Tooltip title={excluded.address != null ? String(excluded.address) : ''}>
+                        <div className="flex items-center gap-1 ">
+                          <Tooltip
+                            title={excluded.deposit_address != null ? String(excluded.deposit_address) : ''}>
                             <span
-                              className="text-xs cursor-pointer"
+                              className="text-xs cursor-pointer flex items-center gap-1"
                               style={{
                                
                                 overflow: 'hidden',
@@ -275,28 +276,29 @@ const ExchangeTable: FC<{
                                 display: 'inline-block',
                               }}
                               onClick={async () => {
-                                if (excluded.address) {
+                                if (excluded.deposit_address) {
                                   try {
-                                    await copyToClipboard(String(excluded.address));
-                                    message.success('Address copied to clipboard!');
+                                    await copyToClipboard(String(excluded.deposit_address));
+                                    message.success('Deposit address copied to clipboard!');
                                   } catch {
-                                    message.error('Failed to copy address!');
+                                    message.error('Failed to copy deposit address!');
                                   }
                                 }
                               }}>
-                              {formatAddress(excluded.address)}
-                             
+                              {formatAddress(excluded.deposit_address)}
+                              
                             </span>
                           </Tooltip>
+                          {/* Правый нижний глазик - копирование адреса для вывода */}
                           <button
                                 onClick={() => {
-                                  if (excluded.address) {
+                                  if (excluded.deposit_address) {
                                     setModalContent({
-                                      title: 'Address Details',
+                                      title: 'Deposit Address Details',
                                       children: (
                                         <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
                                           <div>
-                                            <strong>Address:</strong> {String(excluded.address)}
+                                            <strong>Deposit Address:</strong> {String(excluded.deposit_address)}
                                           </div>
                                         </div>
                                       ),
@@ -306,8 +308,8 @@ const ExchangeTable: FC<{
                                 }}>
                                 <EyeIcon size={16} />
                               </button>
-                          {/* Левый нижний глазик - копирование депозитного адреса */}
                         </div>
+                        
                         {/* MEMO для депозита если есть */}
                         {excluded.memo && <div className="text-xs text-gray-500">MEMO: {excluded.memo}</div>}
                       </div>
@@ -393,11 +395,11 @@ const ExchangeTable: FC<{
                             <EyeIcon size={16} />
                           </button>
                         </div>
-                        <div className="flex items-center gap-1 ">
-                          <Tooltip
-                            title={excluded.deposit_address != null ? String(excluded.deposit_address) : ''}>
+                        {/* Копирование адреса для вывода депозита */}
+                        <div className="flex items-center gap-1">
+                          <Tooltip title={excluded.address != null ? String(excluded.address) : ''}>
                             <span
-                              className="text-xs cursor-pointer flex items-center gap-1"
+                              className="text-xs cursor-pointer"
                               style={{
                                
                                 overflow: 'hidden',
@@ -405,29 +407,28 @@ const ExchangeTable: FC<{
                                 display: 'inline-block',
                               }}
                               onClick={async () => {
-                                if (excluded.deposit_address) {
+                                if (excluded.address) {
                                   try {
-                                    await copyToClipboard(String(excluded.deposit_address));
-                                    message.success('Deposit address copied to clipboard!');
+                                    await copyToClipboard(String(excluded.address));
+                                    message.success('Address copied to clipboard!');
                                   } catch {
-                                    message.error('Failed to copy deposit address!');
+                                    message.error('Failed to copy address!');
                                   }
                                 }
                               }}>
-                              {formatAddress(excluded.deposit_address)}
-                              
+                              {formatAddress(excluded.address)}
+                             
                             </span>
                           </Tooltip>
-                          {/* Правый нижний глазик - копирование адреса для вывода */}
                           <button
                                 onClick={() => {
-                                  if (excluded.deposit_address) {
+                                  if (excluded.address) {
                                     setModalContent({
-                                      title: 'Deposit Address Details',
+                                      title: 'Address Details',
                                       children: (
                                         <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
                                           <div>
-                                            <strong>Deposit Address:</strong> {String(excluded.deposit_address)}
+                                            <strong>Address:</strong> {String(excluded.address)}
                                           </div>
                                         </div>
                                       ),
@@ -437,6 +438,7 @@ const ExchangeTable: FC<{
                                 }}>
                                 <EyeIcon size={16} />
                               </button>
+                          {/* Левый нижний глазик - копирование депозитного адреса */}
                         </div>
                         {/* MEMO для вывода если есть */}
                         {excluded.withdrawal_memo && (
@@ -455,7 +457,7 @@ const ExchangeTable: FC<{
                   {/* Hover кнопки */}
                   {hoveredRowIndex === index && (
                     <div 
-                      className="absolute top-1/4 transform -translate-y-1/2 flex"
+                      className="absolute -bottom-1/4 transform -translate-y-1/2 flex"
                       style={{
                         gap: '4px',
                         width: '260px',
