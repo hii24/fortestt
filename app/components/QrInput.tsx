@@ -21,6 +21,7 @@ const QrInput = ({ value, onChange, placeholder, required }: Props) => {
   return (
     <>
       <Input
+        style={{ fontSize: 16 }}
         required={required}
         placeholder={placeholder}
         value={value}

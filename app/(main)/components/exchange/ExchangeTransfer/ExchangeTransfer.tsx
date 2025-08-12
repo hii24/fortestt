@@ -320,6 +320,7 @@ export const ExchangeTransfer = () => {
             <div className="w-full">
               <p className="text-gray-700 mb-2 text-sm font-medium">Enter Memo address</p>
               <Input
+                style={{ fontSize: 16 }}
                 required={fromCurrency.is_memo || toCurrency.is_memo}
                 placeholder="Enter the recipient's address"
                 value={memoAddress}
@@ -401,6 +402,7 @@ export const ExchangeTransfer = () => {
         <div className="w-full mb-5 ml-1">
           <p className="text-gray-700 mb-2 text-sm font-medium">Refund wallet (optional)</p>
           <Input
+            style={{ fontSize: 16 }}
             placeholder="Wallet for refund (optional)"
             value={refundAddress}
             onChange={(e) => setRefundAddress(e.target.value)}
@@ -414,6 +416,7 @@ export const ExchangeTransfer = () => {
             Email (Optional)
           </p>
           <Input
+            style={{ fontSize: 16 }}
             placeholder="Exchange alerts (optional)"
             value={email}
             type="email"
