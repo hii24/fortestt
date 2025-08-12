@@ -1,16 +1,19 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 import { Pagination } from 'antd';
 import { Order } from '@/types/response.interface';
 import { message, Tooltip } from 'antd';
 import { copyToClipboard } from '@/utils/copyToClipboard';
+import { useViewportPageSize } from '@/hooks/useViewportPageSize';
 
 const OrderTable: FC<{
   total: number;
   list: Order[];
   currentPage: number;
   setCurrentPage: (page: number) => void;
-}> = ({ total = 0, list = [], currentPage, setCurrentPage }) => {
+  pageSize?: number;
+  onDesiredPageSize?: (pageSize: number) => void;
+}> = ({ total = 0, list = [], currentPage, setCurrentPage, pageSize, onDesiredPageSize }) => {
   const mainKeys = [
     'order_id',
     'order_time',
@@ -30,11 +33,26 @@ const OrderTable: FC<{
 
   if (total === 0) return null;
 
+  const tableRef = useRef<HTMLTableElement | null>(null);
+
+  const desiredPageSize = useViewportPageSize(tableRef as unknown as React.MutableRefObject<HTMLElement | null>, {
+    storageKey: 'orderTablePageSize',
+    // Static measurements to avoid initial layout jump
+    topReservePx: 220,
+    tableHeaderPx: 48,
+    rowHeightPx: 60,
+  });
+  useEffect(() => {
+    if (desiredPageSize && onDesiredPageSize) {
+      onDesiredPageSize(desiredPageSize);
+    }
+  }, [desiredPageSize, onDesiredPageSize]);
+
   return (
     <>
       <div className="max-w-full  -mx-3 px-3">
       {/* <div className="max-w-full overflow-x-auto -mx-3 px-3"> */}
-        <table className={styles.table}>
+        <table className={styles.table} ref={tableRef}>
           <thead>
             <tr>
               {mainKeys.map((key) => (
@@ -170,6 +188,7 @@ const OrderTable: FC<{
           className="w-fit inline-block-0 px-3 py-2 rounded-xl"
           current={currentPage}
           onChange={(page) => setCurrentPage(page)}
+          pageSize={pageSize}
           total={total}
         />
       </div>

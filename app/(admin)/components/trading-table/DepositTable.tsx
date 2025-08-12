@@ -1,21 +1,24 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css';
 import { WithdrawalProcessStatus } from '@/config/status.config';
 import { GetWithdrawalItem } from '@/types/withdrawal.interface';
 import { Tooltip, message, Modal } from 'antd';
 import EyeIcon from './EyeIcon';
 import { copyToClipboard } from '@/utils/copyToClipboard';
+import { useViewportPageSize } from '@/hooks/useViewportPageSize';
 
 const DepositTable: FC<{
   list?: GetWithdrawalItem[];
   statusColors?: {
     success: string;
   };
+  onDesiredPageSize?: (size: number) => void;
 }> = ({
   list = [],
   statusColors = {
     success: 'bg-green-100 text-green-800',
   },
+  onDesiredPageSize,
 }) => {
   const excludeKeys: string[] = [
     // 'memo',
@@ -46,6 +49,19 @@ const DepositTable: FC<{
     }
   };
 
+  const tableRef = useRef<HTMLTableElement | null>(null);
+  const desiredPageSize = useViewportPageSize(tableRef as unknown as React.MutableRefObject<HTMLElement | null>, {
+    storageKey: 'depositTablePageSize',
+    topReservePx: 220,
+    tableHeaderPx: 48,
+    rowHeightPx: 50,
+  });
+  useEffect(() => {
+    if (desiredPageSize && onDesiredPageSize) {
+      onDesiredPageSize(desiredPageSize);
+    }
+  }, [desiredPageSize, onDesiredPageSize]);
+
   return (
     <>
       <Modal
@@ -57,7 +73,7 @@ const DepositTable: FC<{
         <div className="text-lg font-bold mb-3">{modalContent?.title}</div>
         {modalContent?.children}
       </Modal>
-      <table className={styles.table}>
+      <table className={styles.table} ref={tableRef}>
         <thead>
           <tr>
             {normalHeaders.map((key, index) => (

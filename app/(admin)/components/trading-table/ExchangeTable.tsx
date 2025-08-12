@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css';
 import { ExchangeProcessStatus } from '@/config/status.config';
 import { GetExchangesItem } from '@/types/exchange.interface';
@@ -9,6 +9,7 @@ import InfoIcon from './InfoIcon';
 import ManualUpdateModal from '../create-modal/ManualUpdateModal';
 import { ExchangeService } from '@/services/exchange/exchange.service';
 import { copyToClipboard } from '@/utils/copyToClipboard';
+import { useViewportPageSize } from '@/hooks/useViewportPageSize';
 
 const ExchangeTable: FC<{
   list?: GetExchangesItem[];
@@ -25,6 +26,7 @@ const ExchangeTable: FC<{
     refunded: string;
   };
   onExchangeUpdated?: () => void;
+  onDesiredPageSize?: (size: number) => void;
 }> = ({
   list = [],
   statusColors = {
@@ -40,6 +42,7 @@ const ExchangeTable: FC<{
     refunded: 'bg-violet-100 text-violet-800',
   },
   onExchangeUpdated,
+  onDesiredPageSize,
 }) => {
   const excludeKeys = [
     'unique_id',
@@ -99,6 +102,19 @@ const ExchangeTable: FC<{
     }
   };
 
+  const tableRef = useRef<HTMLTableElement | null>(null);
+  const desiredPageSize = useViewportPageSize(tableRef as unknown as React.MutableRefObject<HTMLElement | null>, {
+    storageKey: 'exchangeTablePageSize',
+    topReservePx: 220,
+    tableHeaderPx: 48,
+    rowHeightPx: 60,
+  });
+  useEffect(() => {
+    if (desiredPageSize && onDesiredPageSize) {
+      onDesiredPageSize(desiredPageSize);
+    }
+  }, [desiredPageSize, onDesiredPageSize]);
+
   return (
     <>
       <Modal
@@ -110,7 +126,7 @@ const ExchangeTable: FC<{
         <div className="text-lg font-bold mb-3">{modalContent?.title}</div>
         {modalContent?.children}
       </Modal>
-      <table className={styles.table}>
+      <table className={styles.table} ref={tableRef}>
         <thead>
           <tr>
             <th className="p-2 border text-left capitalize">

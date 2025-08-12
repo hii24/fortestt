@@ -31,6 +31,7 @@ export default function HistoryPage() {
   const [responseData, setResponseData] = useState<ResponseList<GetExchangesItem> | EmptyResponse | null>(
     null
   );
+  const [desiredPageSize, setDesiredPageSize] = useState<number | undefined>(undefined);
 
   const onChangeDate: DatePickerProps['onChange'] = (_, dateString) => {
     console.log(dateString);
@@ -93,6 +94,12 @@ export default function HistoryPage() {
   useEffect(() => {
     fetchData(currentParams);
   }, [fetchData, currentParams]);
+
+  useEffect(() => {
+    if (desiredPageSize && String(desiredPageSize) !== currentParams.page_size) {
+      setCurrentParams((prev) => ({ ...prev, page_size: String(desiredPageSize), page: '1' }));
+    }
+  }, [desiredPageSize]);
 
   const [coinList, setCoinList] = useState<{ label: string; value: string }[]>([]);
   const [searchToken1, setSearchToken1] = useState('');
@@ -392,12 +399,14 @@ export default function HistoryPage() {
             <ExchangeTable 
               list={responseData?.results} 
               onExchangeUpdated={handleExchangeUpdated}
+              onDesiredPageSize={(size) => setDesiredPageSize(size)}
             />
           </div>
           <CustomPagination
             total={responseData?.count}
             currentPage={Number(currentParams?.page ?? 1)}
             setCurrentPage={setCurrentPage}
+            pageSize={Number(currentParams.page_size)}
           />
         </>
       ) : (

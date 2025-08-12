@@ -43,6 +43,7 @@ export default function HistoryPage() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [orderData, setOrderData] = useState<ResponseList<Order> | null>(null);
+  const [desiredPageSize, setDesiredPageSize] = useState<number | undefined>(undefined);
 
   const [currentParams, setCurrentParams] = useState<OrderParams>({
     page: 1,
@@ -110,6 +111,13 @@ export default function HistoryPage() {
   useEffect(() => {
     fetchData(currentParams);
   }, [fetchData, currentParams]);
+
+  // When desiredPageSize is computed, push it to backend param and refetch
+  useEffect(() => {
+    if (desiredPageSize && desiredPageSize > 0 && currentParams.page_size !== desiredPageSize) {
+      setCurrentParams((prev) => ({ ...prev, page_size: desiredPageSize, page: 1 }));
+    }
+  }, [desiredPageSize]);
 
   const statusOptions = [
     { value: 'all', label: <span className="text-sm font-medium">Status</span> },
@@ -388,6 +396,8 @@ export default function HistoryPage() {
           list={orderData?.results ?? []}
           currentPage={currentParams?.page ?? 1}
           setCurrentPage={setCurrentPage}
+          pageSize={currentParams.page_size}
+          onDesiredPageSize={(size) => setDesiredPageSize(size)}
         />
       ) : (
         <p className="text-2xl">No Items</p>

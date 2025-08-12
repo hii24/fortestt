@@ -32,6 +32,7 @@ export default function HistoryPage() {
   const [responseData, setResponseData] = useState<ResponseList<GetWithdrawalItem> | EmptyResponse | null>(
     null
   );
+  const [desiredPageSize, setDesiredPageSize] = useState<number | undefined>(undefined);
 
   const onChangeDate: DatePickerProps['onChange'] = (_, dateString) => {
     console.log(dateString);
@@ -73,6 +74,12 @@ export default function HistoryPage() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fetchData(currentParams as any);
   }, [fetchData, currentParams]);
+
+  useEffect(() => {
+    if (desiredPageSize && String(desiredPageSize) !== currentParams.page_size) {
+      setCurrentParams((prev) => ({ ...prev, page_size: String(desiredPageSize), page: '1' }));
+    }
+  }, [desiredPageSize]);
 
   // const [coinList, setCoinList] = useState<{ label: string; value: string | Element }[]>([]);
 
@@ -239,12 +246,13 @@ export default function HistoryPage() {
       ) : responseData && 'count' in responseData && responseData?.count ? (
         <>
           <div className="w-full overflow-x-auto">
-            <DepositTable list={responseData?.results} />
+            <DepositTable list={responseData?.results} onDesiredPageSize={(size) => setDesiredPageSize(size)} />
           </div>
           <CustomPagination
             total={responseData?.count}
             currentPage={Number(currentParams?.page ?? 1)}
             setCurrentPage={setCurrentPage}
+            pageSize={Number(currentParams.page_size)}
           />
         </>
       ) : (

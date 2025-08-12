@@ -6,7 +6,8 @@ export const CustomPagination: FC<{
   total: number;
   currentPage: number;
   setCurrentPage: (page: number) => void;
-}> = ({ total = 0, currentPage = 1, setCurrentPage }) => {
+  pageSize?: number;
+}> = ({ total = 0, currentPage = 1, setCurrentPage, pageSize }) => {
   return (
     <div className={`${styles.paginationContainer} relative h-[48px] my-5`}>
       <Pagination
@@ -16,6 +17,7 @@ export const CustomPagination: FC<{
         onChange={(page) => {
           setCurrentPage(page);
         }}
+        pageSize={pageSize}
         total={total ?? 0}></Pagination>
     </div>
   );
