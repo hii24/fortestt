@@ -40,6 +40,8 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
   const [isStopped, setIsStopped] = useState(false);
   const [note, setNote] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [formError, setFormError] = useState<string>('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
 
   // Состояние для управления dropdown статуса
   const [isStatusOpen, setIsStatusOpen] = useState(false);
@@ -90,8 +92,19 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
       setBuyOrders([]);
       setSellOrders([]);
       setIsStatusOpen(false);
+      setFormError('');
+      setFieldErrors({});
     }
   }, [isOpen]);
+
+  const clearFieldError = (field: string) => {
+    if (fieldErrors[field]) {
+      setFieldErrors(prev => {
+        const { [field]: _removed, ...rest } = prev;
+        return rest;
+      });
+    }
+  };
 
   const handleSubmit = async () => {
     if (!transaction?.unique_id) {
@@ -106,6 +119,8 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
     // }
 
     setIsLoading(true);
+    setFormError('');
+    setFieldErrors({});
     
     try {
       // Подготавливаем данные для отправки согласно новой структуре
@@ -146,12 +161,31 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
         onClose();
       } else {
         console.error('Failed to update exchange:', result?.error || 'Unknown error');
+        // Разложим ошибки по полям, если есть
+        if (result && typeof result === 'object') {
+          const { error, detail, message, ...maybeFieldErrors } = result as Record<string, any>;
+          const collected: Record<string, string[]> = {};
+          Object.entries(maybeFieldErrors).forEach(([key, value]) => {
+            if (value == null) return;
+            if (Array.isArray(value)) {
+              collected[key] = value.map(v => String(v));
+            } else if (typeof value === 'string') {
+              collected[key] = [value];
+            } else if (typeof value === 'object' && Array.isArray((value as any).non_field_errors)) {
+              collected[key] = (value as any).non_field_errors.map((v: unknown) => String(v));
+            }
+          });
+
+          setFieldErrors(collected);
+          setFormError(String(result?.error || result?.detail || result?.message || 'Validation error'));
+        } else {
+          setFormError('Unknown error');
+        }
         // При ошибке не закрываем модалку и не очищаем поля
-        alert('Failed to update exchange: ' + (result?.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error updating exchange:', error);
-      alert('Error updating exchange: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      setFormError(error instanceof Error ? error.message : 'Unknown error');
     } finally {
       setIsLoading(false);
     }
@@ -210,6 +244,9 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
               <path d="M19.92 9.41L13.4 15.93C12.63 16.7 11.37 16.7 10.6 15.93L4.08 9.41" stroke="#1B1B1B" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
+          {fieldErrors.status && fieldErrors.status.length > 0 && (
+            <div className={styles.errorText}>{fieldErrors.status.join(' ')}</div>
+          )}
           
           {/* Status Options */}
           {isStatusOpen && (
@@ -229,23 +266,20 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
           )}
         </div>
 
+        { (formError || Object.keys(fieldErrors).length > 0) && (
+          <div className={styles.errorSummary}>
+            {formError && <div>{formError}</div>}
+            {Object.entries(fieldErrors).map(([key, messages]) => (
+              key !== 'non_field_errors' && messages?.length ? (
+                <div key={key}>{`${key}: ${messages.join(' ')}`}</div>
+              ) : null
+            ))}
+          </div>
+        )}
+
         {/* Input Blocks Grid */}
         <div className={styles.inputGrid}>
-          {/* Withdrawals */}
-          <div className={styles.inputBlock}>
-            <label className={styles.inputLabel}>Withdrawals</label>
-            <div className={styles.inputContainer}>
-              <Input 
-                value={withdrawal}
-                onChange={(e) => setWithdrawal(e.target.value)}
-                className={styles.manualInput}
-                placeholder="Enter withdrawal amount"
-              />
-              <button className={styles.placeOrderButton}>
-                Place new order +
-              </button>
-            </div>
-          </div>
+         
 
           {/* Deposit */}
           <div className={styles.inputBlock}>
@@ -253,47 +287,86 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
             <div className={styles.inputContainer}>
               <Input 
                 value={deposit}
-                onChange={(e) => setDeposit(e.target.value)}
-                className={styles.manualInput}
+                onChange={(e) => {
+                  setDeposit(e.target.value);
+                  clearFieldError('deposit');
+                }}
+                className={`${styles.manualInput} ${fieldErrors.deposit ? styles.inputError : ''}`}
                 placeholder="Enter deposit amount"
               />
+              {fieldErrors.deposit && fieldErrors.deposit.length > 0 && (
+                <div className={styles.errorText}>{fieldErrors.deposit.join(' ')}</div>
+              )}
               <button className={styles.placeOrderButton}>
                 Place new order
               </button>
             </div>
           </div>
-
+ {/* Withdrawals */}
+ <div className={styles.inputBlock}>
+            <label className={styles.inputLabel}>Withdrawals</label>
+            <div className={styles.inputContainer}>
+              <Input 
+                value={withdrawal}
+                onChange={(e) => {
+                  setWithdrawal(e.target.value);
+                  clearFieldError('withdrawal');
+                }}
+                className={`${styles.manualInput} ${fieldErrors.withdrawal ? styles.inputError : ''}`}
+                placeholder="Enter withdrawal amount"
+              />
+              {fieldErrors.withdrawal && fieldErrors.withdrawal.length > 0 && (
+                <div className={styles.errorText}>{fieldErrors.withdrawal.join(' ')}</div>
+              )}
+              <button className={styles.placeOrderButton}>
+                Place new order +
+              </button>
+            </div>
+          </div>
+           {/* Sell Trades */}
+           <div className={styles.inputBlock}>
+            <label className={styles.inputLabel}>Sell Trades</label>
+            <div className={styles.inputContainer}>
+              <Input 
+                value={sellOrders.join(', ')}
+                onChange={(e) => {
+                  setSellOrders(e.target.value.split(',').map(s => s.trim()).filter(s => s));
+                  clearFieldError('sell_orders');
+                }}
+                className={`${styles.manualInput} ${fieldErrors.sell_orders ? styles.inputError : ''}`}
+                placeholder="Enter sell trades"
+              />
+              {fieldErrors.sell_orders && fieldErrors.sell_orders.length > 0 && (
+                <div className={styles.errorText}>{fieldErrors.sell_orders.join(' ')}</div>
+              )}
+              <button className={styles.placeOrderButton}>
+                Place new order
+              </button>
+            </div>
+          </div>
           {/* Buy Trades */}
           <div className={styles.inputBlock}>
             <label className={styles.inputLabel}>Buy Trades</label>
             <div className={styles.inputContainer}>
               <Input 
                 value={buyOrders.join(', ')}
-                onChange={(e) => setBuyOrders(e.target.value.split(',').map(s => s.trim()).filter(s => s))}
-                className={styles.manualInput}
+                onChange={(e) => {
+                  setBuyOrders(e.target.value.split(',').map(s => s.trim()).filter(s => s));
+                  clearFieldError('buy_orders');
+                }}
+                className={`${styles.manualInput} ${fieldErrors.buy_orders ? styles.inputError : ''}`}
                 placeholder="Enter buy trades"
               />
+              {fieldErrors.buy_orders && fieldErrors.buy_orders.length > 0 && (
+                <div className={styles.errorText}>{fieldErrors.buy_orders.join(' ')}</div>
+              )}
               <button className={styles.placeOrderButton}>
                 Place new order
               </button>
             </div>
           </div>
 
-          {/* Sell Trades */}
-          <div className={styles.inputBlock}>
-            <label className={styles.inputLabel}>Sell Trades</label>
-            <div className={styles.inputContainer}>
-              <Input 
-                value={sellOrders.join(', ')}
-                onChange={(e) => setSellOrders(e.target.value.split(',').map(s => s.trim()).filter(s => s))}
-                className={styles.manualInput}
-                placeholder="Enter sell trades"
-              />
-              <button className={styles.placeOrderButton}>
-                Place new order
-              </button>
-            </div>
-          </div>
+         
         </div>
 
         {/* Save Button */}

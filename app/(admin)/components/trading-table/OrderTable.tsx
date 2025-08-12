@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 import styles from './styles.module.css';
 import { Pagination } from 'antd';
 import { Order } from '@/types/response.interface';
-import { Tooltip } from 'antd';
+import { message, Tooltip } from 'antd';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 const OrderTable: FC<{
   total: number;
@@ -111,6 +112,31 @@ const OrderTable: FC<{
                             }`}>
                             {value}
                           </span>
+                        </td>
+                      );
+                    }
+
+                    if (key === 'order_id' || key === 'exchange_id') {
+                      return (
+                        <td key={key} className={`${baseClass} text-left`}>
+                          {value ? (
+                            <span
+                              className="cursor-pointer hover:underline"
+                              onClick={async () => {
+                                try {
+                                  await copyToClipboard(String(value));
+                                  message.success(`${key.replace('_', ' ').toUpperCase()} copied to clipboard!`);
+                                } catch {
+                                  message.error(`Failed to copy ${key.replace('_', ' ')}!`);
+                                }
+                              }}
+                              title={`Click to copy ${key}`}
+                            >
+                              {String(value)}
+                            </span>
+                          ) : (
+                            '-'
+                          )}
                         </td>
                       );
                     }

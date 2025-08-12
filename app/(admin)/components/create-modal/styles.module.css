@@ -474,3 +474,21 @@
 .saveButton:hover {
   background-color: #2850E8;
 }
+
+/* Error styles */
+.errorText {
+  color: #E02424;
+  font-size: 12px;
+}
+
+.errorSummary {
+  background-color: #FFF5F5;
+  border: 1px solid #FED7D7;
+  color: #9B2C2C;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.inputError {
+  outline: 1px solid #E02424;
+}

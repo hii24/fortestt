@@ -89,6 +89,16 @@ const ExchangeTable: FC<{
     return num.toFixed(8);
   };
 
+  const handleCopy = async (label: string, value?: unknown) => {
+    if (!value) return;
+    try {
+      await copyToClipboard(String(value));
+      message.success(`${label} copied to clipboard!`);
+    } catch {
+      message.error(`Failed to copy ${label.toLowerCase()}!`);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -159,7 +169,19 @@ const ExchangeTable: FC<{
                 className="hover:bg-gray-50 relative"
                 onMouseEnter={() => setHoveredRowIndex(index)}
                 onMouseLeave={() => setHoveredRowIndex(null)}>
-                <td className={`${className} min-w-fit text-left`}>{excluded.unique_id}</td>
+                <td className={`${className} min-w-fit text-left`}>
+                  {excluded.unique_id ? (
+                    <span
+                      className="cursor-pointer hover:underline"
+                      onClick={() => handleCopy('Exchange ID', excluded.unique_id)}
+                      title="Click to copy Exchange ID"
+                    >
+                      {excluded.unique_id}
+                    </span>
+                  ) : (
+                    '-'
+                  )}
+                </td>
 
                 <td className={`${className} min-w-fit text-left`}>
                   <span
@@ -248,7 +270,18 @@ const ExchangeTable: FC<{
                                 children: (
                                   <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
                                     <div>
-                                      <strong>Deposit ID:</strong> {excluded?.deposite ?? '-'}
+                                      <strong>Deposit ID:</strong>{' '}
+                                      {excluded?.deposite ? (
+                                        <span
+                                          className="cursor-pointer hover:underline"
+                                          onClick={() => handleCopy('Deposit ID', excluded.deposite)}
+                                          title="Click to copy Deposit ID"
+                                        >
+                                          {excluded.deposite}
+                                        </span>
+                                      ) : (
+                                        '-'
+                                      )}
                                     </div>
                                     <div>
                                       <strong>Expected Deposit:</strong> {excluded.exp_token1_amount ?? '-'}
@@ -378,7 +411,18 @@ const ExchangeTable: FC<{
                                 children: (
                                   <div className="bg-[#F5F0F0] rounded-2xl p-3 mr-4">
                                     <div>
-                                      <strong>Withdrawal ID:</strong> {excluded?.unique_id ?? '-'}
+                                      <strong>Withdrawal ID:</strong>{' '}
+                                      {excluded?.unique_id ? (
+                                        <span
+                                          className="cursor-pointer hover:underline"
+                                          onClick={() => handleCopy('Withdrawal ID', excluded.unique_id)}
+                                          title="Click to copy Withdrawal ID"
+                                        >
+                                          {excluded.unique_id}
+                                        </span>
+                                      ) : (
+                                        '-'
+                                      )}
                                     </div>
                                     <div>
                                       <strong>Expected Withdrawal:</strong>{' '}
@@ -466,6 +510,7 @@ const ExchangeTable: FC<{
                         display: 'flex',
                         flexDirection: 'row',
                       }}>
+                      {!transaction.is_stopped && (
                       <button
                         style={{
                           display: 'flex',
@@ -493,8 +538,9 @@ const ExchangeTable: FC<{
                             
                             if (result && !result.error) {
                               console.log('Exchange stopped successfully:', excluded.unique_id);
-                              // Optionally refresh the data or update UI
-                              // You might want to call a callback prop here to refresh the table data
+                              if (onExchangeUpdated) {
+                                onExchangeUpdated();
+                              }
                             } else {
                               console.error('Failed to stop exchange:', result?.error || 'Unknown error');
                             }
@@ -507,6 +553,7 @@ const ExchangeTable: FC<{
                         title="Stop Exchange">
                         Stop Exchange
                       </button>
+                      )}
                       <button
                         style={{
                           display: 'flex',

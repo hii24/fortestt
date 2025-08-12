@@ -36,6 +36,16 @@ const WithdrawalTable: FC<{
 
   const normalHeaders = Object.keys(list?.[0] ?? {}).filter((key) => !excludeKeys?.includes(key));
 
+  const handleCopy = async (label: string, value?: unknown) => {
+    if (!value) return;
+    try {
+      await copyToClipboard(String(value));
+      message.success(`${label} copied to clipboard!`);
+    } catch {
+      message.error(`Failed to copy ${label.toLowerCase()}!`);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -73,6 +83,25 @@ const WithdrawalTable: FC<{
                       </td>
                     );
                   }
+                  // Click-to-copy ID-like fields
+                  if (key === 'withdrawal_id' || key === 'deposit_id' || key === 'exchange_id' || key === 'order_id' || key === 'id') {
+                    return (
+                      <td key={key} className={className}>
+                        {value ? (
+                          <span
+                            className="cursor-pointer hover:underline"
+                            onClick={() => handleCopy(key.replace('_', ' ').toUpperCase(), value)}
+                            title={`Click to copy ${key}`}
+                          >
+                            {String(value)}
+                          </span>
+                        ) : (
+                          '-'
+                        )}
+                      </td>
+                    );
+                  }
+
                   if (key === 'withdrawal_time') {
                     return (
                       <td key={key} className={className}>
