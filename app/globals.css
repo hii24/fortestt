@@ -379,7 +379,7 @@ img {
   border: none;
   outline: none;
   overflow: hidden;
-  color: var(--Grey_txt, #7d7878);
+  color: #1B1B1B;
   font-feature-settings:
     'liga' off,
     'clig' off;
@@ -388,6 +388,12 @@ img {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+/* Ensure native inputs and textareas default to the primary text color */
+input,
+textarea {
+  color: #1B1B1B;
 }
 
 .customSelect.ant-select-filled:not(.ant-select-customize-input) .ant-select-selector {
