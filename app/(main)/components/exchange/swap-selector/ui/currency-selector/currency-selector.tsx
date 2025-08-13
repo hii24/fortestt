@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { CurrencyPropsFinal } from '@/types/coin.interface';
 import { DebouncedInput } from '@/app/components/DebouncedInput';
 import styles from '@/app/(main)/components/exchange/styles.module.css';
@@ -294,41 +295,42 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
           </div>
         )}
 
-        {opened && isMobile && (
-          <div className="fixed inset-0 z-[4000] flex flex-col bg-white">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#E6E7EB]">
-              <p className="text-[16px] font-[500]">Select a currency</p>
-              <button
-                aria-label="Close"
-                className="p-1"
-                onClick={() => setOpened(false)}
-              >
-                {/* Using a generic X since no back icon is available */}
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 6L18 18" stroke="#1B1B1B" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M18 6L6 18" stroke="#1B1B1B" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </button>
-            </div>
+        {opened && isMobile && typeof document !== 'undefined' &&
+          createPortal(
+            <div className="fixed inset-0 z-[9999] flex flex-col bg-white">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-[#E6E7EB]">
+                <p className="text-[16px] font-[500]">Select a currency</p>
+                <button
+                  aria-label="Close"
+                  className="p-1"
+                  onClick={() => setOpened(false)}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 6L18 18" stroke="#1B1B1B" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M18 6L6 18" stroke="#1B1B1B" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </div>
 
-            <div className="px-4 py-2 border-b border-[#E6E7EB]">
-              <CurrencyDropdownHeader searchQuery={searchQuery} onSearchChange={handleSearchChange} />
-            </div>
+              <div className="px-4 py-2 border-b border-[#E6E7EB]">
+                <CurrencyDropdownHeader searchQuery={searchQuery} onSearchChange={handleSearchChange} />
+              </div>
 
-            <div className="flex-1 px-3 pt-2">
-              <CurrencyList
-                currencies={allCurrencies}
-                isLoading={isLoading}
-                hasNextPage={hasNextPage}
-                searchQuery={searchQuery}
-                onLoadMore={loadNextPage}
-                onCurrencyChange={onCurrencyChange}
-                setOpened={setOpened}
-                maxHeight={'calc(100vh - 120px)'}
-              />
-            </div>
-          </div>
-        )}
+              <div className="flex-1 px-3 pt-2">
+                <CurrencyList
+                  currencies={allCurrencies}
+                  isLoading={isLoading}
+                  hasNextPage={hasNextPage}
+                  searchQuery={searchQuery}
+                  onLoadMore={loadNextPage}
+                  onCurrencyChange={onCurrencyChange}
+                  setOpened={setOpened}
+                  maxHeight={'calc(100vh - 120px)'}
+                />
+              </div>
+            </div>,
+            document.body
+          )}
       </div>
     </div>
   );
