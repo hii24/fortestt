@@ -3,6 +3,7 @@ import { CurrencyView } from '../CurrencyView/CurrencyView';
 import styles from './styles.module.css';
 import { CopiedInput } from '@/app/components/CopiedInput/CopiedInput';
 import { AddressLink } from '@/app/components/AddressLink/AddressLink';
+import CurrencyButton from '../swap-selector/ui/currency-selector/ui/currency-button/currency-button';
 
 interface OperationDetailsProps {
   className?: string;
@@ -54,14 +55,22 @@ export const OperationDetails: FC<OperationDetailsProps> = ({
         <div className="flex gap-1 items-center w-full">
           <div className="flex gap-4 items-center">
             <p className={styles.amountText}>{description}</p>
-            <CurrencyView
+            <CurrencyButton
+                  currencyToken={currencySymbol ?? ''}
+                  currencyTitle={currencyName ?? ''}
+                  networkTitle={networkSymbol ?? ''}
+                  opened={false}
+                  onClick={() => {}}
+                  showArrow={false}
+                />
+            {/* <CurrencyView
               currency={{
                 symbol: currencySymbol ?? '',
                 value: `${tokenAmount}`,
                 network: networkSymbol ?? '',
                 name: currencyName ?? '',
               }}
-            />
+            /> */}
           </div>
         </div>
         {!!recipientAdrress && <LabelInput title="Recipient address:" value={recipientAdrress ?? ''} />}

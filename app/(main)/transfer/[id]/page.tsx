@@ -14,6 +14,7 @@ import { OperationDetails } from '../../components/exchange/OperationDetails/Ope
 import CurrencySelected from '../../components/exchange/CurrencySelected';
 import { CurrencyView } from '../../components/exchange/CurrencyView/CurrencyView';
 import { CopiedInput } from '@/app/components/CopiedInput/CopiedInput';
+import CurrencyButton from '@/app/(main)/components/exchange/swap-selector/ui/currency-selector/ui/currency-button/currency-button';
 
 export default function ExchangeScreen() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +24,7 @@ export default function ExchangeScreen() {
 
   const params = useParams();
   const exchangeId = params?.id;
+  console.log(params, 'params');
 
   const [secondsLeft, setSecondsLeft] = useState<number>(0);
 
@@ -47,7 +49,8 @@ export default function ExchangeScreen() {
 
   useEffect(() => {
     if (!responseData || responseData.status > 1 || !secondsLeft) return;
-
+    // console.log(responseData, 'secondsLeft');
+    
     const timer = setInterval(() => {
       setSecondsLeft((prev) => Math.max(prev - 1, 0));
     }, 1_000);
@@ -237,13 +240,19 @@ export default function ExchangeScreen() {
             <div className="w-full flex items-center gap-3">
               <span className="text-sm ">Send deposit:</span>
 
-              <CurrencyView
-                currency={{
-                  value: responseData?.exp_token1_amount ?? responseData?.token1_amount ?? 0,
-                  symbol: responseData.token1 ?? '',
-                  network: responseData.token1_network ?? '',
-                }}
-              />
+              <div className="flex items-center gap-2">
+                <span className="font-semibold">
+                  {responseData?.exp_token1_amount ?? responseData?.token1_amount ?? 0}
+                </span>
+                <CurrencyButton
+                  currencyToken={responseData.token1 ?? ''}
+                  currencyTitle={responseData.token1_title ?? ''}
+                  networkTitle={responseData.token1_network ?? ''}
+                  opened={false}
+                  onClick={() => {}}
+                  showArrow={false}
+                />
+              </div>
             </div>
             <div className="w-full flex flex-wrap max-sm:flex-col gap-2">
               <div className="flex flex-wrap gap-1 gap-x-3 items-start flex-1 sm:gap-x-3">
@@ -376,14 +385,14 @@ export default function ExchangeScreen() {
                 <div
                   className={`${styles.coplatedResult} flex items-center gap-3 min-w-0 flex-1 justify-end pr-6`}>
                   <span className="truncate">{responseData.exp_token1_amount}</span>
-                  <CurrencyView
-                    currency={{
-                      symbol: responseData?.token1 ?? '',
-                      value: ``,
-                      network: responseData?.token1_network ?? '',
-                      name: responseData?.token1_title ?? '',
-                    }}
-                  />
+                  <CurrencyButton
+                  currencyToken={responseData.token2 ?? ''}
+                  currencyTitle={responseData.token2_title ?? ''}
+                  networkTitle={responseData.token2_network ?? ''}
+                  opened={false}
+                  onClick={() => {}}
+                  showArrow={false}
+                />
                 </div>
 
                 {/* Іконка по центру */}

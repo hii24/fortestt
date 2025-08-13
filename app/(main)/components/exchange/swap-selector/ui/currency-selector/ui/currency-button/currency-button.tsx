@@ -11,6 +11,7 @@ interface CurrencyButtonProps {
   networkTitle?: string;
   opened: boolean;
   onClick: () => void;
+  showArrow?: boolean;
 }
 
 const CurrencyButton: React.FC<CurrencyButtonProps> = ({
@@ -19,6 +20,7 @@ const CurrencyButton: React.FC<CurrencyButtonProps> = ({
   networkTitle,
   opened,
   onClick,
+  showArrow = true,
 }) => {
   const { imgSrc, handleError } = useImageFallback(
     `/_token-logos/${currencyToken?.toLocaleUpperCase()}.png`,
@@ -30,6 +32,7 @@ const CurrencyButton: React.FC<CurrencyButtonProps> = ({
       onClick={onClick}
       type="button"
       className={`${styles.coinsend} ${opened ? `${styles.coinsendOpen} bg-[#F2F2F2]` : ''} transition-colors pl-5 p-2 rounded-lg`}>
+       
       <Image
         className="-ml-2 rounded-full size-[35px]"
         src={imgSrc}
@@ -59,13 +62,15 @@ const CurrencyButton: React.FC<CurrencyButtonProps> = ({
           </p>
         </div>
       </div>
-      <Image
-        src="/icons/arrow-down.svg"
-        width={20}
-        height={20}
-        alt="arrow-down"
-        className={styles.arrowDown}
-      />
+      {showArrow && (
+        <Image
+          src="/icons/arrow-down.svg"
+          width={20}
+          height={20}
+          alt="arrow-down"
+          className={styles.arrowDown}
+        />
+      )}
     </button>
   );
 };
