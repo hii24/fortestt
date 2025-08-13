@@ -25,6 +25,7 @@ interface CurrencyListProps {
   onLoadMore: () => void;
   onCurrencyChange?: (currency: CurrencyPropsFinal) => void;
   setOpened: (opened: boolean) => void;
+  maxHeight?: string;
 }
 
 const CurrencyList: React.FC<CurrencyListProps> = ({
@@ -35,6 +36,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
   onLoadMore,
   onCurrencyChange,
   setOpened,
+  maxHeight,
 }) => {
   const scrollContainerRef = useRef<HTMLUListElement>(null);
 
@@ -94,7 +96,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
       <ul
         ref={scrollContainerRef}
         className="max-h-[calc(theme(spacing.11)*7)] scroll-smooth overflow-y-scroll px-1 relative scrollbar-thumb-[#3c4252] hover:scrollbar-thumb-[#4c5262]"
-        style={{ maxHeight: '300px', scrollbarWidth: 'auto', scrollbarColor: '#616E85 transparent' }}>
+        style={{ maxHeight: maxHeight ?? '300px', scrollbarWidth: 'auto', scrollbarColor: '#616E85 transparent' }}>
         {flattenedCurrencies.map((crypto) => {
           const cryptoId = crypto.network.id;
           const cryptoToken = crypto.coin.token;
@@ -106,7 +108,6 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
             return null;
           }
 
-          console.log(crypto);
           return (
             <CryptoListItem
               key={cryptoId}

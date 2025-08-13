@@ -87,6 +87,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
   const [animationKey, setAnimationKey] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const animationTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const {
     allCurrencies,
@@ -99,7 +100,11 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
     resetData,
   } = useInfiniteScroll(currencyListLimit);
 
-  console.log('allcurrenices', allCurrencies);
+  // Prefetch on mount for faster first-open
+  useEffect(() => {
+    loadInitialData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // Safe access to currency properties
   const currencyToken = currency?.token;
   const currencyTitle = currency?.title;
@@ -132,11 +137,9 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
     };
   }, [isCalculating]);
 
-  // Load initial data when dropdown opens
+  // Load initial data when dropdown opens (kept, but usually prefetch covers it)
   useEffect(() => {
-    if (opened) {
-      loadInitialData();
-    }
+    if (opened) loadInitialData();
   }, [opened, loadInitialData]);
 
   // Handle click outside
@@ -151,12 +154,27 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Reset data when dropdown closes
+  // Do not reset data on close to avoid refetch on next open
+
+  // Detect mobile viewport and lock scroll on mobile when opened
   useEffect(() => {
-    if (!opened) {
-      resetData();
+    const checkMobile = () => setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const scrollContainer = document.documentElement;
+    if (isMobile && opened) {
+      scrollContainer.style.overflow = 'hidden';
+    } else {
+      scrollContainer.style.overflow = '';
     }
-  }, [opened, resetData]);
+    return () => {
+      scrollContainer.style.overflow = '';
+    };
+  }, [isMobile, opened]);
 
   const validateCryptoAmount = (value: string) => {
     const raw = value.replace(',', '.');
@@ -258,7 +276,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
           onClick={() => setOpened((prev) => !prev)}
         />
 
-        {opened && (
+        {opened && !isMobile && (
           <div
             ref={ref}
             className={`${styles.currencyDD} w-full max-w-md mx-auto mt-4 bg-white shadow-md rounded-lg overflow-hidden relative`}>
@@ -273,6 +291,42 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
               onCurrencyChange={onCurrencyChange}
               setOpened={setOpened}
             />
+          </div>
+        )}
+
+        {opened && isMobile && (
+          <div className="fixed inset-0 z-[4000] flex flex-col bg-white">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[#E6E7EB]">
+              <p className="text-[16px] font-[500]">Select a currency</p>
+              <button
+                aria-label="Close"
+                className="p-1"
+                onClick={() => setOpened(false)}
+              >
+                {/* Using a generic X since no back icon is available */}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 6L18 18" stroke="#1B1B1B" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M18 6L6 18" stroke="#1B1B1B" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="px-4 py-2 border-b border-[#E6E7EB]">
+              <CurrencyDropdownHeader searchQuery={searchQuery} onSearchChange={handleSearchChange} />
+            </div>
+
+            <div className="flex-1 px-3 pt-2">
+              <CurrencyList
+                currencies={allCurrencies}
+                isLoading={isLoading}
+                hasNextPage={hasNextPage}
+                searchQuery={searchQuery}
+                onLoadMore={loadNextPage}
+                onCurrencyChange={onCurrencyChange}
+                setOpened={setOpened}
+                maxHeight={'calc(100vh - 120px)'}
+              />
+            </div>
           </div>
         )}
       </div>

@@ -1,4 +1,5 @@
 import { useImageFallback } from '@/hooks/useImageFallback';
+import { getNetworkTextColor } from '@/config/networks.config';
 import { CurrencyPropsFinal } from '@/types/coin.interface';
 import Image from 'next/image';
 
@@ -68,9 +69,10 @@ const CryptoListItem = ({
           <span
             style={{
               backgroundColor:
-                networkColors[cryptoNetworkTitle.toUpperCase() as keyof typeof networkColors] ?? '#5a5a5a',
+                networkColors[cryptoNetworkTitle?.toUpperCase() as keyof typeof networkColors] ?? '#CBEDFF',
+              color: getNetworkTextColor(cryptoNetworkTitle),
             }}
-            className="text-white rounded-[5px] px-1 py-0.5">
+            className="rounded-[5px] px-1 py-0.5">
             {cryptoNetworkTitle}
           </span>
         </div>

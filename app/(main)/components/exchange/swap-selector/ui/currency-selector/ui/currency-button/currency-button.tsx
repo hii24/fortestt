@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useImageFallback } from '@/hooks/useImageFallback';
-import { networkColors } from '@/config/networks.config';
+import { getNetworkTextColor, networkColors } from '@/config/networks.config';
 import styles from '@/app/(main)/components/exchange/styles.module.css';
 
 interface CurrencyButtonProps {
@@ -50,7 +50,9 @@ const CurrencyButton: React.FC<CurrencyButtonProps> = ({
           </p>
           <p
             style={{
-              backgroundColor: networkColors[networkTitle as keyof typeof networkColors] ?? '#5a5a5a',
+              backgroundColor:
+                networkColors[networkTitle?.toUpperCase() as keyof typeof networkColors] ?? '#CBEDFF',
+              color: getNetworkTextColor(networkTitle),
             }}
             className="leading-normal px-1 py-[2px] text-[10px] font-[400] text-white rounded-[5px]">
             {networkTitle}

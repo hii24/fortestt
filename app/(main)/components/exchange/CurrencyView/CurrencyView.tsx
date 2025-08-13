@@ -2,7 +2,7 @@
 import { Image } from 'antd';
 import styles from './styles.module.css';
 import { FC } from 'react';
-import { networkColors } from '@/config/networks.config';
+import { getNetworkTextColor, networkColors } from '@/config/networks.config';
 
 interface CurrencyViewProps {
   marginLeft?: string;
@@ -48,7 +48,9 @@ export const CurrencyView: FC<CurrencyViewProps> = ({
 
             <span
               style={{
-                backgroundColor: networkColors[currency.network as keyof typeof networkColors] ?? '#5a5a5a',
+                backgroundColor:
+                  networkColors[currency.network?.toUpperCase() as keyof typeof networkColors] ?? '#CBEDFF',
+              color: getNetworkTextColor(currency.network),
               }}
               className={styles.networkSymbol}>
               {currency?.network}

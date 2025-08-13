@@ -88,7 +88,6 @@ export const useInfiniteScroll = (currencyListLimit: number = 50) => {
 
       setSearchQuery(search);
       setCurrentPage(1);
-      setAllCurrencies([]);
       setHasNextPage(true);
       fetchCoinsData(1, search, false);
     },
