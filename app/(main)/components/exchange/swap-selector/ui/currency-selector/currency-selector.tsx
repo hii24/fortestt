@@ -100,7 +100,6 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
     handleSearchChange,
     loadNextPage,
     loadInitialData,
-    resetData,
   } = useInfiniteScroll(currencyListLimit);
 
   // Prefetch on mount for faster first-open

@@ -30,8 +30,7 @@ const OrderTable: FC<{
   ];
 
   const extraKeys = Object.keys(list?.[0] ?? {}).filter((key) => !mainKeys.includes(key));
-
-  if (total === 0) return null;
+  const shouldHide = total === 0;
 
   const tableRef = useRef<HTMLTableElement | null>(null);
 
@@ -47,6 +46,8 @@ const OrderTable: FC<{
       onDesiredPageSize(desiredPageSize);
     }
   }, [desiredPageSize, onDesiredPageSize]);
+
+  if (shouldHide) return null;
 
   return (
     <>

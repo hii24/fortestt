@@ -1,6 +1,6 @@
-import { inputTranslation } from '@/app/(main)/components/footer/footer';
+export type FooterLanguage = keyof typeof footerTranslations;
 
-export const getTranslatedFooterContent = (language: keyof typeof inputTranslation) => {
+export const getTranslatedFooterContent = (language: FooterLanguage) => {
   return footerTranslations[language] || footerTranslations.en;
 };
 

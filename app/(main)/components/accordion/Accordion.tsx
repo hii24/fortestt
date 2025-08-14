@@ -109,7 +109,7 @@ const Accordion = () => {
                   openStates[activeCategoryIndex][faqIndex] ? styles.open : styles.close
                 }`}>
                 <div>
-                  {t.rich(faq.answerKey as any, {
+                  {t.rich(faq.answerKey, {
                     p: (chunks) => <p>{chunks}</p>,
                     ul: (chunks) => <ul>{chunks}</ul>,
                     li: (chunks) => <li>{chunks}</li>,

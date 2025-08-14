@@ -100,7 +100,8 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
   const clearFieldError = (field: string) => {
     if (fieldErrors[field]) {
       setFieldErrors(prev => {
-        const { [field]: _removed, ...rest } = prev;
+        const rest = { ...prev };
+        delete rest[field];
         return rest;
       });
     }
@@ -163,21 +164,30 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
         console.error('Failed to update exchange:', result?.error || 'Unknown error');
         // Разложим ошибки по полям, если есть
         if (result && typeof result === 'object') {
-          const { error, detail, message, ...maybeFieldErrors } = result as Record<string, any>;
+          const maybeFieldErrors = Object.fromEntries(
+            Object.entries(result as Record<string, unknown>).filter(([key]) =>
+              !['error', 'detail', 'message'].includes(key)
+            )
+          );
           const collected: Record<string, string[]> = {};
           Object.entries(maybeFieldErrors).forEach(([key, value]) => {
             if (value == null) return;
             if (Array.isArray(value)) {
-              collected[key] = value.map(v => String(v));
+              collected[key] = value.map((v) => String(v));
             } else if (typeof value === 'string') {
               collected[key] = [value];
-            } else if (typeof value === 'object' && Array.isArray((value as any).non_field_errors)) {
-              collected[key] = (value as any).non_field_errors.map((v: unknown) => String(v));
+            } else if (
+              typeof value === 'object' &&
+              value !== null &&
+              'non_field_errors' in (value as { non_field_errors?: unknown[] }) &&
+              Array.isArray((value as { non_field_errors?: unknown[] }).non_field_errors)
+            ) {
+              collected[key] = ((value as { non_field_errors?: unknown[] }).non_field_errors ?? []).map((v) => String(v));
             }
           });
 
           setFieldErrors(collected);
-          setFormError(String(result?.error || result?.detail || result?.message || 'Validation error'));
+          setFormError(String((result as Record<string, unknown>)?.error || (result as Record<string, unknown>)?.detail || (result as Record<string, unknown>)?.message || 'Validation error'));
         } else {
           setFormError('Unknown error');
         }

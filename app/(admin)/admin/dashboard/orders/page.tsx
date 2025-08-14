@@ -117,7 +117,7 @@ export default function HistoryPage() {
     if (desiredPageSize && desiredPageSize > 0 && currentParams.page_size !== desiredPageSize) {
       setCurrentParams((prev) => ({ ...prev, page_size: desiredPageSize, page: 1 }));
     }
-  }, [desiredPageSize]);
+  }, [desiredPageSize, currentParams.page_size]);
 
   const statusOptions = [
     { value: 'all', label: <span className="text-sm font-medium">Status</span> },

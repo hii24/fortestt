@@ -1,8 +1,7 @@
 // Define the structure of the footer sections
-import { getTranslatedFooterContent } from '@/app/(main)/components/footer/lang';
-import { inputTranslation } from '@/app/(main)/components/footer/footer';
+import { getTranslatedFooterContent, FooterLanguage } from '@/app/(main)/components/footer/lang';
 
-export const getFooterSections = (language: keyof typeof inputTranslation) => {
+export const getFooterSections = (language: FooterLanguage) => {
   const translations = getTranslatedFooterContent(language);
 
   // Define sections with their translations

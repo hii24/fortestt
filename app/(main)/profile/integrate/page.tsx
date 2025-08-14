@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl';
 
 const Page = () => {
   const t = useTranslations('profile.integrate');
+  const tCommon = useTranslations('profile.common');
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +51,7 @@ const Page = () => {
         {isMobile && <MobileSideBar></MobileSideBar>}
         {!isMobile && (
           <>
-            <input type="search" className={styles.search} placeholder={useTranslations('profile.common')('search')} />
+            <input type="search" className={styles.search} placeholder={tCommon('search')} />
             <Breadcrumbs />
           </>
         )}

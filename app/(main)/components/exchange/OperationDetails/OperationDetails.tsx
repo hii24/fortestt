@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { useTranslations } from 'next-intl';
-import { CurrencyView } from '../CurrencyView/CurrencyView';
 import styles from './styles.module.css';
 import { CopiedInput } from '@/app/components/CopiedInput/CopiedInput';
 import { AddressLink } from '@/app/components/AddressLink/AddressLink';
@@ -67,6 +66,9 @@ export const OperationDetails: FC<OperationDetailsProps> = ({
                   onClick={() => {}}
                   showArrow={false}
                 />
+            {tokenAmount && (
+              <span className={styles.amountText}>{tokenAmount}</span>
+            )}
             {/* <CurrencyView
               currency={{
                 symbol: currencySymbol ?? '',

@@ -76,7 +76,7 @@ export default function HistoryPage() {
     if (desiredPageSize && String(desiredPageSize) !== currentParams.page_size) {
       setCurrentParams((prev) => ({ ...prev, page_size: String(desiredPageSize), page: '1' }));
     }
-  }, [desiredPageSize]);
+  }, [desiredPageSize, currentParams.page_size]);
 
   // const [coinList, setCoinList] = useState<{ label: string; value: string | Element }[]>([]);
 
