@@ -249,7 +249,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
             )}
           </AnimatePresence>
 
-          <span className="lg:text-sm xl:text-base">
+          <span className="lg:text-sm xl:text-[26px] ">
             {String(amount).includes('.')
               ? String(amount).split('.')[0] + '.' + String(amount).split('.')[1].slice(0, 8)
               : String(amount)}
