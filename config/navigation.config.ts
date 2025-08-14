@@ -1,14 +1,20 @@
-export const NAV_LINKS = [
-  { label: 'How it works', href: '/how-it-works' },
-  { label: 'About us', href: '/about-us' },
-  { label: 'Contact us', href: '/contact-us' },
+export type NavLink = {
+  labelKey: string;
+  href: string;
+  subLinks?: NavLink[];
+};
+
+export const NAV_LINKS: NavLink[] = [
+  { labelKey: 'nav.howItWorks', href: '/how-it-works' },
+  { labelKey: 'nav.aboutUs', href: '/about-us' },
+  { labelKey: 'nav.contactUs', href: '/contact-us' },
   {
-    label: 'For business',
+    labelKey: 'nav.forBusiness',
     href: '#partners',
     subLinks: [
-      { label: 'Affiliate program', href: '/' },
-      { label: 'Api documentation', href: '/' },
+      { labelKey: 'nav.affiliateProgram', href: '/' },
+      { labelKey: 'nav.apiDocumentation', href: '/' },
     ],
   },
-  { label: 'FAQ', href: '/faq' },
+  { labelKey: 'nav.faq', href: '/faq' },
 ];

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import styles from './styles.module.css';
 import LangSwitcher from '@/app/(main)/components/langSwitcher/langSwitcher';
 import { NAV_LINKS } from '@/config/navigation.config';
+import { useTranslations } from 'next-intl';
 import { Logo } from '../Logo/Logo';
 import { useEffect, useState } from 'react';
 import ava from '@/public/_home/_reviews/ava.svg';
@@ -18,6 +19,7 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, onClose, isAuthenticated, isAdmin, username }: MobileMenuProps) {
+  const t = useTranslations();
   const [shouldRenderInner, setShouldRenderInner] = useState(false);
 
   useEffect(() => {
@@ -64,10 +66,10 @@ export default function MobileMenu({ isOpen, onClose, isAuthenticated, isAdmin, 
             {isAuthenticated ? (
               <div className={`${styles.authButtons} container mx-auto`}>
                 <Link href="/auth" className={styles.login}>
-                  Log in
+                  {t('auth.login')}
                 </Link>
                 <Link href="/auth?register" className={styles.signup}>
-                  Sign up
+                  {t('auth.signup')}
                 </Link>
               </div>
             ) : (
@@ -87,10 +89,10 @@ export default function MobileMenu({ isOpen, onClose, isAuthenticated, isAdmin, 
             )}
 
             <ul className={`${styles.navLinks} container mx-auto`}>
-              {NAV_LINKS.map(({ label, href }) => (
-                <li key={label}>
+              {NAV_LINKS.map(({ labelKey, href }) => (
+                <li key={labelKey}>
                   <Link href={href} onClick={onClose}>
-                    {label}
+                    {t(labelKey)}
                   </Link>
                 </li>
               ))}

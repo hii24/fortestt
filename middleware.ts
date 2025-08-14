@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import {locales, defaultLocale} from '@/i18n/config';
 
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
@@ -16,6 +17,28 @@ export function middleware(request: NextRequest) {
   }
 
   const { cookies } = request;
+
+  // i18n: redirect top-level routes to default locale if no locale prefix present
+  const hasLocalePrefix = locales.some((loc) => pathname === `/${loc}` || pathname.startsWith(`/${loc}/`));
+  const missingLocalePrefix = !hasLocalePrefix;
+  const isPublicAsset = pathname.startsWith('/api') || pathname.startsWith('/_next') || pathname.startsWith('/images') || pathname.startsWith('/image') || pathname.startsWith('/icons') || pathname === '/favicon.ico' || pathname === '/robots.txt' || pathname === '/sitemap.xml' || pathname.startsWith('/_vercel');
+  if (missingLocalePrefix && !isPublicAsset && !pathname.startsWith('/admin') && !pathname.startsWith('/auth')) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}${pathname}`;
+    return NextResponse.redirect(url);
+  }
+  // If locale prefix present, persist it in cookie and rewrite to path without the prefix
+  const localeMatch = pathname.match(/^\/(en|ru|uk)(?:\/|$)/);
+  if (localeMatch) {
+    const activeLocale = localeMatch[1];
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace(/^\/(en|ru|uk)(?=\/|$)/, '') || '/';
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-active-locale', activeLocale);
+    const response = NextResponse.rewrite(url, {request: {headers: requestHeaders}} as any);
+    response.cookies.set('NEXT_LOCALE', activeLocale, {path: '/', sameSite: 'lax'});
+    return response;
+  }
 
   // if development comment this
   // from here -------------
@@ -40,6 +63,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|_next/images|images|image|favicon.ico|icons|robots.txt|sitemap.xml).*)',
+    '/((?!_next/static|_next/image|_next/images|images|image|favicon.ico|icons|robots.txt|sitemap.xml).*)',
   ],
 };

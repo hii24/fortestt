@@ -1,0 +1,23 @@
+{
+  "common": {
+    "welcome": "Добро пожаловать в Lizex"
+  },
+  "test": {
+    "description": "Это тестовая страница, демонстрирующая локализацию."
+  },
+  "nav": {
+    "howItWorks": "Как это работает",
+    "aboutUs": "О нас",
+    "contactUs": "Контакты",
+    "forBusiness": "Бизнесу",
+    "affiliateProgram": "Партнерская программа",
+    "apiDocumentation": "API документация",
+    "faq": "Вопросы и ответы"
+  },
+  "auth": {
+    "login": "Войти",
+    "signup": "Регистрация"
+  }
+}
+
+

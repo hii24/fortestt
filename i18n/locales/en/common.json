@@ -1,0 +1,23 @@
+{
+  "common": {
+    "welcome": "Welcome to Lizex"
+  },
+  "test": {
+    "description": "This is a test page demonstrating localization."
+  },
+  "nav": {
+    "howItWorks": "How it works",
+    "aboutUs": "About us",
+    "contactUs": "Contact us",
+    "forBusiness": "For business",
+    "affiliateProgram": "Affiliate program",
+    "apiDocumentation": "API documentation",
+    "faq": "FAQ"
+  },
+  "auth": {
+    "login": "Log in",
+    "signup": "Sign up"
+  }
+}
+
+

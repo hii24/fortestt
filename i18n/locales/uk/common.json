@@ -1,0 +1,23 @@
+{
+  "common": {
+    "welcome": "Ласкаво просимо до Lizex"
+  },
+  "test": {
+    "description": "Це тестова сторінка, що демонструє локалізацію."
+  },
+  "nav": {
+    "howItWorks": "Як це працює",
+    "aboutUs": "Про нас",
+    "contactUs": "Контакти",
+    "forBusiness": "Для бізнесу",
+    "affiliateProgram": "Партнерська програма",
+    "apiDocumentation": "Документація API",
+    "faq": "Питання та відповіді"
+  },
+  "auth": {
+    "login": "Увійти",
+    "signup": "Зареєструватися"
+  }
+}
+
+

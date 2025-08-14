@@ -9,11 +9,13 @@ import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { getLocalStoreItem } from '@/utils/local.storage';
 import { NAV_LINKS } from '@/config/navigation.config';
+import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { motion, Variants } from 'framer-motion';
 import ava from '@/public/_home/_reviews/ava.svg';
 
 export default function Header() {
+  const t = useTranslations();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const pathname = usePathname();
@@ -66,11 +68,11 @@ export default function Header() {
         </ul>
 
         <ul className={`${styles.navLinks} px-4  items-center max-sm:hidden`}>
-          {NAV_LINKS.map(({ label, href, subLinks }) =>
+          {NAV_LINKS.map(({ labelKey, href, subLinks }) =>
             subLinks ? (
-              <li key={label} className={styles.subMenu}>
+              <li key={labelKey} className={styles.subMenu}>
                 <span className={'text-[#1B1B1B] hover:text-[#3460fd] transition-colors !font-[400]'}>
-                  {label}
+                  {t(labelKey)}
                 </span>
                 {/*                 <Image
                   src="/icons/arrow-down.svg"
@@ -96,26 +98,26 @@ export default function Header() {
                   />
                 </svg>
                 <ul style={{ boxShadow: '0px 0px 4px 0px #E1DCDC' }} className={clsx('', styles.subMenuList)}>
-                  {subLinks.map(({ label: subLabel, href: subHref }) => (
-                    <li key={subLabel}>
+                  {subLinks.map(({ labelKey: subLabelKey, href: subHref }) => (
+                    <li key={subLabelKey}>
                       <Link
                         href={subHref}
                         className={'text-[#1B1B1B] hover:text-[#3460fd] transition-colors !font-[400]'}>
-                        {subLabel}
+                        {t(subLabelKey)}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </li>
             ) : (
-              <li key={label}>
+              <li key={labelKey}>
                 <Link
                   href={href}
                   className={clsx(
                     'text-[#1B1B1B] hover:text-[#3460fd] transition-colors !font-[400]',
                     pathname === href ? 'text-[#3460fd]' : ''
                   )}>
-                  {label}
+                  {t(labelKey)}
                 </Link>
               </li>
             )
@@ -128,10 +130,10 @@ export default function Header() {
           {!isAuthenticated ? (
             <div className={`${styles.authButtons} gap-2 lg:gap-5`}>
               <Link href="/auth" className={styles.login}>
-                Log in
+                {t('auth.login')}
               </Link>
               <Link href="/auth?register" className={styles.signup}>
-                Sign up
+                {t('auth.signup')}
               </Link>
             </div>
           ) : (

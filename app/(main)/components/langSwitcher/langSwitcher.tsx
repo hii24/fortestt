@@ -1,7 +1,9 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import Cookies from 'js-cookie';
 import styles from './styles.module.css';
 
 const LangSwitcher = () => {
@@ -9,6 +11,8 @@ const LangSwitcher = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentLocale = useLocale();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -28,22 +32,24 @@ const LangSwitcher = () => {
   };
 
   const handleLanguageSelect = (lang: string) => {
-    const segments = pathname.split('/').filter(Boolean);
-
-    if (segments.length > 0 && (segments[0] === 'en' || segments[0] === 'ru')) {
-      segments[0] = lang;
-      router.push(`/${segments.join('/')}`);
-    } else {
-      router.push(`/${lang}${pathname}`);
-    }
+    const basePath = (pathname || '/').replace(/^\/(en|ru|uk)(?=\/|$)/, '') || '/';
+    const qs = searchParams?.toString();
+    const href = `/${lang}${basePath}${qs ? `?${qs}` : ''}`;
+    Cookies.set('NEXT_LOCALE', lang, { path: '/' });
+    router.push(href);
     setIsOpen(false);
   };
 
   return (
     <div className={styles.langMenu} ref={menuRef}>
       <div className={styles.selectedLang} onClick={toggleMenu}>
-        <Image src="/icons/en.svg" alt="flag-en" width={22} height={22} />
-        <p className={styles.selected}>EN</p>
+        <Image
+          src={currentLocale === 'ru' ? '/icons/ru.svg' : currentLocale === 'en' ? '/icons/en.svg' : '/icons/globe.svg'}
+          alt={`flag-${currentLocale}`}
+          width={22}
+          height={22}
+        />
+        <p className={styles.selected}>{currentLocale.toUpperCase()}</p>
         <Image src="/icons/down.svg" alt="arrow-down" width={15} height={15} />
       </div>
 
@@ -67,6 +73,16 @@ const LangSwitcher = () => {
               }}>
               <Image src="/icons/ru.svg" alt="flag-ru" width={22} height={22} />
               <p>Русский</p>
+            </button>
+          </li>
+          <li>
+            <button
+              className="flex gap-2.5"
+              onClick={() => {
+                handleLanguageSelect('uk');
+              }}>
+              <Image src="/icons/globe.svg" alt="flag-uk" width={22} height={22} />
+              <p>Українська</p>
             </button>
           </li>
         </ul>

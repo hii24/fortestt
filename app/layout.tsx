@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Inter } from 'next/font/google';
+import IntlProvider from '@/app/providers/IntlProvider';
+import ClientIntlProvider from '@/app/providers/ClientIntlProvider';
+import {cookies} from 'next/headers';
+import {defaultLocale, isSupportedLocale} from '@/i18n/config';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -76,9 +80,12 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('locale')?.value;
+  const activeLang = isSupportedLocale(localeCookie) ? localeCookie : defaultLocale;
   return (
-    <html lang="en" suppressHydrationWarning className={inter.className}>
+    <html lang={activeLang} suppressHydrationWarning className={inter.className}>
       <head>
         <meta
           name="viewport"
@@ -112,7 +119,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <IntlProvider>
+          <ClientIntlProvider>{children}</ClientIntlProvider>
+        </IntlProvider>
+      </body>
     </html>
   );
 }
