@@ -1,6 +1,7 @@
 {
   "common": {
-    "welcome": "Welcome to Lizex"
+    "welcome": "Welcome to Lizex",
+    "logout": "Log out"
   },
   "test": {
     "description": "This is a test page demonstrating localization."
@@ -212,6 +213,80 @@
     "reviewsOn": "reviews on",
     "rateUsOn": "Rate us on"
   },
+  "profile": {
+    "common": {
+      "search": "Search...",
+      "select": "Select",
+      "selectStartDate": "Select start date",
+      "selectEndDate": "Select end date",
+      "loading": "Loading..."
+    },
+    "layout": {
+      "loading": "Loading..."
+    },
+    "main": {
+      "header": "Statistic",
+      "selectDateRange": "Select Date Range",
+      "table": {
+        "id": "ID",
+        "datetime": "Date/Time",
+        "type": "Type",
+        "from": "From",
+        "to": "To",
+        "profit": "Profit",
+        "status": "Status",
+        "nothingFound": "Nothing Found"
+      }
+    },
+    "settings": {
+      "header": "Settings",
+      "password": {
+        "title": "Password",
+        "desc": "Set a password to protect your account.",
+        "edit": "Edit",
+        "changeTitle": "Change Password",
+        "current": {"label": "Current Password", "placeholder": "Enter current password"},
+        "new": {"label": "New Password", "placeholder": "Enter new password"},
+        "confirm": {"label": "Confirm New Password", "placeholder": "Repeat new password"},
+        "submit": {"loading": "Please wait...", "label": "Change Password"}
+      }
+    },
+    "integrate": {
+      "header": "Integrate",
+      "apiKey": {"label": "API Key", "tooltip": "API Key"},
+      "referral": {"label": "Referral Link", "tooltip": "Referral Link"}
+    },
+    "payouts": {
+      "header": "Payouts",
+      "selectDateRange": "Select Date Range",
+      "processing": "Processing...",
+      "errors": {"currency": "Currency", "amount": "Amount", "address": "Address", "invalidWallet": "Check your wallet for a valid one"},
+      "request": {"button": "Request", "title": "Request Withdraw"},
+      "form": {
+        "coin": "Coin",
+        "amount": "Amount",
+        "address": "Address",
+        "addressPlaceholder": "Enter Withdraw address",
+        "qr": "Qr"
+      },
+      "cards": {
+        "actual": "Actual balance",
+        "on": "On",
+        "earnedMonth": "Earned this month",
+        "earnedTotal": "Earned total"
+      },
+      "available": {
+        "title": "Available for payouts",
+        "min": "The minimum amount for withdrawal is $30",
+        "button": "Request Withdraw"
+      },
+      "latest": {
+        "title": "Latest Payouts",
+        "desc": "Information about your latest transfers will be displayed here.",
+        "button": "Request Withdraw"
+      }
+    }
+  },
   "contactPage": {
     "hero": {
       "title": "How to contact us",
@@ -309,6 +384,11 @@
       "title": "What are fixed (Fixed) and floating (Float) rates?",
       "answer": "<p>When exchanging cryptocurrency on Lizex.io, you can choose between two exchange rate options:</p><p><strong>Fixed rate:</strong> This type of exchange locks in the exchange rate at the moment the order is created. Regardless of market fluctuations during the exchange process, you will receive the exact amount displayed at the time of order creation. This is useful for high-volatility cryptocurrencies. However, to secure the rate, you must send the funds within the specified time frame after placing the order.</p><p><strong>Floating rate:</strong> This exchange type is based on the current market rate and may change during the transaction. If the market rate increases in your favor, you will receive more cryptocurrency. If the rate decreases, the final amount will be lower.</p>"
     }
+  },
+  "accordionSimple": {
+    "q1": {"title": "What is Lizex?", "answer": "Lizex is an innovative cryptocurrency exchange platform that provides fast, secure and anonymous transactions."},
+    "q2": {"title": "Why trust us?", "answer": "Lizex is an innovative cryptocurrency exchange platform that provides fast, secure and anonymous transactions."},
+    "q3": {"title": "Do I need to create an account or register?", "answer": "Lizex is an innovative cryptocurrency exchange platform that provides fast, secure and anonymous transactions."}
   },
   "exchange": {
     "loading": "Loading exchange details...",

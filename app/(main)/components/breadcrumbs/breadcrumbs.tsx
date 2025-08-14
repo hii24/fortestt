@@ -3,9 +3,11 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './styles.module.css';
+import { useTranslations } from 'next-intl';
 
 export default function Breadcrumbs() {
   const pathname = usePathname();
+  const t = useTranslations('profile');
   if (!pathname) return null;
 
   let segments = pathname.replace(/^\/|\/$/g, '').split('/');
@@ -25,6 +27,11 @@ export default function Breadcrumbs() {
     if (label.toLowerCase() === 'terms-of-use') {
       label = 'Terms of use';
     }
+    if (label.toLowerCase() === 'profile') label = 'Profile';
+    if (label.toLowerCase() === 'statistics') label = t('main.header');
+    if (label.toLowerCase() === 'integrate') label = t('integrate.header');
+    if (label.toLowerCase() === 'settings') label = t('settings.header');
+    if (label.toLowerCase() === 'payouts') label = t('payouts.header');
     const href = '/' + segments.slice(0, idx + 1).join('/');
     return { label, href };
   });

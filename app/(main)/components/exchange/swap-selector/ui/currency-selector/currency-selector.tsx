@@ -144,7 +144,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
   useEffect(() => {
     if (opened) loadInitialData();
   }, [opened, loadInitialData]);
-
+  console.log(allCurrencies,'allCurrencies');
   // Handle click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

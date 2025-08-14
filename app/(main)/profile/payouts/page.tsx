@@ -13,9 +13,12 @@ import { Button, DatePicker, DatePickerProps, Input, Modal, Select, Tooltip } fr
 import { WithdrawalService } from '@/services/withdrawal/withdrawal.service';
 import { CurrencyView } from '../../components/exchange/CurrencyView/CurrencyView';
 import { debounce } from '@/utils/debounce';
+import { useTranslations } from 'next-intl';
 import { CoinService } from '@/services/coin/coin.service';
 
 const Page = () => {
+  const t = useTranslations('profile');
+  const tc = useTranslations('profile.common');
   const [isMobile, setIsMobile] = useState(false);
 
   React.useEffect(() => {
@@ -163,14 +166,14 @@ const Page = () => {
           centered
           className="p-3"
           open={openDateModal}
-          okText="Select"
+          okText={tc('select')}
           onOk={() => {}}
           onCancel={() => {
             setOpenDateModal(false);
           }}>
           <DatePicker
             className="mx-2 mt-6 mb-2 w-full"
-            placeholder="Select start date"
+            placeholder={tc('selectStartDate')}
             variant="filled"
             color="blue"
             size="large"
@@ -178,7 +181,7 @@ const Page = () => {
           />
           <DatePicker
             className="mx-2 w-full"
-            placeholder="Select end date"
+            placeholder={tc('selectEndDate')}
             variant="filled"
             color="blue"
             size="large"
@@ -191,14 +194,14 @@ const Page = () => {
           className="p-3"
           footer={
             <>
-              {isLoading && <p className="text-center">Processing...</p>}
+              {isLoading && <p className="text-center">{t('payouts.processing')}</p>}
               {isError && (
                 <p className="text-center text-red-600 flex flex-col">
-                  {isError?.coin && <span className="capitalize">{` Currency: ${isError.coin}`}</span>}
-                  {isError?.amount && <span className="capitalize">{` Amount: ${isError.amount}`}</span>}
-                  {isError?.address && <span className="capitalize">{` Address: ${isError.address}`}</span>}
+                  {isError?.coin && <span className="capitalize">{` ${t('payouts.errors.currency')}: ${isError.coin}`}</span>}
+                  {isError?.amount && <span className="capitalize">{` ${t('payouts.errors.amount')}: ${isError.amount}`}</span>}
+                  {isError?.address && <span className="capitalize">{` ${t('payouts.errors.address')}: ${isError.address}`}</span>}
                   {!isValid && (
-                    <div className="text-xs pt-3 text-red-600">{'Check your wallet for a valid one'}</div>
+                    <div className="text-xs pt-3 text-red-600">{t('payouts.errors.invalidWallet')}</div>
                   )}
                 </p>
               )}
@@ -212,7 +215,7 @@ const Page = () => {
                 color="blue"
                 variant="solid"
                 size="large">
-                Request
+                {t('payouts.request.button')}
               </Button>
             </>
           }
@@ -220,7 +223,7 @@ const Page = () => {
             setOpenModal(false);
           }}
           open={openModal}>
-          <h2 className={styles.requestModalTitle}>Request Withdraw</h2>
+          <h2 className={styles.requestModalTitle}>{t('payouts.request.title')}</h2>
 
           <form className="flex flex-col gap-5">
             {/*          <CurrencySelector
@@ -233,7 +236,7 @@ const Page = () => {
               onCurrencyChange={(currency) => setWithdrawalCurrency(currency)}
             /> */}
             <fieldset>
-              <label className={styles.requestFormLabel}>Coin</label>
+              <label className={styles.requestFormLabel}>{t('payouts.form.coin')}</label>
               <Select
                 variant="filled"
                 className="mr-2 w-full min-h-14 customSelect"
@@ -261,7 +264,7 @@ const Page = () => {
               />
             </fieldset>
             <fieldset>
-              <label className={styles.requestFormLabel}>Amount</label>
+              <label className={styles.requestFormLabel}>{t('payouts.form.amount')}</label>
               <Input
                 type="number"
                 step={0.01}
@@ -274,10 +277,10 @@ const Page = () => {
               />
             </fieldset>
             <fieldset>
-              <label className={styles.requestFormLabel}>Address</label>
+              <label className={styles.requestFormLabel}>{t('payouts.form.address')}</label>
               <Input
                 required
-                placeholder="Enter Withdraw address"
+                placeholder={t('payouts.form.addressPlaceholder')}
                 value={withdrawalAddress}
                 onChange={({ currentTarget }) => {
                   setWithdrawalAddress(currentTarget.value);
@@ -285,7 +288,7 @@ const Page = () => {
                 className="rounded-md border-gray-300 w-full"
                 size="large"
                 suffix={
-                  <Tooltip title="Qr">
+                  <Tooltip title={t('payouts.form.qr')}>
                     <Image
                       src="/icons/qr.svg"
                       width={20}
@@ -301,23 +304,23 @@ const Page = () => {
         </Modal>
         {isMobile && <Breadcrumbs />}
         {!isMobile && (
-          <div className={styles.header}>
+            <div className={styles.header}>
             <div className="headText">
-              <p className="headerP">Payouts</p>
+              <p className="headerP">{t('payouts.header')}</p>
             </div>
             <button
               className={styles.dataPicker}
               onClick={() => {
                 setOpenDateModal(true);
               }}>
-              <p className={styles.textDataPicker}>Select Date Range</p>
+              <p className={styles.textDataPicker}>{t('payouts.selectDateRange')}</p>
               {/* <Image src="/icons/down.svg" alt="arrow-down" height={15} width={15} className="dark:invert" /> */}
             </button>
           </div>
         )}
         {isMobile && (
           <div className="headText">
-            <p className="headerP">Payouts</p>
+            <p className="headerP">{t('payouts.header')}</p>
             <Image src={'/icons/calendar.svg'} alt={'calendar search'} width={24} height={24}></Image>
           </div>
         )}
@@ -327,11 +330,11 @@ const Page = () => {
           {isMobile && (
             <div className={`${styles.card} ${styles.cardHeight}`}>
               <div className={styles.cardLeft}>
-                <p className={styles.cardTitle}>Actual balance</p>
+                <p className={styles.cardTitle}>{t('payouts.cards.actual')}</p>
                 <h3 className={styles.cardValue}>{data ? `$ ${data.actual_balance}` : `$ 0`}</h3>
               </div>
               <div className={styles.cardRight}>
-                <span className={styles.cardSub}>On {`${formatedDate.month} ${formatedDate.year}`}</span>
+                <span className={styles.cardSub}>{t('payouts.cards.on')} {`${formatedDate.month} ${formatedDate.year}`}</span>
                 <Image src="/icons/size.svg" alt="copy" height={20} width={20}></Image>
               </div>
             </div>
@@ -340,7 +343,7 @@ const Page = () => {
             <div className={styles.cardsCliped}>
               <div className={`${styles.card} ${styles.cliped}`}>
                 <div className={styles.cardLeft}>
-                  <p className={styles.cardTitle}>Earth Months</p>
+                  <p className={styles.cardTitle}>{t('payouts.cards.earnedMonth')}</p>
                   <h3 className={styles.cardValue}>{data ? `$ ${data.earned_month}` : `$ 0`}</h3>
                 </div>
                 <div className={styles.cardRight}>
@@ -355,7 +358,7 @@ const Page = () => {
               )}
               <div className={`${styles.card}  ${styles.clipedtwo}`}>
                 <div className={styles.cardLeft}>
-                  <p className={styles.cardTitle}>Earth Total</p>
+                  <p className={styles.cardTitle}>{t('payouts.cards.earnedTotal')}</p>
                   <h3 className={styles.cardValue}>{data ? `$ ${data.earned_total}` : `$ 0`}</h3>
                 </div>
                 <div className={styles.cardRight}>
@@ -369,11 +372,11 @@ const Page = () => {
           {!isMobile && (
             <div className={`${styles.card} ${styles.cardHeight}`}>
               <div className={styles.cardLeft}>
-                <p className={styles.cardTitle}>Actual balance</p>
+                <p className={styles.cardTitle}>{t('payouts.cards.actual')}</p>
                 <h3 className={styles.cardValue}>{data ? `$ ${data.actual_balance}` : `$ 0`}</h3>
               </div>
               <div className={styles.cardRight}>
-                <span className={styles.cardSub}>On {`${formatedDate.month}.${formatedDate.year}`}</span>
+                <span className={styles.cardSub}>{t('payouts.cards.on')} {`${formatedDate.month}.${formatedDate.year}`}</span>
                 <Image src="/icons/size.svg" alt="copy" height={20} width={20}></Image>
               </div>
             </div>
@@ -392,12 +395,12 @@ const Page = () => {
           <div className={styles.payoutsSection}>
             <div className={styles.availableForPayouts}>
               <div className="">
-                <p className={styles.blockTitle}>Available for payouts</p>
+                <p className={styles.blockTitle}>{t('payouts.available.title')}</p>
                 <h3 className={styles.blockValue}>
                   {data ? `$ ${data.actual_balance}` : `$ 0`}
                   <span className={styles.smallTag}>TRS20</span>
                 </h3>
-                <p className={styles.minimalInfo}>The minimum amount for withdrawal is $30</p>
+                <p className={styles.minimalInfo}>{t('payouts.available.min')}</p>
               </div>
               <button
                 type="button"
@@ -405,7 +408,7 @@ const Page = () => {
                   setOpenModal(true);
                 }}
                 className={styles.withdrawButton}>
-                Request Withdraw
+                {t('payouts.available.button')}
               </button>
             </div>
           </div>
@@ -416,24 +419,21 @@ const Page = () => {
               setOpenModal(true);
             }}
             className={styles.withdrawButton}>
-            Request Withdraw
+            {t('payouts.available.button')}
           </button>
         )}
         <div className={styles.latestPayouts}>
-          <h1>Latest Payouts</h1>
+          <h1>{t('payouts.latest.title')}</h1>
           <div className={styles.latestPayoutsTitle}>
-            <h3 className={styles.blockTitleWindraw}>Latest Payouts</h3>
-            <p className={styles.blockDescription}>
-              Information about your latest transfers will be <br />
-              displayed here.
-            </p>
+            <h3 className={styles.blockTitleWindraw}>{t('payouts.latest.title')}</h3>
+            <p className={styles.blockDescription}>{t('payouts.latest.desc')}</p>
             <button
               type="button"
               onClick={() => {
                 setOpenModal(true);
               }}
               className={styles.withdrawButton}>
-              Request Withdraw
+              {t('payouts.latest.button')}
             </button>
           </div>
         </div>

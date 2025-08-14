@@ -11,8 +11,11 @@ import '@ant-design/v5-patch-for-react-19';
 
 import FlexTable from '@/app/(main)/components/TableProfile/FlexTable';
 import { CustomPagination } from '@/app/components/paginations/CustomPagination';
+import { useTranslations } from 'next-intl';
 
 const Page = () => {
+  const t = useTranslations('profile');
+  const tc = useTranslations('profile.common');
   const [isMobile, setIsMobile] = useState(false);
   React.useEffect(() => {
     const handleResize = () => {
@@ -89,7 +92,7 @@ const Page = () => {
           <>
             <Breadcrumbs />
             <div className="headText">
-              <p className="headerP">Statistic</p>
+              <p className="headerP">{t('main.header')}</p>
               <button type="button" onClick={() => setOpenModal(true)}>
                 <Image src={'/icons/calendar.svg'} alt={'calendar search'} width={24} height={24}></Image>
               </button>
@@ -100,7 +103,7 @@ const Page = () => {
 
         {!isMobile && (
           <>
-            <input type="search" className={styles.search} placeholder="Search..." />
+            <input type="search" className={styles.search} placeholder={tc('search')} />
             <Breadcrumbs></Breadcrumbs>
 
             <div className={styles.buttonsTable}>
@@ -108,7 +111,7 @@ const Page = () => {
                 onClick={() => {
                   setOpenModal(true);
                 }}>
-                Select Date Rage
+                {t('main.selectDateRange')}
                 <Image src="/icons/arrowDownWhite.svg" alt="arrowDown" width={15} height={15}></Image>
               </button>
 
@@ -134,7 +137,7 @@ const Page = () => {
           }}>
           <DatePicker
             className="mx-2 mt-6 mb-2 w-full"
-            placeholder="Select start date"
+            placeholder={t('common.selectStartDate')}
             variant="filled"
             color="blue"
             size="large"
@@ -142,7 +145,7 @@ const Page = () => {
           />
           <DatePicker
             className="mx-2 w-full"
-            placeholder="Select end date"
+            placeholder={t('common.selectEndDate')}
             variant="filled"
             color="blue"
             size="large"
@@ -152,7 +155,7 @@ const Page = () => {
 
         <div className="mt-4 flex-1">
           {loading ? (
-            <div>Loading</div>
+            <div>{tc('loading')}</div>
           ) : responseData && 'count' in responseData && responseData?.count ? (
             <>
               <div className="w-full overflow-x-auto">
@@ -167,17 +170,17 @@ const Page = () => {
           ) : (
             <div className={styles.wrapper}>
               <div className={styles.tableHeader}>
-                <div>ID</div>
-                <div>Date/Time</div>
-                <div>Type</div>
-                <div>From</div>
-                <div>To</div>
-                <div>Profit</div>
-                <div>Status</div>
+                <div>{t('main.table.id')}</div>
+                <div>{t('main.table.datetime')}</div>
+                <div>{t('main.table.type')}</div>
+                <div>{t('main.table.from')}</div>
+                <div>{t('main.table.to')}</div>
+                <div>{t('main.table.profit')}</div>
+                <div>{t('main.table.status')}</div>
               </div>
 
               <div className={styles.tableRow}>
-                <div>Nothing Found</div>
+                <div>{t('main.table.nothingFound')}</div>
               </div>
             </div>
           )}

@@ -5,29 +5,31 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getLocalStoreItem } from '@/utils/local.storage';
+import { useTranslations } from 'next-intl';
 
 const SideBar: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
+  const t = useTranslations('profile');
 
   const menuItems = [
     {
       href: '/profile',
-      label: 'Statistics',
+      label: t('main.header'),
       icon: '/icons/calendar.svg',
     },
     {
       href: '/profile/integrate',
-      label: 'Integrate',
+      label: t('integrate.header'),
       icon: '/icons/settings.svg',
     },
     {
       href: '/profile/settings',
-      label: 'Settings',
+      label: t('settings.header'),
       icon: '/icons/settingst.svg',
     },
     {
       href: '/profile/payouts',
-      label: 'Payouts',
+      label: t('payouts.header'),
       icon: '/icons/element.svg',
     },
     /*     {

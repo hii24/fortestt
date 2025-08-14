@@ -2,31 +2,20 @@
 import { useState } from 'react';
 import styles from './styles.module.css';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface FAQItem {
   question: string;
   answer: string;
 }
 
-const faqData: FAQItem[] = [
-  {
-    question: 'What is Lizex?',
-    answer:
-      'Lizex is an innovative cryptocurrency exchange platform that provides fast, secure and anonymous transactions.',
-  },
-  {
-    question: 'Why trust us?',
-    answer:
-      'Lizex is an innovative cryptocurrency exchange platform that provides fast, secure and anonymous transactions.',
-  },
-  {
-    question: 'Do I need to create an account or register?',
-    answer:
-      'Lizex is an innovative cryptocurrency exchange platform that provides fast, secure and anonymous transactions.',
-  },
-];
-
 const AccordionWithOutCategory = () => {
+  const t = useTranslations('accordionSimple');
+  const faqData: FAQItem[] = [
+    { question: t('q1.title'), answer: t('q1.answer') },
+    { question: t('q2.title'), answer: t('q2.answer') },
+    { question: t('q3.title'), answer: t('q3.answer') },
+  ];
   const [openStates, setOpenStates] = useState<boolean[]>(Array(faqData.length).fill(false));
 
   const toggleAccordion = (index: number) => {

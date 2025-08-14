@@ -7,8 +7,10 @@ import MobileSideBar from '@/app/(main)/components/mobileSideBar/mobileSideBar';
 import ButtonLogout from '@/app/components/buttonLogout/buttonLogout';
 import { UserService } from '@/services/user/user.service';
 import { Modal } from 'antd';
+import { useTranslations } from 'next-intl';
 
 const Page = () => {
+  const t = useTranslations('profile.settings');
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -58,13 +60,13 @@ const Page = () => {
         {isMobile && <Breadcrumbs />}
         {!isMobile && (
           <div className="headText">
-            <p className="headerP">Settings</p>
+            <p className="headerP">{t('header')}</p>
           </div>
         )}
         {isMobile && (
           <>
             <div className="headText">
-              <p className="headerP">Settings</p>
+              <p className="headerP">{t('header')}</p>
             </div>
           </>
         )}
@@ -72,12 +74,12 @@ const Page = () => {
         {!isMobile && <Breadcrumbs />}
         <div className={styles.password}>
           <div className="inputDescription">
-            <h1 className={styles.textMainPassword}>Password</h1>
-            <h2 className={styles.textDescriptionPassword}>Set a password to protect your account.</h2>
+            <h1 className={styles.textMainPassword}>{t('password.title')}</h1>
+            <h2 className={styles.textDescriptionPassword}>{t('password.desc')}</h2>
           </div>
           <input type="password" value="****************" className={styles.passwordInput} readOnly={true} />
           <button onClick={() => setIsVisible(true)} className={styles.btnPassword}>
-            Edit
+            {t('password.edit')}
           </button>
         </div>
         {isMobile && <ButtonLogout />}
@@ -96,10 +98,10 @@ const Page = () => {
             }}
             className={styles.changePasswordForm}
             onSubmit={onSubmit}>
-            <h2 className={styles.changePasswordFormTitle}>Change Password</h2>
+            <h2 className={styles.changePasswordFormTitle}>{t('password.changeTitle')}</h2>
 
             <div>
-              <label htmlFor="current-password">Current Password</label>
+              <label htmlFor="current-password">{t('password.current.label')}</label>
               <input
                 id="current-password"
                 name="currentPassword"
@@ -109,12 +111,12 @@ const Page = () => {
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 className={styles.inputField}
-                placeholder="Enter current password"
+                placeholder={t('password.current.placeholder')}
               />
             </div>
 
             <div>
-              <label htmlFor="new-password">New Password</label>
+              <label htmlFor="new-password">{t('password.new.label')}</label>
               <input
                 id="new-password"
                 name="newPassword"
@@ -124,12 +126,12 @@ const Page = () => {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 className={styles.inputField}
-                placeholder="Enter new password"
+                placeholder={t('password.new.placeholder')}
               />
             </div>
 
             <div>
-              <label htmlFor="confirm-password">Confirm New Password</label>
+              <label htmlFor="confirm-password">{t('password.confirm.label')}</label>
               <input
                 id="confirm-password"
                 name="confirmPassword"
@@ -139,7 +141,7 @@ const Page = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className={styles.inputField}
-                placeholder="Repeat new password"
+                placeholder={t('password.confirm.placeholder')}
               />
             </div>
 
@@ -165,7 +167,7 @@ const Page = () => {
                   />
                 </svg>
               ) : null}
-              {isLoading ? 'Please wait...' : 'Change Password'}
+              {isLoading ? t('password.submit.loading') : t('password.submit.label')}
             </button>
           </form>
         </Modal>

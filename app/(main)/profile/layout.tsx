@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import styles from './layout.module.css';
 import SideBar from '../components/sideBar/sideBar';
 import ButtonLogout from '../../components/buttonLogout/buttonLogout';
+import { useTranslations } from 'next-intl';
 
 const ProfileLayout: FC<PropsWithChildren> = ({ children }) => {
   const isAuthenticated = () => {
@@ -17,6 +18,7 @@ const ProfileLayout: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
+  const t = useTranslations('profile.layout');
 
   useEffect(() => {
     if (!pathname?.includes('/auth') && !isAuthenticated()) {
@@ -37,7 +39,7 @@ const ProfileLayout: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   if (loading && !pathname?.includes('/auth')) {
-    return <div>Loading...</div>;
+    return <div>{t('loading')}</div>;
   }
 
   return (

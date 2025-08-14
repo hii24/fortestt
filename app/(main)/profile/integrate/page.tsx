@@ -7,8 +7,10 @@ import MobileSideBar from '@/app/(main)/components/mobileSideBar/mobileSideBar';
 import ButtonLogout from '@/app/components/buttonLogout/buttonLogout';
 import { IntergrateService } from '@/services/intergrate/intergrate.service';
 import { CopiedInput } from '@/app/components/CopiedInput/CopiedInput';
+import { useTranslations } from 'next-intl';
 
 const Page = () => {
+  const t = useTranslations('profile.integrate');
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => {
@@ -42,27 +44,27 @@ const Page = () => {
         {isMobile && <Breadcrumbs></Breadcrumbs>}
         {isMobile && (
           <div className="headText">
-            <p className="headerP">Integrate</p>
+            <p className="headerP">{t('header')}</p>
           </div>
         )}
         {isMobile && <MobileSideBar></MobileSideBar>}
         {!isMobile && (
           <>
-            <input type="search" className={styles.search} placeholder="Search..." />
+            <input type="search" className={styles.search} placeholder={useTranslations('profile.common')('search')} />
             <Breadcrumbs />
           </>
         )}
         <div className={styles.twoInputs}>
           <div className={styles.inputGroup}>
-            <p className={styles.label}>API Key:</p>
+            <p className={styles.label}>{t('apiKey.label')}:</p>
             <div className={styles.inputContainer}>
               <CopiedInput
                 readOnly
                 type={apiKeyVisible ? 'text' : 'password'}
                 value={apiKey}
                 className={`w-full  hover:bg-[#fffafa] ${styles.input}`}
-                copyTooltipAlt="API Key"
-                copyTooltipTitle="API Key"
+                copyTooltipAlt={t('apiKey.tooltip')}
+                copyTooltipTitle={t('apiKey.tooltip')}
                 suffix={
                   <button type="button" onClick={toggleApiKeyVisibility} className={styles.iconButton}>
                     <Image src="/icons/eye.svg" alt="eye-icon" width={24} height={24} />
@@ -73,14 +75,14 @@ const Page = () => {
           </div>
 
           <div className={styles.inputGroup}>
-            <p className={styles.label}>Referral Link:</p>
+            <p className={styles.label}>{t('referral.label')}:</p>
             <div className={styles.inputContainer}>
               <CopiedInput
                 readOnly
                 value={refLink}
                 className={`w-full hover:bg-[#fffafa] ${styles.input}`}
-                copyTooltipAlt="Refferal Link"
-                copyTooltipTitle="Refferal Link"
+                copyTooltipAlt={t('referral.tooltip')}
+                copyTooltipTitle={t('referral.tooltip')}
               />
             </div>
           </div>
