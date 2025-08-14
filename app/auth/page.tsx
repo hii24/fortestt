@@ -8,6 +8,7 @@ import { checkAccessExists, storageUser } from '@/services/auth/auth.helper';
 import axiosInter from '@/api/interceptors';
 import { createProxyUrl, getAllDepositsUrl } from '@/config/api.config';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 function AuthTypeHandler({ setAuthTypeLogin }: { setAuthTypeLogin: (value: boolean) => void }) {
   const searchParams = useSearchParams();
@@ -24,6 +25,7 @@ function AuthTypeHandler({ setAuthTypeLogin }: { setAuthTypeLogin: (value: boole
 export default function AdminLogin() {
   const router = useRouter();
   const [authTypeLogin, setAuthTypeLogin] = useState(true);
+  const t = useTranslations('authPage');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -133,7 +135,7 @@ export default function AdminLogin() {
     <Suspense
       fallback={
         <div className="h-full w-full grid place-content-center">
-          <p>Loading...</p>
+          <p>{t('loading')}</p>
         </div>
       }>
       <AuthTypeHandler setAuthTypeLogin={setAuthTypeLogin} />
@@ -147,7 +149,7 @@ export default function AdminLogin() {
 
             <form className="mt-8 gap-3" onSubmit={handleSubmit}>
               <fieldset>
-                <label htmlFor="email-address">Email</label>
+                 <label htmlFor="email-address">{t('email.label')}</label>
                 <input
                   id="email"
                   name="email"
@@ -157,11 +159,11 @@ export default function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className={styles.inputField}
-                  placeholder={`Enter your email`}
+                   placeholder={t('email.placeholder')}
                 />
               </fieldset>
               <fieldset>
-                <label htmlFor="password">Password</label>
+                 <label htmlFor="password">{t('password.label')}</label>
                 <input
                   id="password"
                   name="password"
@@ -171,13 +173,13 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className={styles.inputField}
-                  placeholder="Enter your password"
+                   placeholder={t('password.placeholder')}
                 />
               </fieldset>
 
               {!authTypeLogin && (
                 <fieldset>
-                  <label htmlFor="repeat_password">Repeat Password</label>
+                  <label htmlFor="repeat_password">{t('repeatPassword.label')}</label>
                   <input
                     id="repeat_password"
                     name="repeat_password"
@@ -187,17 +189,15 @@ export default function AdminLogin() {
                     value={repeatPassword}
                     onChange={(e) => setRepeatPassword(e.target.value)}
                     className={styles.inputField}
-                    placeholder="Enter your password"
+                    placeholder={t('repeatPassword.placeholder')}
                   />
                   {!samePasswrd && repeatPassword !== '' && repeatPassword !== password && (
-                    <p className="text-center text-red-400 py-2">Passwords do not match</p>
+                    <p className="text-center text-red-400 py-2">{t('repeatPassword.mismatch')}</p>
                   )}
                 </fieldset>
               )}
               {error && (
-                <p className="text-red-500">
-                  {!authTypeLogin && error?.includes('unique') ? 'Account allready exist!' : error}
-                </p>
+                <p className="text-red-500">{!authTypeLogin && error?.includes('unique') ? t('errors.accountExists') : error}</p>
               )}
 
               {/*               {!authTypeLogin && (
@@ -242,12 +242,12 @@ export default function AdminLogin() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                   ) : null}
-                  {isLoading ? 'Loading...' : authTypeLogin ? 'Sign in' : 'Sign Up'}
+                  {isLoading ? t('loading') : authTypeLogin ? t('buttons.signIn') : t('buttons.signUp')}
                 </button>
               </div>
             </form>
             <button className="px-2" type="button" onClick={() => setAuthTypeLogin((prev) => !prev)}>
-              {authTypeLogin ? 'Register' : 'Login'}
+              {authTypeLogin ? t('switch.toRegister') : t('switch.toLogin')}
             </button>
           </div>
 

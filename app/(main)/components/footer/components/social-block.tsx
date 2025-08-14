@@ -1,20 +1,15 @@
 import { useRef, useState } from 'react';
 import { motion, useInView, Variants } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
 import { socialLinks } from '@/app/(main)/components/footer/social-icons';
 import DefaultAppear from '@/app/components/animation/default-appear';
-import { getTranslatedFooterContent } from '@/app/(main)/components/footer/lang';
-import { inputTranslation } from '@/app/(main)/components/footer/footer';
+import { useTranslations } from 'next-intl';
 
 // <CommunitySection delay={1.0} />
 // Community Section with icons
 const SocialBlock = ({ delay }: { delay: number }) => {
   const [isHovered, setIsHovered] = useState<number | null>(null);
 
-  const { i18n } = useTranslation();
-
-  // Get translations based on current language
-  const t = getTranslatedFooterContent(i18n.language as keyof typeof inputTranslation);
+  const t = useTranslations('footer');
 
   // Container animation variants for staggered children
   const containerVariants = {
@@ -49,9 +44,7 @@ const SocialBlock = ({ delay }: { delay: number }) => {
   return (
     <div ref={ref} className="flex flex-col items-baseline gap-[6px] lg:gap-[10px] w-full">
       <DefaultAppear delay={delay - 0.2} position={'bottom'}>
-        <h3 className="text-left text-[#1B1B1B] font-[500] text-[14px] leading-normal">
-          {t.items.community}
-        </h3>
+        <h3 className="text-left text-[#1B1B1B] font-[500] text-[14px] leading-normal">{t('community')}</h3>
       </DefaultAppear>
       <motion.div
         className="flex justify-start gap-[16px] md:gap-[10px] max-w-[190px] md:max-w-full w-full"

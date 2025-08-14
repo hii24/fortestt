@@ -14,8 +14,10 @@ import { debounce } from '@/utils/debounce';
 import { CoinService } from '@/services/coin/coin.service';
 import QrInput from '@/app/components/QrInput';
 import SwapSelector from '@/app/(main)/components/exchange/swap-selector/swap-selector';
+import { useTranslations } from 'next-intl';
 
 export const ExchangeTransfer = () => {
+  const t = useTranslations('exchange');
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -268,7 +270,7 @@ export const ExchangeTransfer = () => {
       <div className="mt-2 mb-3 sm:mt-10 max-xl:w-full px-3 flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading exchange details...</p>
+          <p className="text-gray-600">{t('loading')}</p>
         </div>
       </div>
     );
@@ -278,7 +280,7 @@ export const ExchangeTransfer = () => {
     <div className=" mt-2 mb-3 sm:mt-10 max-xl:w-full px-3">
       {/* Exchange Bloxk */}
       <div className={`${styles.exchangeContainer} !mt-0`}>
-        <h1 className="text-center font-medium">Add exchange details</h1>
+        <h1 className="text-center font-medium">{t('title')}</h1>
       </div>
       {/* Exchange Inputs */}
       <div className={styles.exchangeContainer}>
@@ -304,25 +306,25 @@ export const ExchangeTransfer = () => {
         <form className="w-full" onSubmit={onAddExchange}>
           {/* Wallet Address */}
           <div className="w-full mb-4">
-            <p className="text-gray-700 mb-2 text-sm font-medium">Enter wallet address</p>
+            <p className="text-gray-700 mb-2 text-sm font-medium">{t('walletAddress.label')}</p>
             <QrInput
               value={walletAddress}
               onChange={setWalletAddress}
-              placeholder="Enter the recipient's address"
+              placeholder={t('walletAddress.placeholder')}
               required
             />
             {!isValid && (
-              <div className="text-xs pt-3 text-red-600">{'Check your wallet for a valid one'}</div>
+              <div className="text-xs pt-3 text-red-600">{t('walletAddress.invalid')}</div>
             )}
           </div>
 
           {(fromCurrency?.is_memo || toCurrency?.is_memo) && (
             <div className="w-full">
-              <p className="text-gray-700 mb-2 text-sm font-medium">Enter Memo address</p>
+              <p className="text-gray-700 mb-2 text-sm font-medium">{t('memo.label')}</p>
               <Input
                 style={{ fontSize: 16 }}
                 required={fromCurrency.is_memo || toCurrency.is_memo}
-                placeholder="Enter the recipient's address"
+                placeholder={t('memo.placeholder')}
                 value={memoAddress}
                 onChange={(e) => setMemoAddress(e.target.value)}
                 size="large"
@@ -351,26 +353,26 @@ export const ExchangeTransfer = () => {
               }}
             />
             <p className={styles.policyTermsTextBox}>
-              I agree to the
+              {t('terms.prefix')}
               <a
                 href="/privacy-policy"
                 target="_blank"
                 className={!confTerms && tryExchange ? '!text-red-500' : 'text-blue-500'}>
                 {' Privacy Policy '}
               </a>
-              and
+              {` ${t('terms.and')} `}
               <a
                 href="/temp-of-use"
                 target="_blank"
                 className={!confTerms && tryExchange ? '!text-red-500' : 'text-blue-500'}>
                 {' Terms of Service '}
               </a>
-              when I click
+              {` ${t('terms.whenClick')} `}
               <a
                 href="/temp-of-use"
                 target="_blank"
                 className={!confTerms && tryExchange ? '!text-red-500' : 'text-blue-500'}>
-                {' Create an exchange'}
+                {` ${t('buttons.createExchange')}`}
               </a>
               .
             </p>
@@ -386,7 +388,7 @@ export const ExchangeTransfer = () => {
             variant="solid"
             color="blue"
             size="large">
-            <span>Create an exchange</span>
+            <span>{t('buttons.createExchange')}</span>
           </Button>
 
           {/*  <button >
@@ -400,10 +402,10 @@ export const ExchangeTransfer = () => {
       </div>
       <div className={styles.exchangeContainer}>
         <div className="w-full mb-5 ml-1">
-          <p className="text-gray-700 mb-2 text-sm font-medium">Refund wallet (optional)</p>
+          <p className="text-gray-700 mb-2 text-sm font-medium">{t('refund.label')}</p>
           <Input
             style={{ fontSize: 16 }}
-            placeholder="Wallet for refund (optional)"
+            placeholder={t('refund.placeholder')}
             value={refundAddress}
             onChange={(e) => setRefundAddress(e.target.value)}
             size="large"
@@ -413,11 +415,11 @@ export const ExchangeTransfer = () => {
 
         <div className="w-full mb-2 ml-1">
           <p className={!isError ? 'text-gray-700 mb-2 text-sm font-medium' : 'text-red-500'}>
-            Email (Optional)
+            {t('email.label')}
           </p>
           <Input
             style={{ fontSize: 16 }}
-            placeholder="Exchange alerts (optional)"
+            placeholder={t('email.placeholder')}
             value={email}
             type="email"
             onChange={(e) => setEmail(e.target.value)}
@@ -425,7 +427,7 @@ export const ExchangeTransfer = () => {
           />
           <p className="text-xs mt-2 text-gray-500">
             {
-              isError && <span className="text-red-500">Invalid email</span>
+              isError && <span className="text-red-500">{t('email.invalid')}</span>
               //   : (
               //   'If you want to get notifications about this exchange.'
               // )

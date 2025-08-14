@@ -28,11 +28,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
   // If locale prefix present, persist it in cookie and rewrite to path without the prefix
-  const localeMatch = pathname.match(/^\/(en|ru|uk)(?:\/|$)/);
+  const localeMatch = pathname.match(/^\/(en|ru)(?:\/|$)/);
   if (localeMatch) {
     const activeLocale = localeMatch[1];
     const url = request.nextUrl.clone();
-    url.pathname = pathname.replace(/^\/(en|ru|uk)(?=\/|$)/, '') || '/';
+    url.pathname = pathname.replace(/^\/(en|ru)(?=\/|$)/, '') || '/';
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-active-locale', activeLocale);
     const response = NextResponse.rewrite(url, {request: {headers: requestHeaders}} as any);

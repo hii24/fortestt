@@ -16,7 +16,7 @@ export default function LanguageSwitcher({className}: LanguageSwitcherProps) {
 
   const queryString = searchParams.toString();
   // Ensure we strip any existing locale prefix and build URLs with the target locale
-  const basePath = (pathname || '/').replace(/^\/(en|ru|uk)(?=\/|$)/, '') || '/';
+  const basePath = (pathname || '/').replace(/^\/(en|ru)(?=\/|$)/, '') || '/';
   const hrefWithQuery = (targetLocale: string) => `/${targetLocale}${basePath}${queryString ? `?${queryString}` : ''}`;
 
   return (

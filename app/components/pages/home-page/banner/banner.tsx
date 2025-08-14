@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, animate } from 'framer-motion';
 import TrustPilot from '@/app/(main)/components/footer/trust-pilot/trust-pilot';
+import { useTranslations } from 'next-intl';
 
 interface AnimatedCounterProps {
   from: number;
@@ -50,17 +51,18 @@ interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = ({ coinCountDelay = 0 }) => {
+  const t = useTranslations('banner');
   return (
     <>
       <p
         className={
           'text-center text-[#1B1B1B] text-[25px] md:text-[35px] lg:text-[50px] font-[600] leading-[120%]'
         }>
-        Exchange{' '}
+        {t('prefix')}{' '}
         <span className={'text-[#3460FD]'}>
           <AnimatedCounter from={0} to={2000} delay={coinCountDelay} suffix="+" />
         </span>{' '}
-        Coins <br /> Instantly at the Best Rates
+        {t('middle')} <br /> {t('suffix')}
       </p>
 
       <div className={'flex justify-center mt-[10px]'}>

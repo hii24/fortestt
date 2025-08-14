@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, useMotionValue, animate } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 interface ReviewData {
   count: number;
@@ -59,6 +60,7 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ from, to, duration = 
 };
 
 const TrustPilot = ({ color, variant = 'primary', animationDelay = 0 }: TrustPilotProps) => {
+  const t = useTranslations('trustpilot');
   const [reviewData, setReviewData] = useState<ReviewData>({
     count: 13, // fallback number
     loading: true,
@@ -147,22 +149,20 @@ const TrustPilot = ({ color, variant = 'primary', animationDelay = 0 }: TrustPil
       className={'flex gap-1 items-center opacity-[1.0] hover:opacity-[0.6] transition-opacity'}>
       {variant === 'primary' ? (
         <p style={{ color: color }} className={' text-[14px] md:text-[16px] font-[400] leading-[162%]'}>
-          See our{' '}
+          {t('seeOur')}{' '}
           <span className={'font-[700]'}>
             {!reviewData.loading && <AnimatedCounter from={0} to={reviewData.count} delay={animationDelay} />}
           </span>{' '}
-          reviews on
+          {t('reviewsOn')}
         </p>
       ) : (
         <p style={{ color: color }} className={' text-[14px] md:text-[16px] font-[400] leading-[162%]'}>
-          Rate us on
+          {t('rateUsOn')}
         </p>
       )}
 
       <TrustPilotIcon />
-      <p style={{ color: color }} className={'text-[14px] md:text-[16px] font-[400] leading-[162%]'}>
-        Trustpilot
-      </p>
+      <p style={{ color: color }} className={'text-[14px] md:text-[16px] font-[400] leading-[162%]'}>Trustpilot</p>
     </Link>
   );
 };

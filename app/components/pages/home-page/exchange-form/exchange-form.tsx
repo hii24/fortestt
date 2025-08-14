@@ -9,9 +9,11 @@ import { motion, useInView, Variants } from 'framer-motion';
 import clsx from 'clsx';
 import SwapSelector from '@/app/(main)/components/exchange/swap-selector/swap-selector';
 import { CoinService } from '@/services/coin/coin.service';
+import { useTranslations } from 'next-intl';
 
 const ExchangeForm = () => {
   const router = useRouter();
+  const t = useTranslations('exchange');
   const [fixedRate, setfixedRate] = useState(false);
   const [fromAmount, onFromAmountChange] = useState('0.1');
   const [toAmount, onToAmountChange] = useState('0');
@@ -242,12 +244,12 @@ const ExchangeForm = () => {
       <form action="" className={`flex items-center flex-col w-full`}>
         <div className={styles.formHead}>
           <div className={`${styles.leftForm}`}>
-            <button className={styles.active}>Exchange</button>
+            <button className={styles.active}>{t('tabs.exchange')}</button>
             <button disabled className={styles.disabled}>
-              Buy <span>soon</span>
+              {t('tabs.buy')} <span>{t('soon')}</span>
             </button>
             <button disabled className={styles.disabled}>
-              Sell <span>soon</span>
+              {t('tabs.sell')} <span>{t('soon')}</span>
             </button>
           </div>
 
@@ -284,7 +286,7 @@ const ExchangeForm = () => {
           size="large"
           className={styles.exchangeBtn}
           onClick={handleExchange}>
-          Exchange now
+          {t('buttons.exchangeNow')}
         </Button>
       </form>
     </div>

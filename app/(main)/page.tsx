@@ -14,6 +14,7 @@ import ExchangeForm from '../components/pages/home-page/exchange-form/exchange-f
 import Banner from '@/app/components/pages/home-page/banner/banner';
 import ReviewsSlider from '@/app/components/pages/home-page/reviews/ReviewsSlider';
 import PartnersCarousel from '@/app/(main)/components/partners/PartnersCarousel';
+import { getTranslations } from 'next-intl/server';
 
 const popularExchangesData = [
   {
@@ -119,6 +120,7 @@ const popularExchangesData = [
 
 export default async function Home() {
   const isMobile = await getIsMobile();
+  const t = await getTranslations('home');
 
   return (
     <div className={`${styles.container} z-1`}>
@@ -143,15 +145,14 @@ export default async function Home() {
         </div>
 
         <div className={`reveal fade-up delay-200 ${styles.ourStrengths} `}>
-          {/* <h1 className={styles.ourStrengthsMainText}>Our strengths</h1> */}
+          {/* <h1 className={styles.ourStrengthsMainText}>{t('strengths')}</h1> */}
           {/* {!isMobile && ( */}
           <div className={styles.ourStrengthsBlocks + ` ${styles.borderEffect} ${styles.desktopFlex1536}`}>
             <div className={`reveal slide-left delay-300 ${styles.support}`}>
               <div className={styles.supportText}>
-                <h2 className={styles.supportMainText}>24/7 support</h2>
+                <h2 className={styles.supportMainText}>{t('support.title')}</h2>
                 <h3 className={styles.supportDescriptionText}>
-                  Our support team is available 24/7 to resolve any issues and provide you with the assistance
-                  you need.
+                  {t('support.desc')}
                 </h3>
               </div>
               {/* <Image src={'/images/landing/support.png'} alt={'puzzle'} width={300} height={300}></Image> */}
@@ -160,19 +161,17 @@ export default async function Home() {
               <div className="flex flex-row gap-5">
                 <div className={`reveal fade-up delay-400 ${styles.noLimits}`}>
                   <div className={styles.noLimitsText}>
-                    <h2 className={styles.noLimitsMainText}>No Limits</h2>
+                    <h2 className={styles.noLimitsMainText}>{t('noLimits.title')}</h2>
                     <h3 className={styles.noLimitsDescriptionText}>
-                      Exchange any amount of cryptocurrency without upper limits, offering flexibility for
-                      both small and large transactions.
+                      {t('noLimits.desc')}
                     </h3>
                   </div>
                 </div>
                 <div className={`reveal fade-up delay-500 ${styles.transparency}`}>
                   <div className={styles.transparencyText}>
-                    <h2 className={styles.transparencyMainText}>Transparency</h2>
+                    <h2 className={styles.transparencyMainText}>{t('transparency.title')}</h2>
                     <h3 className={styles.transparencyDescriptionText}>
-                      The exchange process is simple and straightforward. You can always track the status of
-                      your transactions in real time.
+                      {t('transparency.desc')}
                     </h3>
                   </div>
                 </div>
@@ -180,19 +179,17 @@ export default async function Home() {
               <div className="flex flex-row gap-5">
                 <div className={`reveal fade-up delay-600 ${styles.speed}`}>
                   <div className={styles.speedText}>
-                    <h2 className={styles.speedMainText}>Speed</h2>
+                    <h2 className={styles.speedMainText}>{t('speed.title')}</h2>
                     <h3 className={styles.speedDescriptionText}>
-                      Transactions are processed quickly and reliably, usually taking between 5 and 30
-                      minutes.
+                      {t('speed.desc')}
                     </h3>
                   </div>
                 </div>
                 <div className={`reveal fade-up delay-700 ${styles.noRegestration}`}>
                   <div className={styles.noRegestrationText}>
-                    <h2 className={styles.noRegestrationMainText}>No Registration</h2>
+                    <h2 className={styles.noRegestrationMainText}>{t('noRegistration.title')}</h2>
                     <h3 className={styles.noRegestrationDescriptionText}>
-                      Exchange cryptocurrency without creating an account. <br />
-                      Your privacy is fully protected, ensuring complete anonymity.
+                      {t('noRegistration.desc')}
                     </h3>
                   </div>
                 </div>
@@ -204,45 +201,41 @@ export default async function Home() {
           <div className={styles.ourStrengthsBlocks + `  ${styles.mobileFlex1536}`}>
             <div className={styles.support}>
               <div className={styles.supportText}>
-                <h1 className={styles.supportMainText}>24/7 support</h1>
+                <h1 className={styles.supportMainText}>{t('support.title')}</h1>
                 <h3 className={styles.supportDescriptionText}>
-                  Our support team is available 24/7to resolve any issues and provide you with the assistance
-                  you need.
+                  {t('support.desc')}
                 </h3>
               </div>
             </div>
             <div className={styles.noLimits}>
               <div className={styles.noLimitsText}>
-                <h1 className={styles.noLimitsMainText}>No Limits</h1>
+                <h1 className={styles.noLimitsMainText}>{t('noLimits.title')}</h1>
                 <h3 className={styles.noLimitsDescriptionText}>
-                  Exchange any amount of cryptocurrency without upper limits, offering flexibility for both
-                  small and large transactions.
+                  {t('noLimits.desc')}
                 </h3>
               </div>
             </div>
             <div className={styles.transparency}>
               <div className={styles.transparencyText}>
-                <h1 className={styles.transparencyMainText}>Transparency</h1>
+                <h1 className={styles.transparencyMainText}>{t('transparency.title')}</h1>
                 <h3 className={styles.transparencyDescriptionText}>
-                  The exchange process is simple and straightforward. You can always track the status of your
-                  transactions in real time.
+                  {t('transparency.desc')}
                 </h3>
               </div>
             </div>
             <div className={styles.speed}>
               <div className={styles.speedText}>
-                <h1 className={styles.speedMainText}>Speed</h1>
+                <h1 className={styles.speedMainText}>{t('speed.title')}</h1>
                 <h3 className={styles.speedDescriptionText}>
-                  Transactions are processed quickly and reliably, usually taking between 5 and 30 minutes.
+                  {t('speed.desc')}
                 </h3>
               </div>
             </div>
             <div className={styles.noRegestration}>
               <div className={styles.noRegestrationText}>
-                <h1 className={styles.noRegestrationMainText}>No Registration</h1>
+                <h1 className={styles.noRegestrationMainText}>{t('noRegistration.title')}</h1>
                 <h3 className={styles.noRegestrationDescriptionText}>
-                  Exchange cryptocurrency without creating an account. Your privacy is fully protected,
-                  ensuring complete anonymity.
+                  {t('noRegistration.desc')}
                 </h3>
               </div>
             </div>
@@ -257,24 +250,24 @@ export default async function Home() {
           </div>
           {/* )} */}
           <div className={`reveal fade-up delay-300 ${styles.toDayStatisctic}`}>
-            <p className={styles.toDayStatisticMainText}>Today&#39;s statistics</p>
+            <p className={styles.toDayStatisticMainText}>{t('todayStats.title')}</p>
             {!isMobile && (
               <div className={styles.toDayStatisticsBlocks}>
                 <div className={styles.block}>
                   <h1 className={styles.toDayStatisticsBlocksText}>3643+</h1>
-                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>Visits today</h5>
+                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>{t('todayStats.visits')}</h5>
                 </div>
                 <div className={styles.block}>
                   <h1 className={styles.toDayStatisticsBlocksText}>7min</h1>
-                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>Average processing time</h5>
+                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>{t('todayStats.avgTime')}</h5>
                 </div>
                 <div className={styles.block}>
                   <h1 className={styles.toDayStatisticsBlocksText}>864+</h1>
-                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>Transactions carried out</h5>
+                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>{t('todayStats.transactions')}</h5>
                 </div>
                 <div className={styles.block}>
                   <h1 className={styles.toDayStatisticsBlocksText}>615</h1>
-                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>Active Users</h5>
+                  <h5 className={styles.toDayStatisticsBlocksDescriptionText}>{t('todayStats.activeUsers')}</h5>
                 </div>
               </div>
             )}
@@ -284,32 +277,32 @@ export default async function Home() {
 
         <div className={'w-full flex flex-col mt-0 md:mt-[80px] lg:mt-[100px]'}>
           <div id={'how-it-works'} className={'reveal fade-up flex flex-col px-4 md:px-6 lg:px-8'}>
-            <p className={styles.howItWorksMainText}>How It Works</p>
+            <p className={styles.howItWorksMainText}>{t('howItWorks.title')}</p>
 
             <div className={`reveal fade-up delay-200 ${styles.howItWorksContainers}`}>
               <div className={styles.howItWorksContainersBlocks}>
                 <div className={styles.howItWorksContainersBlocksBlock2}>
                   <Image src={'/images/blocks/block1.png'} alt={'block1'} width={272} height={293}></Image>
                   <div className={styles.howItWorksContainersBlocksBlockContentBodyListContainerFooter}>
-                    <h1>1. Selection of coins.</h1>
-                    <h2>Specify which coin you are sending and which one you are receiving.</h2>
+                    <h1>{t('howItWorks.step1.title')}</h1>
+                    <h2>{t('howItWorks.step1.desc')}</h2>
                   </div>
                 </div>
                 <div className={styles.howItWorksContainersBlocksBlock2}>
                   <Image src={'/images/blocks/block2.png'} alt={'block1'} width={328} height={271}></Image>
                   <div className={styles.howItWorksContainersBlocksBlockContentBodyListContainerFooter}>
-                    <h1>2. Making a deposit</h1>
+                    <h1>{t('howItWorks.step2.title')}</h1>
                     <h2>
-                      Send the amount to the address on <br />
-                      time, including the MEMO if needed.
+                      {t('howItWorks.step2.desc1')} <br />
+                      {t('howItWorks.step2.desc2')}
                     </h2>
                   </div>
                 </div>
                 <div className={styles.howItWorksContainersBlocksBlock2}>
                   <Image src={'/images/blocks/block3.png'} alt={'block1'} width={288} height={309}></Image>
                   <div className={styles.howItWorksContainersBlocksBlockContentBodyListContainerFooter}>
-                    <h1>3. Exchange in progress</h1>
-                    <h2>The transaction is processing. Wait for completion.</h2>
+                    <h1>{t('howItWorks.step3.title')}</h1>
+                    <h2>{t('howItWorks.step3.desc')}</h2>
                   </div>
                 </div>
                 <div className={styles.howItWorksContainersBlocksBlock2}>
@@ -327,10 +320,10 @@ export default async function Home() {
                     className={styles.howItWorksContainersBlocksBlock2Image2}></Image>
                   <div
                     className={`${styles.howItWorksContainersBlocksBlockContentBodyListContainerFooter} ${styles.howItWorksContainersBlocksBlockContentBodyListContainerFooterFour}`}>
-                    <h1 className="z-2">4. The exchange is complete</h1>
+                    <h1 className="z-2">{t('howItWorks.step4.title')}</h1>
                     <h2>
-                      Coins have been successfully <br />
-                      credited to your address.
+                      {t('howItWorks.step4.desc1')} <br />
+                      {t('howItWorks.step4.desc2')}
                     </h2>
                   </div>
                 </div>
@@ -341,7 +334,7 @@ export default async function Home() {
           <div
             id="popular-exchanges"
             className={`reveal fade-up px-4 md:px-6 lg:px-8 ${styles.popularExcanges}`}>
-            <p className={styles.popularExcangesMainText}>Popular Exchanges</p>
+            <p className={styles.popularExcangesMainText}>{t('popularExchanges.title')}</p>
             <div className={styles.popularExcangesContainer}>
               {popularExchangesData.map((exchange) => (
                 <div key={exchange.id} className={`${styles.popularExcangesBlock}`}>
@@ -404,7 +397,7 @@ export default async function Home() {
                       network: { id: exchange.token2_id, title: exchange.network2 },
                       is_memo: false,
                     }}>
-                    <p className="max-sm:!text-xs">{'Exchange'}</p>
+                    <p className="max-sm:!text-xs">{t('popularExchanges.exchangeButton')}</p>
                   </PopularExchangeBtn>
                 </div>
               ))}
@@ -417,7 +410,7 @@ export default async function Home() {
           <div
             id="partners"
             className={`reveal fade-up delay-300 !mt-[100px] px-4 md:px-6 lg:px-8 ${styles.partners}`}>
-            <span>List of our partners</span>
+            <span>{t('partners.title')}</span>
             <PartnersCarousel />
             {/*<div className={styles.partnersBlocks}>*/}
             {/*  <div className={styles.partnersBlock}>*/}
@@ -450,7 +443,7 @@ export default async function Home() {
           <div
             id="faq"
             className={`reveal fade-up delay-400 mb-[50px] px-4 md:px-6 lg:px-8 ${styles.accordion}`}>
-            <p className={styles.FaqMainText}>Faq</p>
+            <p className={styles.FaqMainText}>{t('faq.title')}</p>
             <Accordion />
           </div>
         </div>

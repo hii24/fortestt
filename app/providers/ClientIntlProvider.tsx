@@ -17,7 +17,7 @@ export default function ClientIntlProvider({children}: ClientIntlProviderProps) 
 
   // Derive locale from pathname (/en/...)
   React.useEffect(() => {
-    const match = pathname?.match(/^\/(en|ru|uk)(?:\/|$)/);
+    const match = pathname?.match(/^\/(en|ru)(?:\/|$)/);
     const nextLocaleFromPath = match?.[1] ?? null;
     const nextLocale: Locale = isSupportedLocale(nextLocaleFromPath)
       ? (nextLocaleFromPath as Locale)

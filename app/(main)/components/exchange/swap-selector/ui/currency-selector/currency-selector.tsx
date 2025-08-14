@@ -10,6 +10,7 @@ import CurrencyList from '@/app/(main)/components/exchange/swap-selector/ui/curr
 import CurrencyDropdownHeader from '@/app/(main)/components/exchange/swap-selector/ui/currency-selector/ui/currency-dropdown-header/currency-dropdown-header';
 import CurrencyButton from '@/app/(main)/components/exchange/swap-selector/ui/currency-selector/ui/currency-button/currency-button';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 
 interface CurrencySelectorProps {
@@ -83,6 +84,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
   showFloatIcon = false,
   isCalculating = false, // Default to false
 }) => {
+  const t = useTranslations('exchange');
   const [opened, setOpened] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
@@ -299,7 +301,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
           createPortal(
             <div className="fixed inset-0 z-[9999] flex flex-col bg-white">
               <div className="flex items-center justify-between px-4 py-3 border-b border-[#E6E7EB]">
-                <p className="text-[16px] font-[500]">Select a currency</p>
+                <p className="text-[16px] font-[500]">{t('currencySelector.select')}</p>
                 <button
                   aria-label="Close"
                   className="p-1"

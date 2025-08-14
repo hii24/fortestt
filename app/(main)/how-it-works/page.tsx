@@ -2,8 +2,10 @@ import styles from './styles.module.css';
 import Accordion from '@/app/(main)/components/accordion/Accordion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
-const Page = () => {
+const Page = async () => {
+  const t = await getTranslations('howPage');
   return (
     <div className={styles.container}>
       <div className={`${styles.howItWorkTop} xl:gap-20`}>
@@ -11,15 +13,10 @@ const Page = () => {
         <div className="circle circle-2"></div>
         <div className="circle circle-3"></div>
         <div className={`${styles.howItWorkTopLeft} sm:z-10`}>
-          <h1 className={`${styles.heroTitle}`}>
-            Exchange architecture from transaction to receipt of funds
-          </h1>
-          <p className={`${styles.heroDescription} xl:max-w-[444px]`}>
-            {`Exchanging cryptocurrencies with us is simple, fast and safe. We create a clear process that even
-            a beginner can handle. Here's how it all works:`}
-          </p>
+          <h1 className={`${styles.heroTitle}`}>{t('hero.title')}</h1>
+          <p className={`${styles.heroDescription} xl:max-w-[444px]`}>{t('hero.desc')}</p>
           <Link href={'/transfer'}>
-            <button className={styles.exchange}>Exchange now</button>
+            <button className={styles.exchange}>{t('hero.exchangeButton')}</button>
           </Link>
           <Image
             src={'/images/coins/coin2.png'}
@@ -37,12 +34,9 @@ const Page = () => {
             className={`${styles.coinsImage} ${styles.coinsImage3}`}></Image> */}
           <div className={`${styles.heroRightBox} xl:mr-auto xl:max-w-[444px]`}>
             <h5 className={styles.heroRightBoxTitle}>
-              <span>~</span>Floating rate
+              <span>~</span>{t('floating.title')}
             </h5>
-            <p className={styles.heroRightBoxDescription}>
-              The rate is determined at the time the funds are received. Fee: 0.5% + network fee. The exchange
-              is processed at the current market rate.
-            </p>
+            <p className={styles.heroRightBoxDescription}>{t('floating.desc')}</p>
           </div>
           <div className={`${styles.heroRightBox} xl:max-w-[444px]`}>
             <h5 className={`${styles.heroRightBoxTitle} flex gap-1`}>
@@ -61,25 +55,22 @@ const Page = () => {
                 />
                 <path d="M11 13.75L11 15.5833" stroke="#3460FD" strokeWidth="1.55833" strokeLinecap="round" />
               </svg>
-              Floating rate
+              {t('floating.title')}
             </h5>
-            <p className={styles.heroRightBoxDescription}>
-              The rate is determined at the time the funds are received. Fee: 0.5% + network fee. The exchange
-              is processed at the current market rate.
-            </p>
+            <p className={styles.heroRightBoxDescription}>{t('floating.desc')}</p>
           </div>
         </div>
       </div>
-      <div className={`${styles.pageTitle} z-[1]`}>Stages of work</div>
+      <div className={`${styles.pageTitle} z-[1]`}>{t('stages.title')}</div>
 
       <div className={styles.howItWorksContainersBlocks}>
         <div className={styles.howItWorksContainersBlock}>
           <div className={styles.howItWorksContainersBlockText}>
             <h2 className={styles.howItWorksContainersBlockTextTitle}>
               <span>01</span>
-              <br /> Selection of coins.
+              <br /> {t('steps.s1.title')}
             </h2>
-            <p>Specify which coin you are sending and which one you are receiving.</p>
+            <p>{t('steps.s1.desc')}</p>
           </div>
           <div className={styles.howItWorksContainersBlocksBlock}>
             <Image
@@ -95,14 +86,9 @@ const Page = () => {
           <div className={styles.howItWorksContainersBlockText}>
             <h2 className={styles.howItWorksContainersBlockTextTitle}>
               <span>02</span>
-              <br /> Making a deposit
+              <br /> {t('steps.s2.title')}
             </h2>
-            <p>
-              Please make sure that you have transferred the data to the specified address in time. Pay
-              special attention to the correctness of all data entry - in some cases it is also necessary to
-              specify MEMO (or similar additional information), without which the transaction may not be
-              identified properly.
-            </p>
+            <p>{t('steps.s2.desc')}</p>
           </div>
           <div className={styles.howItWorksContainersBlocksBlock}>
             <Image
@@ -118,13 +104,9 @@ const Page = () => {
           <div className={styles.howItWorksContainersBlockText}>
             <h2 className={styles.howItWorksContainersBlockTextTitle}>
               <span>03</span>
-              <br /> Making a deposit
+              <br /> {t('steps.s3.title')}
             </h2>
-            <p>
-              The transaction is currently being processed. This may take a few moments depending on network
-              congestion or other external factors. We kindly ask you to remain patient and wait for the
-              operation to be fully completed.
-            </p>
+            <p>{t('steps.s3.desc')}</p>
           </div>
           <div className={styles.howItWorksContainersBlocksBlock}>
             <Image
@@ -140,9 +122,9 @@ const Page = () => {
           <div className={styles.howItWorksContainersBlockText}>
             <h2 className={styles.howItWorksContainersBlockTextTitle}>
               <span>04</span>
-              <br /> Making a deposit
+              <br /> {t('steps.s4.title')}
             </h2>
-            <p>Specify which coin you are sending and which one you are receiving.</p>
+            <p>{t('steps.s4.desc')}</p>
           </div>
           <div className={styles.howItWorksContainersBlocksBlock}>
             <Image
@@ -155,7 +137,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className={styles.pageTitle + ' ' + styles.pageTitleFAQ}>FAQ</div>
+      <div className={styles.pageTitle + ' ' + styles.pageTitleFAQ}>{t('faq.title')}</div>
       <div id="faq" className={`${styles.faq}`}>
         <Accordion />
       </div>

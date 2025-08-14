@@ -32,7 +32,7 @@ const LangSwitcher = () => {
   };
 
   const handleLanguageSelect = (lang: string) => {
-    const basePath = (pathname || '/').replace(/^\/(en|ru|uk)(?=\/|$)/, '') || '/';
+    const basePath = (pathname || '/').replace(/^\/(en|ru)(?=\/|$)/, '') || '/';
     const qs = searchParams?.toString();
     const href = `/${lang}${basePath}${qs ? `?${qs}` : ''}`;
     Cookies.set('NEXT_LOCALE', lang, { path: '/' });
@@ -73,16 +73,6 @@ const LangSwitcher = () => {
               }}>
               <Image src="/icons/ru.svg" alt="flag-ru" width={22} height={22} />
               <p>Русский</p>
-            </button>
-          </li>
-          <li>
-            <button
-              className="flex gap-2.5"
-              onClick={() => {
-                handleLanguageSelect('uk');
-              }}>
-              <Image src="/icons/globe.svg" alt="flag-uk" width={22} height={22} />
-              <p>Українська</p>
             </button>
           </li>
         </ul>

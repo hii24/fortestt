@@ -17,6 +17,376 @@
   "auth": {
     "login": "Log in",
     "signup": "Sign up"
+  },
+  "authPage": {
+    "loading": "Loading...",
+    "email": {"label": "Email", "placeholder": "Enter your email"},
+    "password": {"label": "Password", "placeholder": "Enter your password"},
+    "repeatPassword": {"label": "Repeat Password", "placeholder": "Enter your password", "mismatch": "Passwords do not match"},
+    "errors": {"accountExists": "Account already exists!"},
+    "buttons": {"signIn": "Sign in", "signUp": "Sign up"},
+    "switch": {"toRegister": "Register", "toLogin": "Login"}
+  },
+  "footer": {
+    "sections": {
+      "popularPairs": "Popular pairs",
+      "forPartners": "For partners",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "links": {
+      "btcToUsdt": "BTC to USDT",
+      "ethToUsdt": "ETH to USDT",
+      "suiToUsdt": "SUI to USDT",
+      "btcToXrp": "BTC to XRP",
+      "usdtToLtc": "USDT to LTC",
+      "dogeToTrx": "DOGE to TRX",
+      "xmrToUsdt": "XMR to USDT",
+      "dogeToUsdt": "DOGE to USDT",
+      "apiForPartners": "API for partners",
+      "affiliateProgram": "Affiliate program",
+      "faq": "F.A.Q.",
+      "howItWorks": "How it works",
+      "aboutUs": "About us",
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy",
+      "amlKyc": "AML/KYC"
+    },
+    "description": "Exchange cryptocurrency quickly and conveniently - Lizex pages in bookmarks in a second!",
+    "community": "Community",
+    "rights": "© 2025 Lizex   All Right Reserved"
+  },
+  "home": {
+    "support": {
+      "title": "24/7 support",
+      "desc": "Our support team is available 24/7 to resolve any issues and provide you with the assistance you need."
+    },
+    "noLimits": {
+      "title": "No Limits",
+      "desc": "Exchange any amount of cryptocurrency without upper limits, offering flexibility for both small and large transactions."
+    },
+    "transparency": {
+      "title": "Transparency",
+      "desc": "The exchange process is simple and straightforward. You can always track the status of your transactions in real time."
+    },
+    "speed": {
+      "title": "Speed",
+      "desc": "Transactions are processed quickly and reliably, usually taking between 5 and 30 minutes."
+    },
+    "noRegistration": {
+      "title": "No Registration",
+      "desc": "Exchange cryptocurrency without creating an account. Your privacy is fully protected, ensuring complete anonymity."
+    },
+    "todayStats": {
+      "title": "Today's statistics",
+      "visits": "Visits today",
+      "avgTime": "Average processing time",
+      "transactions": "Transactions carried out",
+      "activeUsers": "Active Users"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "step1": {
+        "title": "1. Selection of coins.",
+        "desc": "Specify which coin you are sending and which one you are receiving."
+      },
+      "step2": {
+        "title": "2. Making a deposit",
+        "desc1": "Send the amount to the address on",
+        "desc2": "time, including the MEMO if needed."
+      },
+      "step3": {
+        "title": "3. Exchange in progress",
+        "desc": "The transaction is processing. Wait for completion."
+      },
+      "step4": {
+        "title": "4. The exchange is complete",
+        "desc1": "Coins have been successfully",
+        "desc2": "credited to your address."
+      }
+    },
+    "popularExchanges": {
+      "title": "Popular Exchanges",
+      "exchangeButton": "Exchange"
+    },
+    "partners": {
+      "title": "List of our partners"
+    },
+    "faq": {
+      "title": "FAQ"
+    },
+    "reviews": {
+      "title1": "Very good",
+      "text1": "Very good, thank",
+      "title2": "Fast and reliable",
+      "text2": "Schnell und zuverlässig.",
+      "title3": "Great rates and support",
+      "text3": "Great rates and support",
+      "title4": "Swapped coins",
+      "text4": "Swapped coins. Worked like a charm. 10/10",
+      "title5": "Exchanged XMR for TRX here fast and...",
+      "text5": "Exchanged XMR for TRX here fast and hassle free. Fair rates and quick transfers. Recommended!!!!",
+      "title6": "Fast, easy, thanks!!!!!",
+      "text6": "Fast, easy, thanks!!!!!",
+      "title7": "Had a problem with a transaction",
+      "text7": "Had a problem with a transaction, but support was fast and helpful. big thanks",
+      "title8": "Amazing crypto exchange 10/10",
+      "text8": "Amazing crypto exchange 10/10",
+      "title9": "Easy to use and fast exchange",
+      "text9": "Easy to use and fast exchange",
+      "title10": "It was easy to use and the support team...",
+      "text10": "It was easy to use and the support team was very nice and helped me fast",
+      "title11": "The exchange was quick and smooth",
+      "text11": "The exchange was quick and smooth.",
+      "title12": "Good exchange",
+      "text12": "Good exchange. I got my crypto fast."
+    }
+  },
+  "aboutPage": {
+    "top": {
+      "title": "About Lizex",
+      "p1": "We’ve built a platform designed entirely around user convenience: nothing unnecessary — just speed, security, and a straightforward process. No extra steps, no complicated forms, and no drawn-out procedures — just you, your crypto, and a clear, transparent exchange flow.",
+      "p2": "Thanks to that, we’ve created a product that not only works — it helps people every day. We believe in the freedom of digital assets and in the idea that everyone should be able to manage them on their own terms - easily, anonymously, and securely.",
+      "p3": "Lizex is a service where exchanging cryptocurrency is as simple as a single click.",
+      "exchangeButton": "Exchange now"
+    },
+    "right": {
+      "support": "24/7 support",
+      "noLimits": "No Limits",
+      "transparency": "Transparency",
+      "speed": "Speed",
+      "noRegistration": "No Registration"
+    },
+    "why": {
+      "title": "Why Lizex",
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Our support team works around the clock, every day of the week. No matter the time, you can count on prompt assistance — whether it’s a question about your current exchange, clarification of conditions, or tech support."
+      },
+      "noLimits": {
+        "title": "No Limits",
+        "desc": "We don’t impose upper limits on exchange amounts. This is especially important for both individuals and large-scale investors or traders who need flexibility in their operations."
+      },
+      "transparency": {
+        "title": "Transparency",
+        "desc": "The exchange process is simple and straightforward. You can always track the status of your transactions in real time."
+      },
+      "speed": {
+        "title": "Speed",
+        "desc": "Transactions are processed quickly and reliably, usually taking between 5 and 30 minutes."
+      },
+      "noRegistration": {
+        "title": "No Registration",
+        "desc": "Exchange cryptocurrency without creating an account. Your privacy is fully protected, ensuring complete anonymity."
+      }
+    },
+    "reviews": {"title": "Reviews"},
+    "faq": {"title": "FAQ"}
+  },
+  "howPage": {
+    "hero": {
+      "title": "Exchange architecture from transaction to receipt of funds",
+      "desc": "Exchanging cryptocurrencies with us is simple, fast and safe. We create a clear process that even a beginner can handle. Here's how it all works:",
+      "exchangeButton": "Exchange now"
+    },
+    "floating": {
+      "title": "Floating rate",
+      "desc": "The rate is determined at the time the funds are received. Fee: 0.5% + network fee. The exchange is processed at the current market rate."
+    },
+    "stages": {"title": "Stages of work"},
+    "steps": {
+      "s1": {"title": "Selection of coins.", "desc": "Specify which coin you are sending and which one you are receiving."},
+      "s2": {"title": "Making a deposit", "desc": "Please make sure that you have transferred the data to the specified address in time. Pay special attention to the correctness of all data entry - in some cases it is also necessary to specify MEMO (or similar additional information), without which the transaction may not be identified properly."},
+      "s3": {"title": "Exchange in progress", "desc": "The transaction is currently being processed. This may take a few moments depending on network congestion or other external factors. We kindly ask you to remain patient and wait for the operation to be fully completed."},
+      "s4": {"title": "The exchange is complete", "desc": "Coins have been successfully credited to your address."}
+    },
+    "faq": {"title": "FAQ"}
+  },
+  "banner": {
+    "prefix": "Exchange",
+    "middle": "Coins",
+    "suffix": "Instantly at the Best Rates"
+  },
+  "trustpilot": {
+    "seeOur": "See our",
+    "reviewsOn": "reviews on",
+    "rateUsOn": "Rate us on"
+  },
+  "contactPage": {
+    "hero": {
+      "title": "How to contact us",
+      "desc": "Write an email, call or fill out the form to find out how Lizex can solve your messaging problem."
+    },
+    "any": {
+      "title": "Any questions?",
+      "desc": "We are always available to help you with your cryptocurrency exchange and answer all your questions! Whether you're looking for help with technical issues or want more information about our services, our team is on call 24/7."
+    },
+    "cards": {
+      "telegram": {"title": "Write to us in Telegram", "desc": "Go to our chat in Telegram. We are always in touch and ready to help"},
+      "chat": {"title": "Write now in our online chat", "desc": "Go to our chat in Telegram. We are always in touch and ready to help"},
+      "email": {"title": "Contact us by email", "desc": "Send us an email and we will get back to you as soon as possible"}
+    }
+  },
+  "faqPage": {
+    "title": "Frequently asked questions",
+    "desc": "Here are answers to common questions. For more information, please contact us.",
+    "items": [
+      {
+        "question": "How does Lizex work?",
+        "answer": "The Lizex trading system is integrated with the largest cryptocurrency exchanges. There is no deposit storage, and only instant coin exchanges are available on our platform. This allows us to quickly find the most profitable exchange rates for our customers in a very short time."
+      },
+      {
+        "question": "Do I need to create an account or register?",
+        "answer": "No, Lizex is a fully anonymous platform as our team is committed to maintaining anonymity in the cryptocurrency world. We do not require any personal data to complete an exchange."
+      },
+      {
+        "question": "What is Exchange ID?",
+        "answer": "Exchange ID is a unique identifier for your transaction, consisting of alphanumeric characters. It allows you to track the details of your exchange and follow its progress. When contacting our support team, it is recommended to provide the Exchange ID to help speed up the process of locating your exchange in our database."
+      },
+      {
+        "question": "What is a transaction hash?",
+        "answer": "A transaction hash is a unique identifier assigned to every new transaction in the blockchain. This hash is linked to the specific operation and will be included in all subsequent blocks. With the transaction hash, you can view the details of your transaction on the network. It is typically displayed as 'tx ID' in your wallet."
+      }
+    ]
+  },
+  "accordion": {
+    "about": "About Us",
+    "support": "Support",
+    "transaction": "Transaction",
+    "about_q1": {
+      "title": "What is Lizex.io?",
+      "answer": "<p>Lizex.io is a service for fast, anonymous, and secure cryptocurrency exchange. We offer users competitive rates, instant transactions, and a user-friendly interface without the need for registration.</p>"
+    },
+    "about_q2": {
+      "title": "Why choose Lizex.io?",
+      "answer": "<p>Lizex.io provides users with a convenient, secure, and fast way to exchange cryptocurrencies. Our service operates without mandatory KYC, ensuring anonymity and no registration requirements. We offer competitive rates with no hidden fees, and exchanges are completed within an average of 5–30 minutes. All transactions are secured with advanced encryption technologies, and our 24/7 support helps resolve any issues. The interface is intuitive, even for beginners, and there are no maximum limits on exchange amounts.</p>"
+    },
+    "about_q3": {
+      "title": "What cryptocurrencies does Lizex.io support?",
+      "answer": "<p>Our service supports popular cryptocurrencies, including Bitcoin (BTC), Ethereum (ETH), USDT, Litecoin (LTC), Ripple (XRP), and many others. The full list is available on the website’s main page.</p>"
+    },
+    "about_q4": {
+      "title": "Do I need to complete identity verification (KYC)?",
+      "answer": "<p>No, KYC verification is not mandatory. We value user privacy and do not request personal data for standard transactions.</p>"
+    },
+    "about_q5": {
+      "title": "Where can I find news and updates about Lizex.io?",
+      "answer": "<p>Updates can be found on our website and in our social media channels. Follow us to stay informed about new features and opportunities.</p>"
+    },
+    "support_q1": {
+      "title": "How can I contact customer support?",
+      "answer": "<p>You can reach our support team through:</p><ul><li>Live chat on our website.</li><li>Email: support@lizex.io</li><li>Telegram: Link available on the website.</li></ul>"
+    },
+    "support_q2": {
+      "title": "How long does it take to receive a response from support?",
+      "answer": "<p>We aim to respond within a few minutes. In rare cases, response times may extend to a few hours, depending on the team's workload.</p><p>The average exchange processing time is up to 10 minutes, but speed depends on blockchain network congestion.</p>"
+    },
+    "support_q3": {
+      "title": "What should I do if I accidentally sent the wrong amount?",
+      "answer": "<p>If you sent an amount that differs from the one specified in the order, immediately contact our support team, providing your order ID. We will do our best to assist you.</p>"
+    },
+    "support_q4": {
+      "title": "Why is my transaction delayed?",
+      "answer": "<p>Possible reasons:</p><ul><li>Blockchain congestion – high network activity can cause delays.</li><li>Low network fee – if the network is busy, transactions with lower fees may take longer to confirm.</li><li>Incorrect details – check that the entered information is accurate.</li></ul><p>If more than 30 minutes have passed, contact support.</p>"
+    },
+    "support_q5": {
+      "title": "Can I cancel an exchange?",
+      "answer": "<p>No, once the funds have been sent, the transaction cannot be canceled, as blockchain transactions are irreversible.</p>"
+    },
+    "support_q6": {
+      "title": "What should I do if I entered the wrong recipient address?",
+      "answer": "<p>If the funds have already been sent, they cannot be recovered. Blockchain transactions cannot be reversed.</p><p>Always double-check your details before confirming.</p><p>If an error occurs, try reaching out to the recipient (if it's an exchange or service).</p>"
+    },
+    "tx_q1": {
+      "title": "What fees does Lizex.io charge?",
+      "answer": "<ul><li><strong>Service fee:</strong> Already included in the exchange rate.</li><li><strong>Network fee:</strong> Charged by the cryptocurrency network and depends on its current congestion.</li></ul>"
+    },
+    "tx_q2": {
+      "title": "How can I track my transaction status?",
+      "answer": "<ul><li>Use <strong>Swap Tracker</strong> on the Lizex.io website – enter your order ID and monitor its status.</li><li>Check the transaction in the <strong>blockchain explorer</strong> using its TxID (transaction ID).</li></ul><p>If more than 30 minutes have passed, contact support.</p>"
+    },
+    "tx_q3": {
+      "title": "What are fixed (Fixed) and floating (Float) rates?",
+      "answer": "<p>When exchanging cryptocurrency on Lizex.io, you can choose between two exchange rate options:</p><p><strong>Fixed rate:</strong> This type of exchange locks in the exchange rate at the moment the order is created. Regardless of market fluctuations during the exchange process, you will receive the exact amount displayed at the time of order creation. This is useful for high-volatility cryptocurrencies. However, to secure the rate, you must send the funds within the specified time frame after placing the order.</p><p><strong>Floating rate:</strong> This exchange type is based on the current market rate and may change during the transaction. If the market rate increases in your favor, you will receive more cryptocurrency. If the rate decreases, the final amount will be lower.</p>"
+    }
+  },
+  "exchange": {
+    "loading": "Loading exchange details...",
+    "title": "Add exchange details",
+    "walletAddress": {
+      "label": "Enter wallet address",
+      "placeholder": "Enter the recipient's address",
+      "invalid": "Check your wallet for a valid one"
+    },
+    "memo": {
+      "label": "Enter Memo address",
+      "placeholder": "Enter Memo (if required)"
+    },
+    "terms": {
+      "prefix": "I agree to the",
+      "and": "and",
+      "whenClick": "when I click"
+    },
+    "buttons": {
+      "createExchange": "Create an exchange"
+    },
+    "refund": {
+      "label": "Refund wallet (optional)",
+      "placeholder": "Wallet for refund (optional)"
+    },
+    "email": {
+      "label": "Email (Optional)",
+      "placeholder": "Exchange alerts (optional)",
+      "invalid": "Invalid email"
+    },
+    "swap": {
+      "youSend": "You send",
+      "youGet": "You get",
+      "amountRange": "Amount range",
+      "minAmount": "minimum {min} {token}",
+      "pricePerOne": "1 {from} = {price}",
+      "tryAnotherPair": "Try select another pair",
+      "errors": {
+        "fetchRate": "Error fetching exchange rate",
+        "amountRangeIn": "Amount range in {error}"
+      }
+    },
+    "operationDetails": {
+      "title": "Operation details",
+      "recipientAddress": "Recipient address:",
+      "depositAddress": "Deposit address:",
+      "hashIn": "Hash in:",
+      "hashOut": "Hash out:",
+      "copyTooltipTitle": "Your address",
+      "copyTooltipAlt": "Address",
+      "setLabel": "Set Label"
+    }
+    ,
+    "searchPlaceholder": "Search from currency",
+    "all": "All",
+    "new": "New",
+    "soon": "Soon",
+    "tabs": {
+      "exchange": "Exchange",
+      "buy": "Buy",
+      "sell": "Sell"
+    },
+    "rate": {
+      "floating": "Floating Rate",
+      "fixed": "Fixed Rate",
+      "or": "or"
+    },
+    "buttons": {
+      "createExchange": "Create an exchange",
+      "exchangeNow": "Exchange now"
+    },
+    "currencySelector": {
+      "select": "Select a currency"
+    },
+    "list": {
+      "emptySearch": "No currencies found for your search",
+      "empty": "No currencies found"
+    }
   }
 }
 

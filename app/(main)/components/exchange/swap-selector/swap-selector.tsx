@@ -10,6 +10,7 @@ import styles from '@/app/(main)/components/exchange/styles.module.css';
 import { ExchangeService } from '@/services/exchange/exchange.service';
 import CurrencySelector from '@/app/(main)/components/exchange/swap-selector/ui/currency-selector/currency-selector';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 interface SwapSelectorProps {
   fixedRate?: boolean;
@@ -60,6 +61,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [amountRange, setAmountRange] = useState<IAmountRange | null>(null);
   const [pricePerOne, setPricePerOne] = useState<IPerOne | null>(null);
+  const t = useTranslations('exchange.swap');
 
   useEffect(() => {
     onError?.(error && error.trim() !== '' ? true : false);
@@ -101,8 +103,10 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
         CoinService.calculateExchangeRate(calcBody)
           .then((respo) => {
             if (respo?.amount && !respo?.result) {
-              const min = respo?.min_amount ? `minimum ${respo.min_amount} ${fromCurrency?.token}` : '';
-              setError(`Amount range ${min}`);
+              const min = respo?.min_amount
+                ? t('minAmount', { min: respo.min_amount, token: fromCurrency?.token ?? '' })
+                : '';
+              setError(`${t('amountRange')} ${min}`);
               onToAmountChange('0');
             } else {
               setError(null);
@@ -119,7 +123,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
             console.log('Calculate ', respo);
           })
           .catch((err) => {
-            setError('Error fetching exchange rate');
+            setError(t('errors.fetchRate'));
             console.error(err);
           })
           .finally(() => {
@@ -146,7 +150,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
         })
           .then((data) => {
             console.log('price per one', data?.price);
-            if (data?.error) setError(`Amount range in ${data.error}`);
+            if (data?.error) setError(t('errors.amountRangeIn', { error: data.error ?? '' }));
 
             setPricePerOne(data);
           })
@@ -172,7 +176,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
         <div className="flex-1 flex flex-col items-start gap-[10px] pt-[15px] sm:pt-0 lg:max-w-[442px] xl:max-w-none min-w-0">
           <p
             className={`color-[#1b1b1b] text-[14px] md:text-[16px] font-[400] leading-normal ${error && '!text-red-500'}`}>
-            You send
+            {t('youSend')}
           </p>
           <CurrencySelector
             className={`${error && '[&_input]:!text-red-500'}`}
@@ -191,7 +195,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
                 <>
                   {amountRange && (
                     <>
-                      <span className={`${error && '!text-red-500'}`}>Amount range</span>
+                      <span className={`${error && '!text-red-500'}`}>{t('amountRange')}</span>
                       <span>{` ${amountRange?.min_deposit} - ${amountRange?.max_deposit} `}</span>
                       <span className="text-[#1b1b1b]">{fromCurrency?.token}</span>
                     </>
@@ -219,7 +223,7 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
 
         {/*---------------YOU GET---------------*/}
         <div className={`${styles.toSelect} flex-1 gap-[10px] flex flex-col items-start !w-full lg:max-w-[442px] xl:max-w-none min-w-0`}>
-          <p className={'color-[#1b1b1b] text-[14px] md:text-[16px] font-[400] leading-normal'}>You get</p>
+          <p className={'color-[#1b1b1b] text-[14px] md:text-[16px] font-[400] leading-normal'}>{t('youGet')}</p>
           <CurrencySelector
             cuted
             showFloatIcon
@@ -235,8 +239,8 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
           <div className="relative inline-block">
             <p className={clsx(`pl-1 color-[#1B1B1B] text-[12px] md:text-[14px] font-[360] leading-normal`)}>
               {pricePerOne?.price
-                ? `1 ${fromCurrency?.token} = ${pricePerOne?.price}`
-                : `${pricePerOne?.price ?? 'Try select another pair'}`}
+                ? t('pricePerOne', { from: fromCurrency?.token ?? '', price: pricePerOne?.price ?? '' })
+                : `${pricePerOne?.price ?? t('tryAnotherPair')}`}
             </p>
 
             {/* Loading animation overlay - fits content width */}

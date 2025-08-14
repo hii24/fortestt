@@ -1,11 +1,11 @@
 import { motion, useInView, Variants } from 'framer-motion';
-import { AnimatedSection, inputTranslation } from '../footer';
+import { AnimatedSection } from '../footer';
 import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 // import UnderlineAnim from "@/components/ui/animation/underline-anim.tsx";
 import clsx from 'clsx';
 import UnderlineAnim from '@/app/components/animation/underline-anim';
-import { getFooterSections } from '@/app/(main)/components/footer/constants';
+// import { getFooterSections } from '@/app/(main)/components/footer/constants';
 import SocialBlock from '@/app/(main)/components/footer/components/social-block';
 import LogoBlock from '@/app/(main)/components/footer/components/logo-block';
 
@@ -101,10 +101,46 @@ const FooterSection = ({
 };
 
 const LinksBlock = () => {
-  const { i18n } = useTranslation();
+  const t = useTranslations('footer');
 
-  // Get translations based on current language
-  const sections = getFooterSections(i18n.language as keyof typeof inputTranslation);
+  const sections = {
+    popularPairsSection: {
+      title: t('sections.popularPairs'),
+      links: [
+        { text: t('links.btcToUsdt'), href: '/' },
+        { text: t('links.ethToUsdt'), href: '/' },
+        { text: t('links.suiToUsdt'), href: '/' },
+        { text: t('links.btcToXrp'), href: '/' },
+        { text: t('links.usdtToLtc'), href: '/' },
+        { text: t('links.dogeToTrx'), href: '/' },
+        { text: t('links.xmrToUsdt'), href: '/' },
+        { text: t('links.dogeToUsdt'), href: '/' },
+      ],
+    },
+    forPartnersSection: {
+      title: t('sections.forPartners'),
+      links: [
+        { text: t('links.apiForPartners'), href: '/' },
+        { text: t('links.affiliateProgram'), href: '/' },
+      ],
+    },
+    companySection: {
+      title: t('sections.company'),
+      links: [
+        { text: t('links.faq'), href: '/faq' },
+        { text: t('links.howItWorks'), href: '#how-it-works' },
+        { text: t('links.aboutUs'), href: '/about-us' },
+      ],
+    },
+    legalSection: {
+      title: t('sections.legal'),
+      links: [
+        { text: t('links.termsOfService'), href: '/temp-of-use' },
+        { text: t('links.privacyPolicy'), href: '/privacy-policy' },
+        { text: t('links.amlKyc'), href: '/policy' },
+      ],
+    },
+  };
 
   // Define sections to display with their delays
   const displaySections = [

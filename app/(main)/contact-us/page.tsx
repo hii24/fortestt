@@ -1,30 +1,31 @@
-'use client';
 import React from 'react';
 import styles from './styles.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { getTranslations } from 'next-intl/server';
 
-const Page = () => {
+const Page = async () => {
+  const t = await getTranslations('contactPage');
   const contacts = [
     {
       id: 1,
-      title: 'Write to us in Telegram',
-      desc: 'go to our chat in Telegram. We are always in touch and ready to help',
+      title: t('cards.telegram.title'),
+      desc: t('cards.telegram.desc'),
       href: 'https://t.me/Lizex_support',
       icon: '/_contact-us/telegram.svg',
     },
     {
       id: 2,
-      title: 'Write now in our online chat',
-      desc: 'go to our chat in Telegram. We are always in touch and ready to help',
+      title: t('cards.chat.title'),
+      desc: t('cards.chat.desc'),
       href: '#',
       icon: '/_contact-us/chat.svg',
     },
     {
       id: 3,
-      title: 'Contact us by email',
-      desc: 'Send us an email and we will get back to you as soon as possible',
+      title: t('cards.email.title'),
+      desc: t('cards.email.desc'),
       href: 'mailto:support@lizex.com',
       icon: '/_contact-us/mail.svg',
     },
@@ -34,21 +35,16 @@ const Page = () => {
     <div className={'flex flex-col'}>
       <div className={'max-w-[1440px] w-full flex justify-center items-center flex-col px-4 md:px-8'}>
         <div className={styles.howContactUs}>
-          <h1 className={styles.howContactUsMainText}>How to contact us</h1>
-          <h3 className={styles.howContactUsDescriptionText}>
-            Write an email, call or fill out the form to find out how <br /> Lizex can solve your messaging
-            problem.
-          </h3>
+          <h1 className={styles.howContactUsMainText}>{t('hero.title')}</h1>
+          <h3 className={styles.howContactUsDescriptionText}>{t('hero.desc')}</h3>
         </div>
         <div className={'flex flex-col gap-[10px] mt-[100px] w-full'}>
-          <h1 className={styles.anyQuesMainText}>Any questions?</h1>
+          <h1 className={styles.anyQuesMainText}>{t('any.title')}</h1>
           <h3
             className={clsx(
               'text-[#7D7878] text-[14px] md:text-[16px] font-[300] leading-normal max-w-[716px]'
             )}>
-            We are always available to help you with your cryptocurrency exchange and answer all your
-            questions! Whether you&#39;re looking for help with technical issues or want more information
-            about our services, our team is on call 24/7.
+            {t('any.desc')}
           </h3>
         </div>
         <div className={'grid grid-cols-3 gap-5 mt-[50px]'}>

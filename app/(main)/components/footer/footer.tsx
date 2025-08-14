@@ -52,13 +52,7 @@ export const AnimatedSection = memo(({ children, delay = 0, position }: Animated
   );
 });
 
-export const inputTranslation = {
-  en: {
-    name: 'English',
-    select: 'Select language',
-    search: 'Search',
-  },
-};
+// Removed footer-local translation map in favor of next-intl common messages
 
 const Footer = () => {
   // const { t } = useTranslation();

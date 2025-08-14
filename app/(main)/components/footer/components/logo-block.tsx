@@ -3,19 +3,14 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import DefaultAppear from '@/app/components/animation/default-appear';
-import { useTranslation } from 'react-i18next';
-import { getTranslatedFooterContent } from '@/app/(main)/components/footer/lang';
-import { inputTranslation } from '@/app/(main)/components/footer/footer';
+import { useTranslations } from 'next-intl';
 import TrustPilot from '@/app/(main)/components/footer/trust-pilot/trust-pilot';
 
 const LogoBlock = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  const { i18n } = useTranslation();
-
-  // Get translations based on current language
-  const t = getTranslatedFooterContent(i18n.language as keyof typeof inputTranslation);
+  const t = useTranslations('footer');
 
   return (
     <div ref={ref} className="flex flex-col items-start gap-5 relative">
@@ -46,7 +41,7 @@ const LogoBlock = () => {
           className={
             'max-w-[350px] md:max-w-[387px] w-full text-[#1B1B1B] text-[14px] font-[500] leading-normal'
           }>
-          {t.items.description}
+          {t('description')}
         </p>
       </DefaultAppear>
     </div>

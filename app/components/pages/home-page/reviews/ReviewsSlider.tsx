@@ -5,6 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import ava from '@/public/_home/_reviews/ava.svg';
 import Link from 'next/link';
 import { EmblaCarouselType } from 'embla-carousel';
+import { useTranslations } from 'next-intl';
 
 interface Review {
   userName: string;
@@ -23,6 +24,8 @@ interface ReviewItem {
 }
 
 const ReviewsSlider = () => {
+  const tHome = useTranslations('home');
+  const tReviews = useTranslations('home.reviews');
   const reviewGroups: ReviewItem[] = React.useMemo(
     () => [
       {
@@ -31,8 +34,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'John Aruest',
           rating: 5,
-          reviewTitle: 'Very good',
-          reviewText: 'Very good, thank',
+          reviewTitle: tReviews('title1'),
+          reviewText: tReviews('text1'),
           date: 'Jun 14, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/684d79fe5d196e5e44717340',
@@ -44,8 +47,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Dolfchail',
           rating: 5,
-          reviewTitle: 'Fast and reliable',
-          reviewText: 'Schnell und zuverlässig.',
+          reviewTitle: tReviews('title2'),
+          reviewText: tReviews('text2'),
           date: 'Jun 13, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/684c0b3f759030e306784a30',
@@ -57,8 +60,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Arthur Dep',
           rating: 4,
-          reviewTitle: 'Great rates and support',
-          reviewText: 'Great rates and support',
+          reviewTitle: tReviews('title3'),
+          reviewText: tReviews('text3'),
           date: 'Jun 13, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/6849d5e6a5af259091c1ab73',
@@ -70,8 +73,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Bendjok',
           rating: 5,
-          reviewTitle: 'Swapped coins',
-          reviewText: 'Swapped coins. Worked like a charm. 10/10',
+          reviewTitle: tReviews('title4'),
+          reviewText: tReviews('text4'),
           date: 'Jun 12, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/684b0eafef42e6b5eb5ff1a7',
@@ -83,9 +86,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Misha P',
           rating: 5,
-          reviewTitle: 'Exchanged XMR for TRX here fast and...',
-          reviewText:
-            'Exchanged XMR for TRX here fast and hassle free. Fair rates and quick transfers. Recommended!!!!',
+          reviewTitle: tReviews('title5'),
+          reviewText: tReviews('text5'),
           date: 'Jun 12, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/684ab8cac9b306a425c54df2',
@@ -97,8 +99,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Bin Asa Ri',
           rating: 5,
-          reviewTitle: 'Fast, easy, thanks!!!!!',
-          reviewText: 'Fast, easy, thanks!!!!!',
+          reviewTitle: tReviews('title6'),
+          reviewText: tReviews('text6'),
           date: 'Jun 10, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/6847491a084f18cfa90dd2c0',
@@ -110,8 +112,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Mico Guddzfield',
           rating: 5,
-          reviewTitle: 'Had a problem with a transaction',
-          reviewText: 'Had a problem with a transaction, but support was fast and helpful. big thanks',
+          reviewTitle: tReviews('title7'),
+          reviewText: tReviews('text7'),
           date: 'Jun 8, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/68454ba27409752774d9f50f',
@@ -123,8 +125,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Poachok',
           rating: 5,
-          reviewTitle: 'Amazing crypto exchange 10/10',
-          reviewText: 'Amazing crypto exchange 10/10',
+          reviewTitle: tReviews('title8'),
+          reviewText: tReviews('text8'),
           date: 'Jun 7, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/6843f7d651cd17449fc60f38',
@@ -136,8 +138,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Munilo Too',
           rating: 5,
-          reviewTitle: 'Easy to use and fast exchange',
-          reviewText: 'Easy to use and fast exchange',
+          reviewTitle: tReviews('title9'),
+          reviewText: tReviews('text9'),
           date: 'May 20, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/682c97fcad16ffdb16fb3130',
@@ -149,8 +151,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Dimitar Ivanov',
           rating: 5,
-          reviewTitle: 'It was easy to use and the support team...',
-          reviewText: 'It was easy to use and the support team was very nice and helped me fast',
+          reviewTitle: tReviews('title10'),
+          reviewText: tReviews('text10'),
           date: 'May 20, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/682a4d3fd98d117019adeb12',
@@ -162,8 +164,8 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Lucas',
           rating: 5,
-          reviewTitle: 'The exchange was quick and smooth',
-          reviewText: 'The exchange was quick and smooth.',
+          reviewTitle: tReviews('title11'),
+          reviewText: tReviews('text11'),
           date: 'May 20, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/6828f803b47a868735a2c026',
@@ -175,15 +177,15 @@ const ReviewsSlider = () => {
         review: {
           userName: 'Ardian Berish',
           rating: 5,
-          reviewTitle: 'Good exchange',
-          reviewText: 'Good exchange. I got my crypto fast.',
+          reviewTitle: tReviews('title12'),
+          reviewText: tReviews('text12'),
           date: 'May 16, 2025',
           image: ava,
           link: 'https://www.trustpilot.com/reviews/682647355fccb529617c265a',
         },
       },
     ],
-    []
+    [tReviews]
   );
 
   const [slidesPerView, setSlidesPerView] = useState(4);
@@ -276,7 +278,7 @@ const ReviewsSlider = () => {
   return (
     <div className="w-full h-full select-none flex flex-col ">
       <p className="mt-[100px] text-[#3460fd] font-bold text-3xl font-[Inter] px-4 md:px-6 lg:px-8">
-        Reviews
+        {tHome('reviews.title')}
       </p>
 
       <div className="overflow-hidden w-full py-[50px] px-4 md:px-6 lg:px-8" ref={emblaRef}>

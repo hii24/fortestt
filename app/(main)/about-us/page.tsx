@@ -5,8 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ReviewsSlider from '@/app/components/pages/home-page/reviews/ReviewsSlider';
 import clsx from 'clsx';
+import { getTranslations } from 'next-intl/server';
 
-const Page = () => {
+const Page = async () => {
+  const t = await getTranslations('aboutPage');
   return (
     <div className={'max-w-[1372px] w-full mx-auto'}>
       <div className={clsx('px-4 md:px-6 lg:px-0', styles.aboutUsTop)}>
@@ -14,22 +16,12 @@ const Page = () => {
         <div className="circle circle-2 !z-[-1]"></div>
         <div className="circle circle-3 !z-[-1]"></div>
         <div className={`${styles.aboutUsTopLeft} sm:z-10`}>
-          <h1>About Lizex</h1>
-          <p>
-            We’ve built a platform designed entirely around user convenience: nothing unnecessary — just
-            speed, security, and a straightforward process. No extra steps, no complicated forms, and no
-            drawn-out procedures — just you, your crypto, and a clear, transparent exchange flow.
-          </p>
-          <p>
-            Thanks to that, we’ve created a product that not only works — it helps people every day. We
-            believe in the freedom of digital assets and in the idea that everyone should be able to manage
-            them on their own terms - easily, anonymously, and securely.
-          </p>
-          <p className={styles.grey}>
-            Lizex is a service where exchanging cryptocurrency is as simple as a single click.
-          </p>
+          <h1>{t('top.title')}</h1>
+          <p>{t('top.p1')}</p>
+          <p>{t('top.p2')}</p>
+          <p className={styles.grey}>{t('top.p3')}</p>
           <Link href={'/transfer'}>
-            <button className={styles.exchange}>Exchange now</button>
+            <button className={styles.exchange}>{t('top.exchangeButton')}</button>
           </Link>
           <Image
             src={'/images/coins/coin2.png'}
@@ -53,73 +45,60 @@ const Page = () => {
             height={100}
             className={`${styles.coinsImage} ${styles.coinsImage2}`}></Image>
           <div className={styles.aboutUsTopRight_support}>
-            <span className={styles.blockTitle}>24/7 support </span>
+            <span className={styles.blockTitle}>{t('right.support')} </span>
           </div>
           <div className={styles.aboutUsTopRight_others}>
             <div className={styles.aboutUsTopRight_noLimits}>
-              <span className={styles.blockTitle}>No Limits</span>
+              <span className={styles.blockTitle}>{t('right.noLimits')}</span>
             </div>
             <div className={styles.aboutUsTopRight_transparency}>
-              <span className={styles.blockTitle}>Transparency</span>
+              <span className={styles.blockTitle}>{t('right.transparency')}</span>
             </div>
             <div className={styles.aboutUsTopRight_speed}>
-              <span className={styles.blockTitle}>Speed</span>
+              <span className={styles.blockTitle}>{t('right.speed')}</span>
             </div>
             <div className={styles.aboutUsTopRight_noregistration}>
-              <span className={styles.blockTitle}>No Registration</span>
+              <span className={styles.blockTitle}>{t('right.noRegistration')}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className={clsx('px-4 md:px-6 lg:px-8', styles.pageTitle)}>Why Lizex</div>
+      <div className={clsx('px-4 md:px-6 lg:px-8', styles.pageTitle)}>{t('why.title')}</div>
       <div className={clsx('px-4 md:px-6 lg:px-0', styles.why)}>
         <div className={`${styles.why_block} ${styles.why_nolimits}`}>
-          <div className={styles.whyTitle}>24/7 Support</div>
-          <p>
-            Our support team works around the clock, every day of the week. No matter the time, you can count
-            on prompt assistance — whether it’s a question about your current exchange, clarification of
-            conditions, or tech support.
-          </p>
+          <div className={styles.whyTitle}>{t('why.support.title')}</div>
+          <p>{t('why.support.desc')}</p>
         </div>
         <div className={styles.why_flex}>
           <div className={`${styles.why_block}`}>
             <div className={styles.why_bg1}></div>
-            <div className={styles.whyTitle}>No Limits</div>
-            <p>
-              We don’t impose upper limits on exchange amounts. This is especially important for both
-              individuals and large-scale investors or traders who need flexibility in their operations.
-            </p>
+            <div className={styles.whyTitle}>{t('why.noLimits.title')}</div>
+            <p>{t('why.noLimits.desc')}</p>
           </div>
           <div className={styles.why_block}>
-            <div className={styles.whyTitle}>Transparency</div>
-            <p>
-              The exchange process is simple and straightforward. You can always track the status of your
-              transactions in real time.
-            </p>
+            <div className={styles.whyTitle}>{t('why.transparency.title')}</div>
+            <p>{t('why.transparency.desc')}</p>
           </div>
           <div className={styles.why_block}>
-            <div className={styles.whyTitle}>Speed</div>
-            <p>Transactions are processed quickly and reliably, usually taking between 5 and 30 minutes.</p>
+            <div className={styles.whyTitle}>{t('why.speed.title')}</div>
+            <p>{t('why.speed.desc')}</p>
           </div>
           <div className={`${styles.why_block} ${styles.why_bg2}`}>
-            <div className={styles.whyTitle}>No Registration</div>
-            <p>
-              Exchange cryptocurrency without creating an account. Your privacy is fully protected, ensuring
-              complete anonymity.
-            </p>
+            <div className={styles.whyTitle}>{t('why.noRegistration.title')}</div>
+            <p>{t('why.noRegistration.desc')}</p>
           </div>
         </div>
       </div>
       <div className={styles.partners}>
         <PartnersCarousel />
       </div>
-      <div className={clsx('px-4 md:px-6 lg:px-8', styles.pageTitle)}>Reviews</div>
+      <div className={clsx('px-4 md:px-6 lg:px-8', styles.pageTitle)}>{t('reviews.title')}</div>
       <div id="reviews" className={clsx('', styles.reviewsBlock)}>
         <ReviewsSlider />
       </div>
 
-      <div className={`${styles.pageTitle} ${styles.pageTitleFAQ} px-4 md:px-6 lg:px-8`}>FAQ</div>
+      <div className={`${styles.pageTitle} ${styles.pageTitleFAQ} px-4 md:px-6 lg:px-8`}>{t('faq.title')}</div>
       <div id="faq" className={`${styles.faq} px-4 md:px-6 lg:px-8`}>
         <Accordion />
       </div>

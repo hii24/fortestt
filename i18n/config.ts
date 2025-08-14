@@ -1,5 +1,5 @@
 export const runtime = 'edge';
-export const locales = ['en', 'ru', 'uk'] as const;
+export const locales = ['en', 'ru'] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = 'ru';

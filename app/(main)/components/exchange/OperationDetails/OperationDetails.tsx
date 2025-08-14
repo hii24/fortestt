@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 import { CurrencyView } from '../CurrencyView/CurrencyView';
 import styles from './styles.module.css';
 import { CopiedInput } from '@/app/components/CopiedInput/CopiedInput';
@@ -19,21 +20,23 @@ interface OperationDetailsProps {
   depositeAdrress?: string;
 }
 
-const LabelInput = ({ title = 'Set Label', value = '' }) => (
-  <div className="w-full">
-    <p className="text-gray-700 mb-2 text-sm font-medium">{title}</p>
-
-    <CopiedInput
-      readOnly
-      value={value}
-      placeholder="Enter the recipient's address"
-      copyTooltipIcon="/icons/copy.svg"
-      copyTooltipTitle="Your address"
-      copyTooltipAlt="Address"
-      suffix={<AddressLink />}
-    />
-  </div>
-);
+const LabelInput = ({ title, value = '' }: { title: string; value?: string }) => {
+  const t = useTranslations('exchange.operationDetails');
+  return (
+    <div className="w-full">
+      <p className="text-gray-700 mb-2 text-sm font-medium">{title || t('setLabel')}</p>
+      <CopiedInput
+        readOnly
+        value={value}
+        placeholder={t('recipientAddress')}
+        copyTooltipIcon="/icons/copy.svg"
+        copyTooltipTitle={t('copyTooltipTitle')}
+        copyTooltipAlt={t('copyTooltipAlt')}
+        suffix={<AddressLink />}
+      />
+    </div>
+  );
+};
 
 export const OperationDetails: FC<OperationDetailsProps> = ({
   recipientAdrress,
@@ -48,10 +51,11 @@ export const OperationDetails: FC<OperationDetailsProps> = ({
   showTitle = false,
   description = '',
 }) => {
+  const t = useTranslations('exchange.operationDetails');
   return (
     <div className={`${className} w-full `}>
       <div className="w-full flex flex-col gap-8">
-        {showTitle && <h4 className={styles.title}>Operation details</h4>}
+        {showTitle && <h4 className={styles.title}>{t('title')}</h4>}
         <div className="flex gap-1 items-center w-full">
           <div className="flex gap-4 items-center">
             <p className={styles.amountText}>{description}</p>
@@ -73,10 +77,10 @@ export const OperationDetails: FC<OperationDetailsProps> = ({
             /> */}
           </div>
         </div>
-        {!!recipientAdrress && <LabelInput title="Recipient address:" value={recipientAdrress ?? ''} />}
-        {!!depositeAdrress && <LabelInput title="Deposit address:" value={depositeAdrress ?? ''} />}
-        {!!hashIn && <LabelInput title="Hash in:" value={hashIn ?? ''} />}
-        {!!hashOut && <LabelInput title="Hash out:" value={hashOut ?? ''} />}
+        {!!recipientAdrress && <LabelInput title={t('recipientAddress')} value={recipientAdrress ?? ''} />}
+        {!!depositeAdrress && <LabelInput title={t('depositAddress')} value={depositeAdrress ?? ''} />}
+        {!!hashIn && <LabelInput title={t('hashIn')} value={hashIn ?? ''} />}
+        {!!hashOut && <LabelInput title={t('hashOut')} value={hashOut ?? ''} />}
       </div>
     </div>
   );

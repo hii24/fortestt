@@ -3,6 +3,7 @@ import { useEffect, useRef, useMemo } from 'react';
 import { CoinsListItem, CurrencyPropsFinal } from '@/types/coin.interface';
 import { networkColors } from '@/config/networks.config';
 import CryptoListItem from '@/app/(main)/components/exchange/swap-selector/ui/currency-selector/ui/currency-list/ui/crypto-list-item';
+import { useTranslations } from 'next-intl';
 
 // Interface for flattened coin-network combination
 interface FlattenedCoinNetwork {
@@ -91,6 +92,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
     };
   }, [isLoading, hasNextPage, onLoadMore]); // Only the actual dependencies needed
 
+  const t = useTranslations('exchange');
   return (
     <>
       <ul
@@ -126,7 +128,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
         {/* Empty state */}
         {!isLoading && flattenedCurrencies.length === 0 && (
           <li className="flex items-center justify-center p-4 text-gray-500">
-            {searchQuery ? 'No currencies found for your search' : 'No currencies found'}
+            {searchQuery ? t('list.emptySearch') : t('list.empty')}
           </li>
         )}
       </ul>
