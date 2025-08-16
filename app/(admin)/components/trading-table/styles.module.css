@@ -28,7 +28,7 @@
 
 .table td {
   border: none;
-  padding-bottom: 15px;
+  padding: 15px; /* match <th> padding to align columns */
   border-bottom: 1px solid black;
 }
 

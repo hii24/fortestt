@@ -97,9 +97,9 @@ const OrderTable: FC<{
                       const dateStr = date ? date.toLocaleDateString('ru-RU') : '-';
                       const timeStr = date ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-';
                       return (
-                        <td key={key} className={baseClass + ' text-center p-1'}>
+                        <td key={key} className={baseClass + ' text-left'}>
                           <Tooltip title={value}>
-                            <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-start">
                               <span>{dateStr}</span>
                               <span>{timeStr}</span>
                             </div>
@@ -110,7 +110,7 @@ const OrderTable: FC<{
                     if (key === 'side') {
                       const isBuy = String(value).toLowerCase() === 'buy';
                       return (
-                        <td key={key} className={`${baseClass} font-semibold uppercase`}>
+                        <td key={key} className={`${baseClass} text-left font-semibold uppercase`}>
                           <span
                             className={`px-2 py-1 rounded ${
                               isBuy ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
@@ -122,7 +122,7 @@ const OrderTable: FC<{
                     }
                     if (key === 'status') {
                       return (
-                        <td key={key} className={baseClass}>
+                        <td key={key} className={baseClass + ' text-left'}>
                           <span
                             className={`px-2 py-1 rounded uppercase ${
                               value === 'filled'
@@ -173,7 +173,7 @@ const OrderTable: FC<{
                     );
                   })}
                   {Object.entries(extra).map(([key, value]) => (
-                    <td key={key} className="p-2 border text-left">
+                    <td key={key} className="p-2 border text-right">
                       {String(value)}
                     </td>
                   ))}

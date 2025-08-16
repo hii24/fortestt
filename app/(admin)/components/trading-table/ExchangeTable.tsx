@@ -138,22 +138,22 @@ const ExchangeTable: FC<{
             <th className="p-2 border text-left capitalize">
               <span className="px-1">Time</span>
             </th>
-            <th className="p-2 border text-left capitalize">
+            <th className="p-2 border text-center capitalize">
               <span className="px-1">info</span>
             </th>
-            <th className="p-2 border text-left capitalize">
+            <th className="p-2 border text-right capitalize">
               <span className="px-1">volume</span>
             </th>
             <th className="p-2 border text-left capitalize">
               <span className="px-1">Type</span>
             </th>
-            <th className="p-2 border text-left capitalize">
+            <th className="p-2 border text-center capitalize">
               <span className="px-1">Pair</span>
             </th>
-            <th className="p-2 border text-left capitalize">
+            <th className="p-2 border text-right capitalize">
               <span className="px-1">Profit</span>
             </th>
-            <th className="p-2 border text-left capitalize">
+            <th className="p-2 border text-right capitalize">
               <span className="px-1">Partner profit</span>
             </th>
             {/* {normalHeaders.map((key, index) => (
@@ -216,12 +216,12 @@ const ExchangeTable: FC<{
                 </td>
 
                 <td className={`${className} min-w-fit text-left`}>
-                  <div className="flex justify-center items-center">
+                  <div className="flex justify-start items-center">
                     {excluded.end_time || excluded.start_time ? (
                       <Tooltip title={excluded.end_time ?? excluded.start_time}>
-                        <div className="flex flex-col items-center">
-                          <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleDateString('ru-RU')}</span>
-                          <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        <div className="flex flex-col items-start">
+                          {/* <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleDateString('ru-RU')}</span> */}
+                          <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
                         </div>
                       </Tooltip>
                     ) : (
@@ -230,7 +230,7 @@ const ExchangeTable: FC<{
                   </div>
                 </td>
 
-                <td className={`${className} min-w-fit text-left`}>
+                <td className={`${className} min-w-fit text-center`}>
                   <InfoIcon
                     size={20}
                     className="hover:opacity-80 transition-opacity"
@@ -257,12 +257,12 @@ const ExchangeTable: FC<{
                   />
                 </td>
 
-                <td className={`${className} min-w-fit text-left`}>
+                <td className={`${className} min-w-fit text-right`}>
                   {excluded.volume != null ? Number(excluded.volume).toFixed(4) : '-'}
                 </td>
                 <td className={`${className} min-w-fit text-left`}>{excluded.fixed ? 'fixed' : 'float'}</td>
 
-                <td className={className}>
+                <td className={`${className} text-left`}>
                   {!!Object.keys(excluded)?.length && (
                     <div className="flex items-center">
                       <div className="flex flex-col gap-1 " style={{ width: 120 }}>
@@ -508,10 +508,10 @@ const ExchangeTable: FC<{
                     </div>
                   )}
                 </td>
-                <td className={`${className} min-w-fit text-left`}>
+                <td className={`${className} min-w-fit text-right`}>
                   {excluded?.profit != null ? Number(excluded.profit).toFixed(4) : '-'}
                 </td>
-                <td className={`${className} min-w-fit text-left relative`}>
+                <td className={`${className} min-w-fit text-right relative`}>
                   {excluded?.partner_profit != null ? Number(excluded.partner_profit).toFixed(4) : '-'}
                   
                   {/* Hover кнопки */}
