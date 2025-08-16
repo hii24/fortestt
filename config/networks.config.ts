@@ -10,6 +10,7 @@ export const networkColors = {
   XRP: '#E0E0E0', // XRP (brand is near-black)
   EOS: '#C7F0ED', // EOS
   BEP20: '#FFE7A6',
+  TRC20: '#FFB2A5',
   // Others
   SUI: '#CBEDFF', // Sui
 };
@@ -57,6 +58,8 @@ export const networkTextColors: Record<string, string> = {
   DOGE: '#CCB054',
   LTC: '#7E93B9',
   XMR: '#913B39',
+
+  TRC20: '#D66C5E',
   XRP: '#3A3A3A',
   EOS: '#81AAA7',
   SUI: '#39799C',

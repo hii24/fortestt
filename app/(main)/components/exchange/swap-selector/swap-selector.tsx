@@ -106,7 +106,14 @@ const SwapSelector: React.FC<SwapSelectorProps> = ({
               const min = respo?.min_amount
                 ? t('minAmount', { min: respo.min_amount, token: fromCurrency?.token ?? '' })
                 : '';
-              setError(`${t('amountRange')} ${min}`);
+              // If backend returns a human-readable amount error (e.g. "Must be greater than 60 USDT"),
+              // prefer showing it. Otherwise fall back to localized min amount text.
+              const amountMessage = typeof respo.amount === 'string' ? respo.amount : '';
+              if (amountMessage) {
+                setError(amountMessage);
+              } else {
+                setError(`${t('amountRange')} ${min}`.trim());
+              }
               onToAmountChange('0');
             } else {
               setError(null);
