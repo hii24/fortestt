@@ -186,17 +186,24 @@ const ExchangeTable: FC<{
                 onMouseEnter={() => setHoveredRowIndex(index)}
                 onMouseLeave={() => setHoveredRowIndex(null)}>
                 <td className={`${className} min-w-fit text-left`}>
-                  {excluded.unique_id ? (
-                    <span
-                      className="cursor-pointer hover:underline"
-                      onClick={() => handleCopy('Exchange ID', excluded.unique_id)}
-                      title="Click to copy Exchange ID"
-                    >
-                      {excluded.unique_id}
-                    </span>
-                  ) : (
-                    '-'
-                  )}
+                  <div className="flex flex-col items-start">
+                    {excluded.unique_id ? (
+                      <span
+                        className="cursor-pointer hover:underline"
+                        onClick={() => handleCopy('Exchange ID', excluded.unique_id)}
+                        title="Click to copy Exchange ID"
+                      >
+                        {excluded.unique_id}
+                      </span>
+                    ) : (
+                      '-'
+                    )}
+                    {excluded.support_email && excluded.support_email !== '-' && String(excluded.support_email).trim() !== '' && (
+                      <span className="text-xs text-gray-500 mt-1 break-all">
+                        {String(excluded.support_email)}
+                      </span>
+                    )}
+                  </div>
                 </td>
 
                 <td className={`${className} min-w-fit text-left`}>
@@ -220,8 +227,8 @@ const ExchangeTable: FC<{
                     {excluded.end_time || excluded.start_time ? (
                       <Tooltip title={excluded.end_time ?? excluded.start_time}>
                         <div className="flex flex-col items-start">
-                          {/* <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleDateString('ru-RU')}</span> */}
-                          <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+                          <span>{new Date(excluded.end_time ?? excluded.start_time).toLocaleDateString('ru-RU')}</span>
+                          {/* time intentionally omitted per latest requirements */}
                         </div>
                       </Tooltip>
                     ) : (

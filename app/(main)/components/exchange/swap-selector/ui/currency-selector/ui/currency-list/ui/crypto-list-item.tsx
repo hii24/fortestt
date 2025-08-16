@@ -33,7 +33,7 @@ const CryptoListItem = ({
   console.log(cryptoTitle);
   return (
     <li
-      className="flex items-center p-2 hover:bg-blue-50 transition-colors cursor-pointer"
+      className="flex items-center p-2 hover:bg-blue-50 transition-colors cursor-pointer text-left"
       onClick={() => {
         if (onCurrencyChange) {
           try {
@@ -62,8 +62,8 @@ const CryptoListItem = ({
         alt={cryptoTitle}
         className="size-[34px] md:size-10 mr-2 rounded-full"
       />
-      <div>
-        <div className="font-bold text-gray-800">{cryptoToken}</div>
+      <div className="text-left">
+        <div className="font-bold text-gray-800 text-left">{cryptoToken}</div>
         <div className="text-gray-500 text-sm flex gap-2 items-center">
           <span>{cryptoTitle}</span>
           <span

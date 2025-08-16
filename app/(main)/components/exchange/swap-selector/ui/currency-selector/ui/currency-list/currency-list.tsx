@@ -97,7 +97,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
     <>
       <ul
         ref={scrollContainerRef}
-        className="max-h-[calc(theme(spacing.11)*7)] scroll-smooth overflow-y-scroll px-1 relative scrollbar-thumb-[#3c4252] hover:scrollbar-thumb-[#4c5262]"
+        className="max-h-[calc(theme(spacing.11)*7)] scroll-smooth overflow-y-scroll px-3 relative scrollbar-thumb-[#3c4252] hover:scrollbar-thumb-[#4c5262] text-left"
         style={{ maxHeight: maxHeight ?? '300px', scrollbarWidth: 'auto', scrollbarColor: '#616E85 transparent' }}>
         {flattenedCurrencies.map((crypto) => {
           const cryptoId = crypto.network.id;

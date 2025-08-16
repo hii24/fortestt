@@ -281,7 +281,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
         {opened && !isMobile && (
           <div
             ref={ref}
-            className={`${styles.currencyDD} w-full max-w-md mx-auto mt-4 bg-white shadow-md rounded-lg overflow-hidden relative`}>
+            className={`${styles.currencyDD} mt-4 bg-white shadow-md rounded-lg overflow-hidden relative`}>
             <CurrencyDropdownHeader searchQuery={searchQuery} onSearchChange={handleSearchChange} />
 
             <CurrencyList
@@ -299,8 +299,11 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
         {opened && isMobile && typeof document !== 'undefined' &&
           createPortal(
             <div className="fixed inset-0 z-[9999] flex flex-col bg-white">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-[#E6E7EB]">
-                <p className="text-[16px] font-[500]">{t('currencySelector.select')}</p>
+              <div className="relative flex items-center justify-between px-4 py-3 border-b border-[#E6E7EB]">
+                <span className="p-1 invisible" aria-hidden />
+                <p className="absolute left-1/2 -translate-x-1/2 text-[16px] font-[500] text-center">
+                  {t('currencySelector.select')}
+                </p>
                 <button
                   aria-label="Close"
                   className="p-1"

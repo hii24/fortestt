@@ -11,7 +11,7 @@ interface CurrencyDropdownHeaderProps {
 const CurrencyDropdownHeader: React.FC<CurrencyDropdownHeaderProps> = ({ searchQuery, onSearchChange }) => {
   const t = useTranslations('exchange');
   return (
-    <div className="px-4 py-2">
+    <div className="px-3 py-2 text-left">
       <SearchInput
         className="w-full block px-4 py-2 rounded"
         placeholder={t('searchPlaceholder', { fallback: 'Search from currency' })}
@@ -21,14 +21,14 @@ const CurrencyDropdownHeader: React.FC<CurrencyDropdownHeaderProps> = ({ searchQ
         onDebouncedChange={onSearchChange}
       />
 
-      <div className="flex mt-4 space-x-2 overflow-x-auto">
-        <button type="button" className="text-sm font-semibold text-gray-700 hover:text-blue-500 activeBtn">
+      <div className="flex mt-4 space-x-2 overflow-x-auto justify-start">
+        <button type="button" className="text-sm font-semibold text-gray-700 hover:text-blue-500 activeBtn text-left">
           {t('all', { fallback: 'All' })}
         </button>
         <button
           disabled
           type="button"
-          className="text-sm font-semibold text-gray-700 disabled:text-gray-400 ml-1">
+          className="text-sm font-semibold text-gray-700 disabled:text-gray-400 ml-1 text-left">
           {t('new', { fallback: 'New' })}
           <span className="text-[9px] mx-1 text-blue-500">{t('soon', { fallback: 'Soon' })}</span>
         </button>

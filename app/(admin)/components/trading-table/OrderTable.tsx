@@ -57,14 +57,14 @@ const OrderTable: FC<{
           <thead>
             <tr>
               {mainKeys.map((key) => (
-                <th key={key} className="p-2 border text-left capitalize">
-                  <span className="px-1">{key === 'order_time' ? 'Time' : key}</span>
+                <th key={key} className={`p-2 border text-center capitalize`}>
+                  <span className="px-1">{key === 'order_time' ? 'Time' : key.replace('_', ' ')}</span>
                 </th>
               ))}
 
               {extraKeys.map((key) => (
-                <th key={`extra-${key}`} className="p-2 border text-left capitalize">
-                  <span className="px-1">{key}</span>
+                <th key={`extra-${key}`} className="p-2 border text-center capitalize">
+                  <span className="px-1">{key.replace('_', ' ')}</span>
                 </th>
               ))}
             </tr>
@@ -94,15 +94,17 @@ const OrderTable: FC<{
 
                     if (key === 'order_time') {
                       const date = value ? new Date(value) : null;
-                      const dateStr = date ? date.toLocaleDateString('ru-RU') : '-';
-                      const timeStr = date ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-';
+                      const dateStr = date
+                        ? date.toLocaleDateString('en-US', {
+                            month: '2-digit',
+                            day: '2-digit',
+                            year: 'numeric',
+                          })
+                        : '-';
                       return (
                         <td key={key} className={baseClass + ' text-left'}>
                           <Tooltip title={value}>
-                            <div className="flex flex-col items-start">
-                              <span>{dateStr}</span>
-                              <span>{timeStr}</span>
-                            </div>
+                            <span>{dateStr}</span>
                           </Tooltip>
                         </td>
                       );
@@ -161,11 +163,9 @@ const OrderTable: FC<{
                     }
 
                     return (
-                      <td key={key} className={`${baseClass} text-left`}>
+                      <td key={key} className={`${baseClass} ${isNumeric ? 'text-right' : 'text-left'}`}>
                         {isNumeric && value != null && value !== '' ? (
-                          <Tooltip title={value}>
-                            {Number(value).toFixed(2)}
-                          </Tooltip>
+                          <Tooltip title={value}>{Number(value).toFixed(2)}</Tooltip>
                         ) : (
                           value ?? '-'
                         )}

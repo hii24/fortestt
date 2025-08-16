@@ -77,15 +77,25 @@ const DepositTable: FC<{
         <thead>
           <tr>
             {normalHeaders.map((key, index) => (
-              <th key={`norm-${index}`} className="p-2 border text-left capitalize">
-                {key}
+              <th key={`norm-${index}`} className="p-2 border text-left">
+                <span className="whitespace-nowrap">
+                  {(() => {
+                    const base = key.replace(/_/g, ' ');
+                    const title = base.charAt(0).toUpperCase() + base.slice(1);
+                    if (/_id$/.test(key)) return title.replace(/ id$/i, ' ID');
+                    if (key === 'id') return 'ID';
+                    if (key === 'txid') return 'TXID';
+                    if (key === 'deposit_time') return 'Deposit time';
+                    return title;
+                  })()}
+                </span>
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {list.map((transaction, index) => {
-            const className = 'p-2 border';
+            const className = 'p-2 border text-left';
             return (
               <tr key={`exch-${index}`} className="hover:bg-gray-50">
                 {Object.entries(transaction).map(([key, value]) => {
@@ -115,6 +125,25 @@ const DepositTable: FC<{
                         ) : (
                           '-'
                         )}
+                      </td>
+                    );
+                  }
+
+                  if (key === 'deposit_time') {
+                    const date = value ? new Date(String(value)) : null;
+                    return (
+                      <td key={key} className={className}>
+                        <Tooltip title={value != null && value !== '' ? String(value) : ''}>
+                          <span>
+                            {date
+                              ? date.toLocaleDateString('en-GB', {
+                                  day: '2-digit',
+                                  month: '2-digit',
+                                  year: 'numeric',
+                                })
+                              : '-'}
+                          </span>
+                        </Tooltip>
                       </td>
                     );
                   }
@@ -238,7 +267,7 @@ const DepositTable: FC<{
                   }
 
                   return (
-                    <td key={key} className={`border text-left${isNumeric ? ' text-center p-1' : ' p-2'}`}>
+                    <td key={key} className="p-2 border text-left">
                       {isNumeric && value !== '' && value !== null ? (
                         <Tooltip title={value}>
                           {Number(value).toFixed(2)}
