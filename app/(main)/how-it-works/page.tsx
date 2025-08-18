@@ -55,9 +55,9 @@ const Page = async () => {
                 />
                 <path d="M11 13.75L11 15.5833" stroke="#3460FD" strokeWidth="1.55833" strokeLinecap="round" />
               </svg>
-              {t('floating.title')}
+              {t('fixed.title')}
             </h5>
-            <p className={styles.heroRightBoxDescription}>{t('floating.desc')}</p>
+            <p className={styles.heroRightBoxDescription}>{t('fixed.desc')}</p>
           </div>
         </div>
       </div>

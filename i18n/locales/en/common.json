@@ -193,7 +193,11 @@
     },
     "floating": {
       "title": "Floating rate",
-      "desc": "The rate is determined at the time the funds are received. Fee: 0.5% + network fee. The exchange is processed at the current market rate."
+      "desc": "The rate is determined at the time the funds are received. Fee: 0.4% + network fee. The exchange is processed at the current market rate."
+    },
+    "fixed": {
+      "title": "Fixed Rate",
+      "desc": "You will receive the exact amount shown in the \"You will receive\" field. Fee: 1.2% + network fee. If the rate changes by more than 1.2% before the transaction is confirmed, you may choose a refund or proceed at the updated rate."
     },
     "stages": {"title": "Stages of work"},
     "steps": {
