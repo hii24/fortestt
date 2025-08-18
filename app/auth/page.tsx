@@ -24,6 +24,7 @@ function AuthTypeHandler({ setAuthTypeLogin }: { setAuthTypeLogin: (value: boole
 
 export default function AdminLogin() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [authTypeLogin, setAuthTypeLogin] = useState(true);
   const t = useTranslations('authPage');
 
@@ -128,8 +129,9 @@ export default function AdminLogin() {
 
   useEffect(() => {
     const accessExist = checkAccessExists();
-    if (accessExist) window.location.replace('/');
-  }, []);
+    const wantsRegister = searchParams.has('register');
+    if (accessExist && !wantsRegister) window.location.replace('/');
+  }, [searchParams]);
 
   return (
     <Suspense

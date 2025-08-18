@@ -120,8 +120,8 @@ const LinksBlock = () => {
     forPartnersSection: {
       title: t('sections.forPartners'),
       links: [
-        { text: t('links.apiForPartners'), href: '/' },
-        { text: t('links.affiliateProgram'), href: '/' },
+        { text: t('links.apiForPartners'), href: `https://lizexswap.postman.co/workspace/Lizexswap's-Workspace~660b406d-225e-4fe9-857c-c591ba8bcbce/collection/46909352-94eb9e1a-1543-456a-a264-016eefb90d8f?action=share&source=copy-link&creator=46909352` },
+        { text: t('links.affiliateProgram'), href: '/auth?register' },
       ],
     },
     companySection: {
