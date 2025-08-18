@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { ExchangeProcessStatus } from '@/config/status.config';
 import { Modal } from 'antd';
 import styles from './styles.module.css';
+import { useTranslations, useLocale } from 'next-intl';
 
 // Mock data similar to the screenshot
 
@@ -36,6 +37,8 @@ const FlexTable: FC<{
     refunded: 'bg-violet-100 text-violet-800',
   },
 }) => {
+  const t = useTranslations('profile.main.table');
+  const locale = useLocale();
   const excludeKeys = [
     'id',
     'unique_id',
@@ -71,28 +74,28 @@ const FlexTable: FC<{
         <thead>
           <tr>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">ID</span>
+              <span className="px-1">{t('id')}</span>
             </th>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">date/time</span>
+              <span className="px-1">{t('datetime')}</span>
             </th>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">Type</span>
+              <span className="px-1">{t('type')}</span>
             </th>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">From</span>
+              <span className="px-1">{t('from')}</span>
             </th>
             <th className="p-2 border text-left capitalize">
               <span className="px-1"></span>
             </th>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">To</span>
+              <span className="px-1">{t('to')}</span>
             </th>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">Profit</span>
+              <span className="px-1">{t('profit')}</span>
             </th>
             <th className="p-2 border text-left capitalize">
-              <span className="px-1">Status</span>
+              <span className="px-1">{t('status')}</span>
             </th>
             {/*       {normalHeaders.map((key, index) => (
               <th key={`norm-${index}`} className="p-2 border text-left capitalize">
@@ -123,7 +126,7 @@ const FlexTable: FC<{
                 <td className={`${className} min-w-fit`}>{excluded.unique_id}</td>
                 <td className={`${className} min-w-fit`}>
                   <div className="flex justify-center items-center">
-                    {excluded?.start_time ? new Date(excluded.start_time).toLocaleString() : '—'}
+                    {excluded?.start_time ? new Date(excluded.start_time).toLocaleString(locale) : '—'}
                   </div>
                 </td>
                 <td className={`${className} min-w-fit`}>{`${excluded?.fixed ? 'fix' : 'float'}`}</td>

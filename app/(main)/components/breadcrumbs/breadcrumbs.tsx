@@ -20,14 +20,14 @@ export default function Breadcrumbs() {
   }
 
   const crumbs = segments.map((segment, idx) => {
-    let label = idx === 0 ? 'Profile' : segment;
+    let label = idx === 0 ? t('breadcrumbs.profile') : segment;
     /*     if (label.toLowerCase() === 'statistics') {
       label = 'History';
     } */
     if (label.toLowerCase() === 'terms-of-use') {
-      label = 'Terms of use';
+      label = t('breadcrumbs.terms');
     }
-    if (label.toLowerCase() === 'profile') label = 'Profile';
+    if (label.toLowerCase() === 'profile') label = t('breadcrumbs.profile');
     if (label.toLowerCase() === 'statistics') label = t('main.header');
     if (label.toLowerCase() === 'integrate') label = t('integrate.header');
     if (label.toLowerCase() === 'settings') label = t('settings.header');

@@ -219,6 +219,10 @@
     "rateUsOn": "Rate us on"
   },
   "profile": {
+    "breadcrumbs": {
+      "profile": "Profile",
+      "terms": "Terms of use"
+    },
     "common": {
       "search": "Search...",
       "select": "Select",
@@ -277,6 +281,7 @@
       "cards": {
         "actual": "Actual balance",
         "on": "On",
+        "periodShort": "P.",
         "earnedMonth": "Earned this month",
         "earnedTotal": "Earned total"
       },

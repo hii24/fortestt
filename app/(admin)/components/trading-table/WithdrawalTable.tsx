@@ -21,6 +21,7 @@ const WithdrawalTable: FC<{
   onDesiredPageSize,
 }) => {
   const excludeKeys: string[] = [
+    'id',
     'memo',
     // 'deposit_address', 'address'
   ];

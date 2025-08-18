@@ -219,6 +219,10 @@
     "rateUsOn": "Оцените нас на"
   },
   "profile": {
+    "breadcrumbs": {
+      "profile": "Профиль",
+      "terms": "Условия использования"
+    },
     "common": {
       "search": "Поиск...",
       "select": "Выбрать",
@@ -277,6 +281,7 @@
       "cards": {
         "actual": "Текущий баланс",
         "on": "На",
+        "periodShort": "П.",
         "earnedMonth": "Заработано за месяц",
         "earnedTotal": "Заработано всего"
       },

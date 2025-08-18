@@ -13,12 +13,13 @@ import { Button, DatePicker, DatePickerProps, Input, Modal, Select, Tooltip } fr
 import { WithdrawalService } from '@/services/withdrawal/withdrawal.service';
 import { CurrencyView } from '../../components/exchange/CurrencyView/CurrencyView';
 import { debounce } from '@/utils/debounce';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { CoinService } from '@/services/coin/coin.service';
 
 const Page = () => {
   const t = useTranslations('profile');
   const tc = useTranslations('profile.common');
+  const locale = useLocale();
   const [isMobile, setIsMobile] = useState(false);
 
   React.useEffect(() => {
@@ -38,10 +39,15 @@ const Page = () => {
 
   const currentDate = new Date();
   const formatedDate = {
-    day: currentDate.getDay(),
+    day: currentDate.getDate(),
     month: String(currentDate.getMonth() + 1).padStart(2, '0'),
     year: currentDate.getFullYear(),
-  };
+    monthName: currentDate.toLocaleString(locale, { month: 'long' }),
+  } as const;
+
+  const monthStart = 1;
+  const monthEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+  const monthRangeLabel = `${t('payouts.cards.periodShort')} ${monthStart}-${monthEnd}${formatedDate.monthName}`;
 
   const [data, setData] = useState<{
     actual_balance: number;
@@ -347,7 +353,7 @@ const Page = () => {
                   <h3 className={styles.cardValue}>{data ? `$ ${data.earned_month}` : `$ 0`}</h3>
                 </div>
                 <div className={styles.cardRight}>
-                  <p className={styles.cardRightSub}>P.1-31July</p>
+                  <p className={styles.cardRightSub}>{monthRangeLabel}</p>
                   <Image src="/icons/size.svg" alt="copy" height={20} width={20}></Image>
                 </div>
               </div>
@@ -362,7 +368,7 @@ const Page = () => {
                   <h3 className={styles.cardValue}>{data ? `$ ${data.earned_total}` : `$ 0`}</h3>
                 </div>
                 <div className={styles.cardRight}>
-                  <p className={styles.cardRightSub}>2021-2024</p>
+                  <p className={styles.cardRightSub}>{`2021-${formatedDate.year}`}</p>
                   <Image src="/icons/size.svg" alt="copy" height={20} width={20}></Image>
                 </div>
               </div>
@@ -398,7 +404,7 @@ const Page = () => {
                 <p className={styles.blockTitle}>{t('payouts.available.title')}</p>
                 <h3 className={styles.blockValue}>
                   {data ? `$ ${data.actual_balance}` : `$ 0`}
-                  <span className={styles.smallTag}>TRS20</span>
+                  <span className={styles.smallTag}>TRC20</span>
                 </h3>
                 <p className={styles.minimalInfo}>{t('payouts.available.min')}</p>
               </div>
