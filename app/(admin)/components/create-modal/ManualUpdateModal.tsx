@@ -58,8 +58,6 @@ const ManualUpdateModal: React.FC<ManualUpdateModalProps> = ({ isOpen, onClose, 
     'Frozen': 8,
     'Problematic': 9,
     'Refunded': 10,
-    'Pending': 2, // Map Pending to Confirmation
-    'Failed': 9,   // Map Failed to Problematic
   }), []);
 
   // Предзаполнение полей при открытии модалки
