@@ -63,9 +63,8 @@ const CryptoListItem = ({
         className="size-[34px] md:size-10 mr-2 rounded-full"
       />
       <div className="text-left">
-        <div className="font-bold text-gray-800 text-left">{cryptoToken}</div>
-        <div className="text-gray-500 text-sm flex gap-2 items-center">
-          <span>{cryptoTitle}</span>
+        <div className=" flex gap-[5px] items-center">
+          <div className="font-bold text-gray-800 text-left">{cryptoToken}</div>
           <span
             style={{
               backgroundColor:
@@ -76,6 +75,8 @@ const CryptoListItem = ({
             {cryptoNetworkTitle}
           </span>
         </div>
+
+        <span className="text-gray-500 text-sm">{cryptoTitle}</span>
       </div>
     </li>
   );

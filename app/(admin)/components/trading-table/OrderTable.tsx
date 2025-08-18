@@ -29,7 +29,9 @@ const OrderTable: FC<{
     'fee',
   ];
 
-  const extraKeys = Object.keys(list?.[0] ?? {}).filter((key) => !mainKeys.includes(key));
+  const extraKeys = Object.keys(list?.[0] ?? {}).filter(
+    (key) => !mainKeys.includes(key) && key !== 'exchange_id'
+  );
   const shouldHide = total === 0;
 
   const tableRef = useRef<HTMLTableElement | null>(null);
@@ -76,7 +78,9 @@ const OrderTable: FC<{
                   if (mainKeys.includes(key)) {
                     exc[key] = value;
                   } else {
-                    inc[key] = value;
+                    if (key !== 'exchange_id') {
+                      inc[key] = value;
+                    }
                   }
                   return [inc, exc];
                 },
@@ -172,11 +176,13 @@ const OrderTable: FC<{
                       </td>
                     );
                   })}
-                  {Object.entries(extra).map(([key, value]) => (
-                    <td key={key} className="p-2 border text-right">
-                      {String(value)}
-                    </td>
-                  ))}
+                  {Object.entries(extra)
+                    .filter(([key]) => key !== 'exchange_id')
+                    .map(([key, value]) => (
+                      <td key={key} className="p-2 border text-right">
+                        {String(value)}
+                      </td>
+                    ))}
                 </tr>
               );
             })}

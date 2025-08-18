@@ -117,6 +117,7 @@
       "title": "FAQ"
     },
     "reviews": {
+      "title": "Отзывы",
       "title1": "Очень хорошо",
       "text1": "Очень хорошо, спасибо",
       "title2": "Быстро и надёжно",
@@ -466,6 +467,35 @@
     "list": {
       "emptySearch": "По вашему запросу валют не найдено",
       "empty": "Валюты не найдены"
+    }
+  }
+  ,
+  "transfer": {
+    "loading": "Загрузка...",
+    "noData": "Нет данных",
+    "exchangeId": "Exchange ID",
+    "copy": {"exchangeIdAlt": "Exchange ID", "idTitle": "ID"},
+    "steps": {
+      "pendingDeposit": "Ожидание депозита",
+      "confirming": "Подтверждение",
+      "exchanging": "Обмен",
+      "sending": "Отправка"
+    },
+    "awaiting": {
+      "title": "Ожидание вашего депозита",
+      "sendDeposit": "Отправьте депозит:",
+      "depositAddress": "Адрес депозита:",
+      "memo": "Memo:"
+    },
+    "confirming": {"title": "Подтверждение транзакции"},
+    "exchanging": {"title": "Идёт обмен"},
+    "sending": {"title": "Отправка", "desc": "Монеты в пути"},
+    "completed": {"title": "Успешно завершено", "startNewExchange": "Создать новый обмен"},
+    "feedback": {"prefix": "Оставьте", "word": "отзыв"},
+    "operation": {"youSend": "Вы отправляете:"},
+    "overdue": {
+      "title": "Срок сделки истёк",
+      "desc": "Время для внесения депозита по этой сделке истекло. Если вы отправили средства на указанный адрес, а обмен не начался, пожалуйста, свяжитесь с нашей службой поддержки."
     }
   }
 }

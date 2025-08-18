@@ -117,6 +117,7 @@
       "title": "FAQ"
     },
     "reviews": {
+      "title": "Reviews",
       "title1": "Very good",
       "text1": "Very good, thank",
       "title2": "Fast and reliable",
@@ -466,6 +467,35 @@
     "list": {
       "emptySearch": "No currencies found for your search",
       "empty": "No currencies found"
+    }
+  }
+  ,
+  "transfer": {
+    "loading": "Loading...",
+    "noData": "No data",
+    "exchangeId": "Exchange ID",
+    "copy": {"exchangeIdAlt": "Exchange ID", "idTitle": "ID"},
+    "steps": {
+      "pendingDeposit": "Pending Deposit",
+      "confirming": "Confirming",
+      "exchanging": "Exchanging",
+      "sending": "Sending"
+    },
+    "awaiting": {
+      "title": "Awaiting your deposit",
+      "sendDeposit": "Send deposit:",
+      "depositAddress": "Deposit address:",
+      "memo": "Memo:"
+    },
+    "confirming": {"title": "Confirming the transaction"},
+    "exchanging": {"title": "Exchanging"},
+    "sending": {"title": "Sending", "desc": "Coins are on the way"},
+    "completed": {"title": "Completed successfully", "startNewExchange": "Start a new exchange"},
+    "feedback": {"prefix": "Submit your", "word": "feedback"},
+    "operation": {"youSend": "You send:"},
+    "overdue": {
+      "title": "Transaction is overdue",
+      "desc": "The time to make a deposit for this transaction has expired. If you did send a deposit to the address that was specified and your exchange has not started, please contact our support team."
     }
   }
 }

@@ -42,16 +42,9 @@ const CurrencyButton: React.FC<CurrencyButtonProps> = ({
         onError={handleError}
       />
       <div className="flex flex-col items-start gap-x-2">
+      <div className="flex gap-[5px] items-center">
         <p className="text-[#1B1B1B] text-[16px] font-[400]">{currencyToken}</p>
-        <div className="flex gap-[10px] items-center">
-          <p
-            className={clsx(
-              '!text-left max-w-[50px] md:max-w-[150px] w-full truncate',
-              'text-[#7D7878] text-[12px] font-[300]'
-            )}>
-            {currencyTitle}
-          </p>
-          <p
+        <p
             style={{
               backgroundColor:
                 networkColors[networkTitle?.toUpperCase() as keyof typeof networkColors] ?? '#CBEDFF',
@@ -61,6 +54,14 @@ const CurrencyButton: React.FC<CurrencyButtonProps> = ({
             {networkTitle}
           </p>
         </div>
+          <p
+            className={clsx(
+              '!text-left max-w-[50px] md:max-w-[150px] w-full truncate',
+              'text-[#7D7878] text-[12px] font-[300]'
+            )}>
+            {currencyTitle}
+          </p>
+       
       </div>
       {showArrow && (
         <Image

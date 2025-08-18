@@ -21,7 +21,10 @@ const DepositTable: FC<{
   onDesiredPageSize,
 }) => {
   const excludeKeys: string[] = [
-    // 'memo',
+    'id',
+    'is_transferred',
+    'memo',
+    'required',
     // 'deposit_address', 'address'
   ];
   console.log('statusColors', statusColors);
@@ -99,6 +102,7 @@ const DepositTable: FC<{
             return (
               <tr key={`exch-${index}`} className="hover:bg-gray-50">
                 {Object.entries(transaction).map(([key, value]) => {
+                  if (excludeKeys.includes(key)) return null;
                   value = value === '' || (!!value && value !== true) ? value : JSON.stringify(value);
                   const isNumeric = typeof value === 'number' || (!isNaN(Number(value)) && value !== '' && value !== null);
 

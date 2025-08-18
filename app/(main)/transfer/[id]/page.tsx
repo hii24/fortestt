@@ -15,9 +15,12 @@ import CurrencySelected from '../../components/exchange/CurrencySelected';
 import { CurrencyView } from '../../components/exchange/CurrencyView/CurrencyView';
 import { CopiedInput } from '@/app/components/CopiedInput/CopiedInput';
 import CurrencyButton from '@/app/(main)/components/exchange/swap-selector/ui/currency-selector/ui/currency-button/currency-button';
+import { useTranslations } from 'next-intl';
 
 export default function ExchangeScreen() {
   const [isLoading, setIsLoading] = useState(true);
+  const t = useTranslations('transfer');
+  const tExchange = useTranslations('exchange');
 
   // main response
   const [responseData, setResponseData] = useState<ExchangeCheckingItem | null>(null);
@@ -92,7 +95,7 @@ export default function ExchangeScreen() {
           />
         </svg>
       ),
-      label: 'Pending Deposit',
+      label: t('steps.pendingDeposit'),
       code: 1,
     },
     {
@@ -115,7 +118,7 @@ export default function ExchangeScreen() {
           />
         </svg>
       ),
-      label: 'Confirming',
+      label: t('steps.confirming'),
       code: 2,
     },
     {
@@ -163,7 +166,7 @@ export default function ExchangeScreen() {
           />
         </svg>
       ),
-      label: 'Exchanging',
+      label: t('steps.exchanging'),
       code: 4,
     },
     {
@@ -193,7 +196,7 @@ export default function ExchangeScreen() {
           />
         </svg>
       ),
-      label: 'Sending',
+      label: t('steps.sending'),
       code: 5,
     },
   ];
@@ -201,13 +204,13 @@ export default function ExchangeScreen() {
   if (isLoading) {
     return (
       <div className={`lg:mt-10 max-xl:w-full font-semibold min-h-screen`}>
-        <p>Loading...</p>
+        <p>{t('loading')}</p>
       </div>
     );
   } else if (responseData === null) {
     return (
       <div className={`lg:mt-10 max-xl:w-full font-semibold min-h-screen`}>
-        <p>No data</p>
+        <p>{t('noData')}</p>
       </div>
     );
   } else
@@ -217,12 +220,12 @@ export default function ExchangeScreen() {
         <div className={`flex justify-between gap-2 sm:gap-5 w-full max-w-[994px] mx-auto`}>
           <div
             className={`flex sm:gap-2 items-center w-fit bg-[#FFFAFA] px-5 rounded-[10px] flex-1 ${responseData.status === 7 ? 'text-red-500' : ''}`}>
-            <b className="sm:mx-1 min-w-[104px]">Exchange ID:</b>
+            <b className="sm:mx-1 min-w-[104px]">{t('exchangeId')}:</b>
 
             <CopiedInput
               className="rounded-md py-2 my-2 !bg-transparent !border-0 !outline-none text-sm lg:mx-3 !text-[#1B1B1B]"
-              copyTooltipAlt="Exchange ID"
-              copyTooltipTitle="ID"
+              copyTooltipAlt={t('copy.exchangeIdAlt')}
+              copyTooltipTitle={t('copy.idTitle')}
               value={responseData.unique_id}
             />
           </div>
@@ -236,9 +239,9 @@ export default function ExchangeScreen() {
 
         {responseData.status === 1 && (
           <div className={styles.exchangeContainer}>
-            <h1 className="flex flex-col text-center text-xl font-medium mb-8">Awaiting your deposit</h1>
+            <h1 className="flex flex-col text-center text-xl font-medium mb-8">{t('awaiting.title')}</h1>
             <div className="w-full flex items-center gap-3">
-              <span className="text-sm ">Send deposit:</span>
+              <span className="text-sm ">{t('awaiting.sendDeposit')}</span>
 
               <div className="flex items-center gap-2">
                 <span className="font-semibold">
@@ -257,15 +260,15 @@ export default function ExchangeScreen() {
             <div className="w-full flex flex-wrap max-sm:flex-col gap-2">
               <div className="flex flex-wrap gap-1 gap-x-3 items-start flex-1 sm:gap-x-3">
                 <div className="w-full flex flex-wrap gap-1 items-start justify-start">
-                  <span className="text-sm">Deposit address:</span>
+                  <span className="text-sm">{t('awaiting.depositAddress')}</span>
                   <Input
                     variant="outlined"
                     className="rounded-md !bg-transparent !outline !outline-[1px] !outline-[#F0F1F5] lg:mx-3 !text-[#1B1B1B]"
-                    placeholder="Enter the recipient's address"
+                    placeholder={tExchange('walletAddress.placeholder')}
                     value={responseData.deposit_address}
                     size="large"
                     suffix={
-                      <Tooltip title="Deposite address">
+                      <Tooltip title={t('awaiting.depositAddress')}>
                         {/* <CopyOutlined className="text-gray-400 cursor-pointer" /> */}
                         <Image
                           src="/icons/copy.svg"
@@ -301,16 +304,16 @@ export default function ExchangeScreen() {
                 </div>
                 {responseData.deposit_memo && (
                   <div className="w-full flex flex-wrap items-start gap-1 sm:gap-x-4 flex-1">
-                    <span className="text-sm">Memo:</span>
+                    <span className="text-sm">{t('awaiting.memo')}</span>
                     {/* <QRCode bordered={false} value={responseData.deposit_memo} /> */}
                     <Input
                       variant="outlined"
                       className="rounded-md !bg-transparent !outline !outline-[1px] !outline-[#F0F1F5] lg:mx-3 !text-[#1B1B1B]"
-                      placeholder="Enter the recipient's address"
+                      placeholder={tExchange('memo.placeholder')}
                       value={responseData.deposit_memo}
                       size="large"
                       suffix={
-                        <Tooltip title="Memo">
+                        <Tooltip title={t('awaiting.memo')}>
                           {/* <CopyOutlined className="text-gray-400 cursor-pointer" /> */}
                           <Image
                             src="/icons/copy.svg"
@@ -358,28 +361,28 @@ export default function ExchangeScreen() {
 
         {(responseData.status === 2 || responseData.status === 3) && (
           <div className={`${styles.exchangeContainer} gap-3`}>
-            <b className="text-xl">Confirming the transaction</b>
+            <b className="text-xl">{t('confirming.title')}</b>
             {/* <p className="text-gray-400">Number of blockchain confirmations: 1</p> */}
           </div>
         )}
 
         {responseData.status === 4 && (
           <div className={`${styles.exchangeContainer} gap-3`}>
-            <b className="text-xl">Exchanging</b>
+            <b className="text-xl">{t('exchanging.title')}</b>
             {/* <p className="text-gray-400">Your coins are safe and being exchanged</p> */}
           </div>
         )}
 
         {responseData.status === 5 && (
           <div className={`${styles.exchangeContainer} gap-3`}>
-            <b className="text-xl">Sending</b>
-            <p className="text-gray-400">Coins are on the way</p>
+            <b className="text-xl">{t('sending.title')}</b>
+            <p className="text-gray-400">{t('sending.desc')}</p>
           </div>
         )}
         {responseData.status === 6 && (
           <>
             <div className={`${styles.exchangeContainer} gap-3`}>
-              <b className="text-xl">Сompleted successfully</b>
+              <b className="text-xl">{t('completed.title')}</b>
               <div className="relative flex items-center w-full pb-4 pt-2">
                 {/* Ліва частина */}
                 <div
@@ -439,7 +442,7 @@ export default function ExchangeScreen() {
 
               <Link href={'/transfer'}>
                 <Button size="large" color="blue" variant="solid">
-                  Start a new exchange
+                  {t('completed.startNewExchange')}
                 </Button>
               </Link>
 
@@ -468,8 +471,8 @@ export default function ExchangeScreen() {
                   />
                 </svg>
                 <p className={styles.submitFeedback}>
-                  <span className="text-[#7D7878]">Submit your</span>
-                  <span className="text-[#3460FD]">{' feedback'}</span>
+                  <span className="text-[#7D7878]">{t('feedback.prefix')}</span>
+                  <span className="text-[#3460FD]">{` ${t('feedback.word')}`}</span>
                 </p>
               </Link>
             </div>
@@ -561,14 +564,14 @@ export default function ExchangeScreen() {
             /> */}
             <OperationDetails
               showTitle
-              description="You send:"
+              description={t('operation.youSend')}
               className={styles.exchangeContainer}
               recipientAdrress={responseData.address}
               depositeAdrress={responseData?.status === 2 ? responseData.deposit_address : undefined}
-              tokenAmount={responseData?.exp_token2_amount ?? responseData?.token2_amount ?? 0}
-              currencyName={responseData?.token2_title}
-              currencySymbol={responseData.token2}
-              networkSymbol={responseData.token2_network}
+              tokenAmount={responseData?.exp_token1_amount ?? responseData?.token1_amount ?? 0}
+              currencyName={responseData?.token1_title}
+              currencySymbol={responseData.token1}
+              networkSymbol={responseData.token1_network}
               hashIn={responseData.transactions?.in}
               hashOut={responseData.transactions?.out}
             />
@@ -578,10 +581,9 @@ export default function ExchangeScreen() {
         {responseData.status === 7 && (
           <div className={styles.exchangeContainer}>
             <div className={styles.statusOverdueWrapper}>
-              <b className={styles.statusOverdueTitle}>Transaction is overdue</b>
+              <b className={styles.statusOverdueTitle}>{t('overdue.title')}</b>
               <p className={styles.statusOverdueDescription}>
-                The time to make a deposit for this transaction has expired. If you did send a deposit to the
-                address that was specified and your exchange has not started, please contact our support team.
+                {t('overdue.desc')}
               </p>
             </div>
           </div>
