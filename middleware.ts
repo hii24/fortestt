@@ -24,7 +24,9 @@ export function middleware(request: NextRequest) {
   const isPublicAsset = pathname.startsWith('/api') || pathname.startsWith('/_next') || pathname.startsWith('/images') || pathname.startsWith('/image') || pathname.startsWith('/icons') || pathname === '/favicon.ico' || pathname === '/robots.txt' || pathname === '/sitemap.xml' || pathname.startsWith('/_vercel');
   if (missingLocalePrefix && !isPublicAsset && !pathname.startsWith('/admin') && !pathname.startsWith('/auth')) {
     const url = request.nextUrl.clone();
-    url.pathname = `/${defaultLocale}${pathname}`;
+    const cookieLocale = cookies.get('NEXT_LOCALE')?.value || cookies.get('locale')?.value;
+    const localeFromCookie = locales.includes((cookieLocale as any) || '') ? (cookieLocale as string) : defaultLocale;
+    url.pathname = `/${localeFromCookie}${pathname}`;
     return NextResponse.redirect(url);
   }
   // If locale prefix present, persist it in cookie and rewrite to path without the prefix
